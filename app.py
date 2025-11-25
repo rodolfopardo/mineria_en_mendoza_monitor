@@ -841,10 +841,10 @@ elif page == "Configuración":
                         Scraping completado:
                         - Posts nuevos: {results['totals']['new']}
                         - Posts actualizados: {results['totals']['updated']}
-                    """)
+                        """)
 
-                except Exception as e:
-                    st.error(f"Error durante el scraping: {e}")
+                    except Exception as e:
+                        st.error(f"Error durante el scraping: {e}")
 
 
 # Footer
