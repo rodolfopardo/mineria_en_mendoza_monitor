@@ -1,0 +1,849 @@
+"""
+Social Monitor Dashboard - Monitor de Redes Sociales para Minería en Mendoza
+Dashboard interactivo para análisis de impacto y riesgo sociopolítico
+"""
+
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+from datetime import datetime, timedelta
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+from database import SocialDatabase
+from analysis.impact_analyzer import ImpactAnalyzer
+from scrapers import InstagramScraper, FacebookScraper, TikTokScraper, TwitterScraper
+
+# Configuración de página
+st.set_page_config(
+    page_title="Monitor Social - Minería Mendoza",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# CSS personalizado
+st.markdown("""
+<style>
+    .main-header {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #1f4e79;
+        margin-bottom: 0;
+    }
+    .sub-header {
+        font-size: 1.1rem;
+        color: #666;
+        margin-top: 0;
+    }
+    .risk-high {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .risk-medium {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #212529;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .risk-low {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .metric-card {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #1f4e79;
+    }
+    .platform-instagram { color: #E1306C; }
+    .platform-facebook { color: #1877F2; }
+    .platform-tiktok { color: #000000; }
+    .platform-twitter { color: #1DA1F2; }
+</style>
+""", unsafe_allow_html=True)
+
+# Inicializar componentes
+db = SocialDatabase()
+analyzer = ImpactAnalyzer()
+
+# Sidebar
+with st.sidebar:
+    # Logo de Identidad Central
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 10px;">
+        <a href="https://www.identidadcentral.com/" target="_blank">
+            <img src="https://www.identidadcentral.com/wp-content/uploads/2023/06/logo-identidad-central.png"
+                 alt="Identidad Central" width="180"
+                 onerror="this.src='https://img.icons8.com/fluency/96/monitor.png'; this.width='80';">
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+    st.title("Monitor Social")
+    st.markdown("**Minería en Mendoza**")
+    st.markdown("---")
+
+    # Navegación
+    page = st.radio(
+        "Navegación",
+        [
+            "Dashboard Principal",
+            "Análisis por Plataforma",
+            "Publicaciones",
+            "Convocatorias",
+            "Estrategia",
+            "Configuración"
+        ],
+        index=0
+    )
+
+    st.markdown("---")
+
+    # Filtro de período
+    st.subheader("Período de análisis")
+    period_days = st.selectbox(
+        "Seleccionar período:",
+        [7, 14, 30],
+        index=1,
+        format_func=lambda x: f"Últimos {x} días"
+    )
+
+    st.markdown("---")
+
+    # Botón de actualización
+    if st.button("🔄 Actualizar Datos", type="primary", use_container_width=True):
+        with st.spinner("Actualizando datos de redes sociales..."):
+            st.session_state['updating'] = True
+
+    # Info
+    st.markdown("---")
+    st.markdown("""
+    <div style="text-align: center; font-size: 0.75em; color: #888;">
+        <a href="https://www.identidadcentral.com/" target="_blank" style="color: #1f4e79; text-decoration: none;">
+            Identidad Central
+        </a><br>
+        Monitor Social v1.0
+    </div>
+    """, unsafe_allow_html=True)
+    st.caption(f"Última actualización: {datetime.now().strftime('%d/%m/%Y %H:%M')}")
+
+
+# ========== PÁGINA: DASHBOARD PRINCIPAL ==========
+if page == "Dashboard Principal":
+    st.markdown('<p class="main-header">📊 Monitor de Redes Sociales</p>', unsafe_allow_html=True)
+    st.markdown('<p class="sub-header">Análisis de impacto y riesgo sociopolítico - Minería en Mendoza</p>', unsafe_allow_html=True)
+    st.markdown("---")
+
+    # Generar reporte
+    report = analyzer.generate_full_report(days=period_days)
+
+    # ===== EVALUACIÓN DE RIESGO =====
+    st.subheader("Evaluación de Riesgo")
+
+    risk_level = report['risk_evaluation']['risk_level']
+    risk_class = f"risk-{risk_level.lower()}"
+
+    col_risk, col_metrics = st.columns([1, 2])
+
+    with col_risk:
+        st.markdown(f"""
+        <div class="{risk_class}">
+            <h2 style="margin:0;">RIESGO {risk_level}</h2>
+            <p style="margin:5px 0;">{report['risk_evaluation']['risk_score']}/12 puntos ({report['risk_evaluation']['risk_percentage']}%)</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.info(report['risk_evaluation']['risk_description'])
+
+    with col_metrics:
+        # Factores de riesgo
+        st.markdown("**Factores evaluados:**")
+
+        factor_data = []
+        for factor, score in report['risk_evaluation']['risk_factors']:
+            factor_data.append({
+                'Factor': factor,
+                'Puntuación': score,
+                'Nivel': '🔴' if score == 3 else '🟡' if score == 2 else '🟢'
+            })
+
+        df_factors = pd.DataFrame(factor_data)
+        st.dataframe(df_factors, hide_index=True, use_container_width=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ===== MÉTRICAS CONSOLIDADAS =====
+    st.subheader("Métricas Consolidadas")
+
+    metrics = report['risk_evaluation']['metrics']
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.metric(
+            "Total Publicaciones",
+            f"{metrics['total_posts']:,}",
+            help="Publicaciones analizadas en el período"
+        )
+
+    with col2:
+        st.metric(
+            "Total Interacciones",
+            f"{metrics['total_engagement']:,}",
+            help="Likes + Comentarios + Shares"
+        )
+
+    with col3:
+        st.metric(
+            "Alcance Estimado",
+            f"{metrics['estimated_reach']:,}",
+            help="Personas potencialmente alcanzadas"
+        )
+
+    with col4:
+        st.metric(
+            "Convocatorias Detectadas",
+            len(report['risk_evaluation']['mobilization_calls']),
+            help="Llamados a movilización identificados"
+        )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ===== MÉTRICAS POR PLATAFORMA =====
+    st.subheader("Distribución por Plataforma")
+
+    col_chart, col_table = st.columns([2, 1])
+
+    with col_chart:
+        if metrics['by_platform']:
+            platform_df = pd.DataFrame([
+                {
+                    'Plataforma': platform.upper(),
+                    'Posts': data['posts'],
+                    'Engagement': data['engagement']
+                }
+                for platform, data in metrics['by_platform'].items()
+            ])
+
+            fig = px.pie(
+                platform_df,
+                values='Engagement',
+                names='Plataforma',
+                title='Distribución de Engagement por Plataforma',
+                color='Plataforma',
+                color_discrete_map={
+                    'INSTAGRAM': '#E1306C',
+                    'FACEBOOK': '#1877F2',
+                    'TIKTOK': '#000000',
+                    'TWITTER': '#1DA1F2'
+                }
+            )
+            fig.update_traces(textposition='inside', textinfo='percent+label')
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.info("No hay datos de plataformas disponibles")
+
+    with col_table:
+        if metrics['by_platform']:
+            st.markdown("**Desglose por red:**")
+            for platform, data in metrics['by_platform'].items():
+                st.markdown(f"""
+                **{platform.upper()}**
+                - Posts: {data['posts']}
+                - Likes: {data['likes']:,}
+                - Comentarios: {data['comments']:,}
+                - Compartidos: {data['shares']:,}
+                """)
+        else:
+            st.info("Sin datos")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ===== NARRATIVAS PRINCIPALES =====
+    st.subheader("Principales Narrativas Detectadas")
+
+    narrative_analysis = report['narrative_analysis']
+
+    col_narr, col_cloud = st.columns([1, 1])
+
+    with col_narr:
+        st.markdown("**Consignas más frecuentes:**")
+        for narrative, count in narrative_analysis['narratives'][:7]:
+            if count > 0:
+                st.markdown(f"- *\"{narrative}\"* ({count} menciones)")
+
+        if not any(c > 0 for _, c in narrative_analysis['narratives']):
+            st.info("No se detectaron narrativas conocidas en el período")
+
+    with col_cloud:
+        # Nube de palabras
+        if narrative_analysis['word_frequency']:
+            word_freq = dict(narrative_analysis['word_frequency'])
+
+            wordcloud = WordCloud(
+                width=600,
+                height=300,
+                background_color='white',
+                colormap='Blues',
+                max_words=50,
+                relative_scaling=0.5
+            ).generate_from_frequencies(word_freq)
+
+            fig_wc, ax_wc = plt.subplots(figsize=(10, 5))
+            ax_wc.imshow(wordcloud, interpolation='bilinear')
+            ax_wc.axis('off')
+            st.pyplot(fig_wc)
+            plt.close()
+        else:
+            st.info("No hay suficientes datos para la nube de palabras")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ===== TOP PUBLICACIONES =====
+    st.subheader("Publicaciones de Mayor Impacto")
+
+    top_posts = report['top_posts']
+
+    if top_posts:
+        for i, post in enumerate(top_posts[:5], 1):
+            reach_emoji = "🔴" if post.get('reach_level') == 'ALTO' else "🟡" if post.get('reach_level') == 'MEDIO' else "🟢"
+
+            with st.expander(f"{reach_emoji} #{i} - @{post.get('author_username', 'N/A')} ({post.get('platform', 'N/A').upper()}) - {post.get('engagement_total', 0):,} interacciones"):
+                col_info, col_metrics = st.columns([2, 1])
+
+                with col_info:
+                    st.markdown(f"**Contenido:**")
+                    content = post.get('content', '')[:300]
+                    st.markdown(f">{content}{'...' if len(post.get('content', '')) > 300 else ''}")
+                    st.markdown(f"[Ver publicación]({post.get('post_url', '#')})")
+
+                with col_metrics:
+                    st.metric("Likes", f"{post.get('likes', 0):,}")
+                    st.metric("Comentarios", f"{post.get('comments', 0):,}")
+                    st.metric("Compartidos", f"{post.get('shares', 0):,}")
+    else:
+        st.info("No hay publicaciones para mostrar. Ejecuta el scraper para obtener datos.")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ===== CUENTAS CON MAYOR IMPACTO =====
+    st.subheader("Cuentas con Mayor Impacto")
+
+    top_accounts = report['top_accounts']
+
+    if top_accounts:
+        accounts_df = pd.DataFrame(top_accounts[:10])
+        accounts_df['username'] = accounts_df['username'].apply(lambda x: f"@{x}")
+
+        fig_accounts = px.bar(
+            accounts_df,
+            x='username',
+            y='total_engagement',
+            color='platform',
+            title='Top 10 Cuentas por Engagement',
+            labels={'username': 'Cuenta', 'total_engagement': 'Engagement Total', 'platform': 'Plataforma'},
+            color_discrete_map={
+                'instagram': '#E1306C',
+                'facebook': '#1877F2',
+                'tiktok': '#000000',
+                'twitter': '#1DA1F2'
+            }
+        )
+        st.plotly_chart(fig_accounts, use_container_width=True)
+    else:
+        st.info("No hay datos de cuentas disponibles")
+
+
+# ========== PÁGINA: ANÁLISIS POR PLATAFORMA ==========
+elif page == "Análisis por Plataforma":
+    st.header("Análisis por Plataforma")
+
+    platform_selected = st.selectbox(
+        "Seleccionar plataforma:",
+        ["Todas", "Instagram", "Facebook", "TikTok", "Twitter"]
+    )
+
+    platform_filter = None if platform_selected == "Todas" else platform_selected.lower()
+
+    posts = db.get_posts(platform=platform_filter, days=period_days, limit=200)
+
+    if posts:
+        df = pd.DataFrame(posts)
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric("Total Posts", len(df))
+        with col2:
+            st.metric("Total Engagement", f"{df['engagement_total'].sum():,}")
+        with col3:
+            avg_engagement = df['engagement_total'].mean()
+            st.metric("Engagement Promedio", f"{avg_engagement:,.0f}")
+
+        st.markdown("---")
+
+        # Gráfico temporal
+        if 'post_date' in df.columns:
+            df['post_date'] = pd.to_datetime(df['post_date'], errors='coerce')
+            df_dated = df.dropna(subset=['post_date'])
+
+            if not df_dated.empty:
+                df_daily = df_dated.groupby(df_dated['post_date'].dt.date).agg({
+                    'engagement_total': 'sum',
+                    'id': 'count'
+                }).reset_index()
+                df_daily.columns = ['Fecha', 'Engagement', 'Posts']
+
+                fig = px.line(
+                    df_daily,
+                    x='Fecha',
+                    y='Engagement',
+                    title='Evolución del Engagement',
+                    markers=True
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
+        # Tabla de posts
+        st.subheader("Listado de Publicaciones")
+
+        display_df = df[['platform', 'author_username', 'engagement_total', 'likes', 'comments', 'shares', 'reach_level', 'post_url']].copy()
+        display_df.columns = ['Plataforma', 'Usuario', 'Engagement', 'Likes', 'Comentarios', 'Compartidos', 'Alcance', 'URL']
+
+        st.dataframe(
+            display_df,
+            column_config={
+                "URL": st.column_config.LinkColumn("URL"),
+                "Plataforma": st.column_config.TextColumn("Plataforma", width="small"),
+                "Alcance": st.column_config.TextColumn("Alcance", width="small")
+            },
+            hide_index=True,
+            use_container_width=True
+        )
+    else:
+        st.info("No hay datos disponibles para esta plataforma. Ejecuta el scraper primero.")
+
+
+# ========== PÁGINA: PUBLICACIONES ==========
+elif page == "Publicaciones":
+    st.header("Explorador de Publicaciones")
+
+    # Filtros
+    col_f1, col_f2, col_f3 = st.columns(3)
+
+    with col_f1:
+        platform_filter = st.selectbox(
+            "Plataforma:",
+            ["Todas", "Instagram", "Facebook", "TikTok", "Twitter"]
+        )
+
+    with col_f2:
+        reach_filter = st.selectbox(
+            "Nivel de alcance:",
+            ["Todos", "ALTO", "MEDIO", "BAJO"]
+        )
+
+    with col_f3:
+        sort_by = st.selectbox(
+            "Ordenar por:",
+            ["Engagement", "Likes", "Comentarios", "Compartidos"]
+        )
+
+    # Obtener posts
+    platform = None if platform_filter == "Todas" else platform_filter.lower()
+    posts = db.get_posts(platform=platform, days=period_days, limit=500)
+
+    if posts:
+        df = pd.DataFrame(posts)
+
+        # Aplicar filtro de alcance
+        if reach_filter != "Todos":
+            df = df[df['reach_level'] == reach_filter]
+
+        # Ordenar
+        sort_map = {
+            "Engagement": "engagement_total",
+            "Likes": "likes",
+            "Comentarios": "comments",
+            "Compartidos": "shares"
+        }
+        df = df.sort_values(by=sort_map[sort_by], ascending=False)
+
+        st.markdown(f"**{len(df)} publicaciones encontradas**")
+        st.markdown("---")
+
+        # Mostrar posts como cards
+        for _, post in df.head(20).iterrows():
+            reach_color = "#dc3545" if post['reach_level'] == 'ALTO' else "#ffc107" if post['reach_level'] == 'MEDIO' else "#28a745"
+
+            st.markdown(f"""
+            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 10px; border-left: 4px solid {reach_color};">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>{post['platform'].upper()}</strong> | @{post['author_username']}
+                        <span style="background-color: {reach_color}; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-left: 10px;">
+                            {post['reach_level']}
+                        </span>
+                    </div>
+                    <div style="text-align: right;">
+                        ❤️ {post['likes']:,} | 💬 {post['comments']:,} | 🔄 {post['shares']:,}
+                    </div>
+                </div>
+                <p style="margin: 10px 0; color: #555;">{(post['content'] or '')[:200]}{'...' if len(post['content'] or '') > 200 else ''}</p>
+                <a href="{post['post_url']}" target="_blank" style="color: #1f4e79;">Ver publicación →</a>
+            </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.info("No hay publicaciones para mostrar")
+
+
+# ========== PÁGINA: CONVOCATORIAS ==========
+elif page == "Convocatorias":
+    st.header("Convocatorias a Movilización Detectadas")
+
+    st.markdown("""
+    <div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <strong>⚠️ Detección automática</strong><br>
+        Las convocatorias se detectan automáticamente mediante análisis de texto.
+        Pueden existir falsos positivos o convocatorias no detectadas.
+    </div>
+    """, unsafe_allow_html=True)
+
+    mobilizations = db.get_mobilization_calls(days=period_days)
+
+    if mobilizations:
+        st.metric("Convocatorias detectadas", len(mobilizations))
+        st.markdown("---")
+
+        for mob in mobilizations:
+            event_date = mob.get('event_date', 'No especificada')
+
+            st.markdown(f"""
+            <div style="border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                <h4 style="margin: 0;">📅 Fecha: {event_date}</h4>
+                <p><strong>Plataforma:</strong> {mob.get('platform', 'N/A').upper()}</p>
+                <p><strong>Usuario:</strong> @{mob.get('author_username', 'N/A')}</p>
+                <p style="color: #666;">{mob.get('content', '')[:300]}...</p>
+                <a href="{mob.get('post_url', '#')}" target="_blank">Ver publicación original →</a>
+            </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.success("No se han detectado convocatorias a movilización en el período seleccionado")
+
+
+# ========== PÁGINA: ESTRATEGIA ==========
+elif page == "Estrategia":
+    st.header("Estrategia de Comunicación")
+
+    st.markdown("""
+    <div style="background-color: #e7f3ff; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #1f4e79;">
+        <h3 style="margin: 0 0 10px 0; color: #1f4e79;">Enfoque Recomendado</h3>
+        <p style="margin: 0; color: #333;">
+            Utilizar <strong>influencers mendocinos</strong> con ecommerce o emprendimientos propios para establecer
+            una estrategia de comunicación efectiva centrada en los <strong>beneficios económicos</strong> de la minería.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # Mensajes clave
+    st.subheader("Mensajes Clave Recomendados")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        <div style="background-color: #d4edda; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+            <h4 style="margin: 0 0 10px 0; color: #155724;">Empleo y Oportunidades</h4>
+            <ul style="margin: 0; color: #155724;">
+                <li>Generación de empleo local directo e indirecto</li>
+                <li>Oportunidades para PyMEs y proveedores locales</li>
+                <li>Capacitación y desarrollo profesional</li>
+                <li>Salarios competitivos en la región</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style="background-color: #d4edda; padding: 15px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #155724;">Progreso Regional</h4>
+            <ul style="margin: 0; color: #155724;">
+                <li>Inversión en infraestructura</li>
+                <li>Desarrollo de comunidades locales</li>
+                <li>Dinamización de la economía mendocina</li>
+                <li>Modernización tecnológica</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+            <h4 style="margin: 0 0 10px 0; color: #856404;">Temas a Evitar</h4>
+            <ul style="margin: 0; color: #856404;">
+                <li>Debate sobre el agua (tema sensible)</li>
+                <li>Confrontación directa con grupos ambientalistas</li>
+                <li>Aspectos técnicos complejos</li>
+                <li>Comparaciones con otros proyectos polémicos</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style="background-color: #cce5ff; padding: 15px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #004085;">Tono de Comunicación</h4>
+            <ul style="margin: 0; color: #004085;">
+                <li>Positivo y propositivo</li>
+                <li>Enfocado en historias de éxito</li>
+                <li>Testimonios de trabajadores locales</li>
+                <li>Datos concretos de impacto económico</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # Perfil de influencers
+    st.subheader("Perfil de Influencers Objetivo")
+
+    st.markdown("""
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+        <h4 style="margin: 0 0 15px 0;">Características ideales:</h4>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
+                <strong>Perfil Comercial</strong>
+                <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;">
+                    Emprendedores, dueños de ecommerce, negocios locales que puedan hablar desde
+                    la perspectiva del crecimiento económico.
+                </p>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
+                <strong>Audiencia Local</strong>
+                <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;">
+                    Seguidores principalmente de Mendoza y alrededores, con interés en
+                    desarrollo regional y oportunidades de negocio.
+                </p>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
+                <strong>Engagement Orgánico</strong>
+                <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;">
+                    Preferir micro-influencers (5K-50K seguidores) con comunidad activa
+                    sobre grandes cuentas con engagement bajo.
+                </p>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
+                <strong>Sin Historial Político</strong>
+                <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;">
+                    Evitar perfiles con posiciones políticas marcadas o historial de
+                    contenido controversial.
+                </p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # Formatos de contenido
+    st.subheader("Formatos de Contenido Sugeridos")
+
+    col_format1, col_format2, col_format3 = st.columns(3)
+
+    with col_format1:
+        st.markdown("""
+        **Videos Cortos (TikTok/Reels)**
+        - Testimonios de trabajadores
+        - "Un día en mi trabajo"
+        - Datos de impacto económico
+        - Historias de emprendedores beneficiados
+        """)
+
+    with col_format2:
+        st.markdown("""
+        **Posts Informativos**
+        - Infografías de empleo generado
+        - Comparativas económicas regionales
+        - Historias de éxito locales
+        - Anuncios de inversiones
+        """)
+
+    with col_format3:
+        st.markdown("""
+        **Stories/Contenido Efímero**
+        - Detrás de escenas
+        - Q&A sobre oportunidades
+        - Encuestas de opinión
+        - Colaboraciones con negocios locales
+        """)
+
+    st.markdown("---")
+
+    # Plan de acción
+    st.subheader("Plan de Acción Sugerido")
+
+    st.markdown("""
+    | Fase | Acción | Objetivo |
+    |------|--------|----------|
+    | **1. Identificación** | Mapear influencers mendocinos con perfil comercial | Crear base de datos de potenciales colaboradores |
+    | **2. Acercamiento** | Contacto inicial enfocado en colaboración comercial | Establecer relación sin mencionar minería inicialmente |
+    | **3. Educación** | Compartir información sobre impacto económico | Generar conocimiento sobre beneficios |
+    | **4. Activación** | Proponer colaboraciones de contenido | Crear contenido orgánico y auténtico |
+    | **5. Amplificación** | Coordinar publicaciones y hashtags | Maximizar alcance de mensajes positivos |
+    """)
+
+    st.markdown("---")
+
+    st.markdown("""
+    <div style="background-color: #1f4e79; color: white; padding: 20px; border-radius: 10px; margin-top: 20px;">
+        <h4 style="margin: 0 0 10px 0; color: white;">¿Necesitás implementar esta estrategia?</h4>
+        <p style="margin: 0 0 15px 0;">
+            En <strong>Identidad Central</strong> somos especialistas en comunicación estratégica,
+            marketing digital y gestión de reputación corporativa. Podemos ayudarte a:
+        </p>
+        <ul style="margin: 0 0 15px 0;">
+            <li>Identificar y contactar influencers relevantes</li>
+            <li>Diseñar contenido auténtico y efectivo</li>
+            <li>Monitorear y medir el impacto de la campaña</li>
+            <li>Gestionar la comunicación en redes sociales</li>
+        </ul>
+        <a href="https://www.identidadcentral.com/" target="_blank"
+           style="display: inline-block; background: white; color: #1f4e79; padding: 10px 20px;
+                  border-radius: 5px; text-decoration: none; font-weight: bold;">
+            Contactanos →
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.info("""
+    **Nota:** Esta estrategia busca complementar la presencia digital actual con voces
+    independientes y creíbles. El éxito depende de la autenticidad del contenido y de
+    evitar que parezca comunicación corporativa o gubernamental.
+    """)
+
+
+# ========== PÁGINA: CONFIGURACIÓN ==========
+elif page == "Configuración":
+    st.header("Configuración del Monitor")
+
+    tab1, tab2, tab3 = st.tabs(["Palabras Clave", "Cuentas Monitoreadas", "Scraping Manual"])
+
+    with tab1:
+        st.subheader("Palabras Clave de Búsqueda")
+
+        keywords = db.get_active_keywords()
+        df_keywords = pd.DataFrame(keywords)
+
+        st.dataframe(df_keywords, hide_index=True, use_container_width=True)
+
+        st.markdown("---")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            new_keyword = st.text_input("Nueva palabra clave:")
+        with col2:
+            new_category = st.selectbox("Categoría:", ["general", "consigna", "movilizacion", "proyecto", "legal", "ambiental"])
+
+        if st.button("Agregar palabra clave"):
+            if new_keyword:
+                if db.add_keyword(new_keyword, new_category):
+                    st.success(f"Palabra clave '{new_keyword}' agregada")
+                    st.rerun()
+                else:
+                    st.error("Error al agregar palabra clave")
+
+    with tab2:
+        st.subheader("Cuentas Monitoreadas")
+
+        accounts = db.get_monitored_accounts()
+        df_accounts = pd.DataFrame(accounts)
+
+        if not df_accounts.empty:
+            st.dataframe(
+                df_accounts[['platform', 'username', 'display_name', 'account_type', 'is_key_account']],
+                hide_index=True,
+                use_container_width=True
+            )
+
+        st.markdown("---")
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            new_platform = st.selectbox("Plataforma:", ["instagram", "facebook", "tiktok", "twitter"])
+        with col2:
+            new_username = st.text_input("Username:")
+        with col3:
+            new_type = st.selectbox("Tipo:", ["influencer", "organizacion", "asamblea", "medio", "politico"])
+
+        if st.button("Agregar cuenta"):
+            if new_username:
+                if db.add_monitored_account(new_platform, new_username, account_type=new_type, is_key=True):
+                    st.success(f"Cuenta @{new_username} agregada")
+                    st.rerun()
+                else:
+                    st.error("Error al agregar cuenta")
+
+    with tab3:
+        st.subheader("Scraping Manual")
+
+        st.warning("⚠️ El scraping consume créditos de la API de Apify. Usar con moderación.")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            scrape_platform = st.selectbox(
+                "Seleccionar plataforma:",
+                ["Instagram", "Facebook", "TikTok", "Twitter"]
+            )
+
+        with col2:
+            max_results = st.number_input("Máximo de resultados:", min_value=5, max_value=100, value=20)
+
+        if st.button("Ejecutar Scraping", type="primary"):
+            with st.spinner(f"Scrapeando {scrape_platform}..."):
+                try:
+                    scrapers = {
+                        "Instagram": InstagramScraper,
+                        "Facebook": FacebookScraper,
+                        "TikTok": TikTokScraper,
+                        "Twitter": TwitterScraper
+                    }
+
+                    scraper = scrapers[scrape_platform]()
+                    results = scraper.run(
+                        fetch_by_keywords=True,
+                        fetch_by_accounts=True,
+                        max_per_keyword=max_results,
+                        max_per_account=max_results // 2
+                    )
+
+                    st.success(f"""
+                    Scraping completado:
+                    - Posts nuevos: {results['totals']['new']}
+                    - Posts actualizados: {results['totals']['updated']}
+                    """)
+
+                except Exception as e:
+                    st.error(f"Error durante el scraping: {e}")
+
+
+# Footer
+st.markdown("---")
+st.markdown("""
+<div style="text-align: center; padding: 10px;">
+    <p style="margin: 0; font-size: 0.9em; color: #666;">
+        Monitor Social - Minería en Mendoza
+    </p>
+    <p style="margin: 5px 0 0 0; font-size: 0.8em;">
+        Desarrollado por <a href="https://www.identidadcentral.com/" target="_blank" style="color: #1f4e79; text-decoration: none; font-weight: bold;">Identidad Central</a>
+    </p>
+</div>
+""", unsafe_allow_html=True)
