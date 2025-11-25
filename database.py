@@ -4,14 +4,32 @@ Almacena publicaciones de Instagram, Facebook, TikTok y Twitter
 """
 
 import sqlite3
+import shutil
+import os
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
 import json
 
 
+def get_db_path():
+    """Obtiene la ruta de la base de datos, copiando a tmp si es necesario para Streamlit Cloud"""
+    original_db = os.path.join(os.path.dirname(__file__), "social_monitor.db")
+
+    # En Streamlit Cloud, el filesystem es read-only, copiamos a /tmp
+    if os.path.exists("/tmp"):
+        tmp_db = "/tmp/social_monitor.db"
+        # Solo copiar si no existe o si el original es mas nuevo
+        if not os.path.exists(tmp_db):
+            if os.path.exists(original_db):
+                shutil.copy2(original_db, tmp_db)
+        return tmp_db
+
+    return original_db
+
+
 class SocialDatabase:
-    def __init__(self, db_path: str = "social_monitor.db"):
-        self.db_path = db_path
+    def __init__(self, db_path: str = None):
+        self.db_path = db_path or get_db_path()
         self.init_database()
 
     def init_database(self):

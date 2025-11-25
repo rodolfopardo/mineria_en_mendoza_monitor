@@ -10,10 +10,18 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import os
 
 from database import SocialDatabase
 from analysis.impact_analyzer import ImpactAnalyzer
-from scrapers import InstagramScraper, FacebookScraper, TikTokScraper, TwitterScraper
+
+# Importar scrapers solo si hay APIFY_TOKEN (para Streamlit Cloud)
+SCRAPING_ENABLED = bool(os.getenv('APIFY_TOKEN'))
+if SCRAPING_ENABLED:
+    try:
+        from scrapers import InstagramScraper, FacebookScraper, TikTokScraper, TwitterScraper
+    except Exception:
+        SCRAPING_ENABLED = False
 
 # Configuración de página
 st.set_page_config(
@@ -794,41 +802,45 @@ elif page == "Configuración":
     with tab3:
         st.subheader("Scraping Manual")
 
-        st.warning("⚠️ El scraping consume créditos de la API de Apify. Usar con moderación.")
+        if not SCRAPING_ENABLED:
+            st.warning("⚠️ Scraping no disponible. Configure APIFY_TOKEN en los secretos de Streamlit Cloud para habilitar esta funcion.")
+            st.info("El dashboard funciona con los datos precargados en la base de datos.")
+        else:
+            st.warning("⚠️ El scraping consume creditos de la API de Apify. Usar con moderacion.")
 
-        col1, col2 = st.columns(2)
+            col1, col2 = st.columns(2)
 
-        with col1:
-            scrape_platform = st.selectbox(
-                "Seleccionar plataforma:",
-                ["Instagram", "Facebook", "TikTok", "Twitter"]
-            )
+            with col1:
+                scrape_platform = st.selectbox(
+                    "Seleccionar plataforma:",
+                    ["Instagram", "Facebook", "TikTok", "Twitter"]
+                )
 
-        with col2:
-            max_results = st.number_input("Máximo de resultados:", min_value=5, max_value=100, value=20)
+            with col2:
+                max_results = st.number_input("Maximo de resultados:", min_value=5, max_value=100, value=20)
 
-        if st.button("Ejecutar Scraping", type="primary"):
-            with st.spinner(f"Scrapeando {scrape_platform}..."):
-                try:
-                    scrapers = {
-                        "Instagram": InstagramScraper,
-                        "Facebook": FacebookScraper,
-                        "TikTok": TikTokScraper,
-                        "Twitter": TwitterScraper
-                    }
+            if st.button("Ejecutar Scraping", type="primary"):
+                with st.spinner(f"Scrapeando {scrape_platform}..."):
+                    try:
+                        scrapers = {
+                            "Instagram": InstagramScraper,
+                            "Facebook": FacebookScraper,
+                            "TikTok": TikTokScraper,
+                            "Twitter": TwitterScraper
+                        }
 
-                    scraper = scrapers[scrape_platform]()
-                    results = scraper.run(
-                        fetch_by_keywords=True,
-                        fetch_by_accounts=True,
-                        max_per_keyword=max_results,
-                        max_per_account=max_results // 2
-                    )
+                        scraper = scrapers[scrape_platform]()
+                        results = scraper.run(
+                            fetch_by_keywords=True,
+                            fetch_by_accounts=True,
+                            max_per_keyword=max_results,
+                            max_per_account=max_results // 2
+                        )
 
-                    st.success(f"""
-                    Scraping completado:
-                    - Posts nuevos: {results['totals']['new']}
-                    - Posts actualizados: {results['totals']['updated']}
+                        st.success(f"""
+                        Scraping completado:
+                        - Posts nuevos: {results['totals']['new']}
+                        - Posts actualizados: {results['totals']['updated']}
                     """)
 
                 except Exception as e:
