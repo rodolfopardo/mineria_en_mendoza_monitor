@@ -89,9 +89,8 @@ with st.sidebar:
     st.markdown("""
     <div style="text-align: center; margin-bottom: 10px;">
         <a href="https://www.identidadcentral.com/" target="_blank">
-            <img src="https://www.identidadcentral.com/wp-content/uploads/2023/06/logo-identidad-central.png"
-                 alt="Identidad Central" width="180"
-                 onerror="this.src='https://img.icons8.com/fluency/96/monitor.png'; this.width='80';">
+            <img src="https://www.identidadcentral.com/logo.jpeg"
+                 alt="Identidad Central" width="180">
         </a>
     </div>
     """, unsafe_allow_html=True)
