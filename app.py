@@ -107,6 +107,7 @@ with st.sidebar:
             "Análisis por Plataforma",
             "Publicaciones",
             "Convocatorias",
+            "Casos de Estudio",
             "Estrategia",
             "Configuración"
         ],
@@ -545,6 +546,165 @@ elif page == "Convocatorias":
             """, unsafe_allow_html=True)
     else:
         st.success("No se han detectado convocatorias a movilización en el período seleccionado")
+
+
+# ========== PÁGINA: CASOS DE ESTUDIO ==========
+elif page == "Casos de Estudio":
+    st.header("Casos de Estudio")
+
+    st.markdown("""
+    <div style="background-color: #e7f3ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #1f4e79;">
+        <p style="margin: 0; color: #333;">
+            Esta seccion documenta casos relevantes de contenido viral relacionado con la mineria en Mendoza.
+            Estos casos sirven como referencia para entender patrones de comunicacion y potencial de viralización.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # ===== CASO MANU CHAO =====
+    st.subheader("Caso: Manu Chao - Apoyo a Uspallata")
+
+    col_info, col_metrics = st.columns([2, 1])
+
+    with col_info:
+        st.markdown("""
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #dee2e6;">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="background: linear-gradient(135deg, #000 0%, #333 100%); color: white; padding: 5px 10px; border-radius: 5px; font-size: 0.8em; margin-right: 10px;">
+                    TikTok
+                </div>
+                <span style="font-weight: bold; font-size: 1.1em;">@manuchaoofficial</span>
+                <span style="color: #1DA1F2; margin-left: 5px;">✓</span>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #dc3545; margin-bottom: 15px;">
+                <p style="font-size: 1.1em; margin: 0; font-style: italic;">
+                    "Todos con Uspallata !!!<br>
+                    Fuera minería de Mendoza !!!"
+                </p>
+                <p style="color: #666; margin: 10px 0 0 0; font-size: 0.9em;">
+                    #manuchao #noalamina #notprogress #mendoza
+                </p>
+            </div>
+            <p style="color: #666; font-size: 0.9em; margin: 0;">
+                <strong>Fecha de publicacion:</strong> 2 de Agosto de 2025
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        st.markdown("""
+        <a href="https://www.tiktok.com/@manuchaoofficial/video/7534059456691227926" target="_blank"
+           style="display: inline-block; background: #000; color: white; padding: 10px 20px;
+                  border-radius: 5px; text-decoration: none; font-weight: bold;">
+            Ver publicacion en TikTok →
+        </a>
+        """, unsafe_allow_html=True)
+
+    with col_metrics:
+        st.markdown("### Metricas")
+        st.metric("Likes", "11,700", help="Me gusta en la publicacion")
+        st.metric("Comentarios", "278", help="Comentarios totales")
+        st.metric("Compartidos", "669", help="Veces compartido")
+        st.metric("Reproducciones", "147,900", help="Visualizaciones del video")
+
+        total_engagement = 11700 + 278 + 669
+        st.markdown("---")
+        st.metric("Engagement Total", f"{total_engagement:,}")
+
+    st.markdown("---")
+
+    # Análisis del caso
+    st.subheader("Analisis del Caso")
+
+    col_analysis1, col_analysis2 = st.columns(2)
+
+    with col_analysis1:
+        st.markdown("""
+        <div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+            <h4 style="margin: 0 0 10px 0; color: #856404;">Por que es relevante</h4>
+            <ul style="margin: 0; color: #856404;">
+                <li><strong>Artista internacional</strong> con millones de seguidores</li>
+                <li><strong>147,900 reproducciones</strong> en un solo video</li>
+                <li>Menciona especificamente <strong>Uspallata y Mendoza</strong></li>
+                <li>Utiliza hashtags de alta visibilidad</li>
+                <li>Contenido que puede <strong>resurgir</strong> en momentos clave</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_analysis2:
+        st.markdown("""
+        <div style="background-color: #f8d7da; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+            <h4 style="margin: 0 0 10px 0; color: #721c24;">Factores de Riesgo</h4>
+            <ul style="margin: 0; color: #721c24;">
+                <li>Potencial de <strong>reactivacion viral</strong></li>
+                <li>Credibilidad por ser figura publica reconocida</li>
+                <li>Asociacion emocional con la marca "Manu Chao"</li>
+                <li>Contenido facilmente compartible</li>
+                <li>Puede inspirar acciones similares de otros artistas</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # Alcance estimado
+    st.subheader("Alcance Estimado")
+
+    # Calcular alcance
+    reach_likes = 11700 * 2
+    reach_comments = 278 * 5
+    reach_shares = 669 * 50
+    reach_views = 147900 * 1
+    total_reach = reach_likes + reach_comments + reach_shares + reach_views
+
+    col_reach1, col_reach2, col_reach3, col_reach4 = st.columns(4)
+
+    with col_reach1:
+        st.metric("Por Likes", f"{reach_likes:,}", help="Likes x 2")
+    with col_reach2:
+        st.metric("Por Comentarios", f"{reach_comments:,}", help="Comentarios x 5")
+    with col_reach3:
+        st.metric("Por Shares", f"{reach_shares:,}", help="Compartidos x 50")
+    with col_reach4:
+        st.metric("Por Views", f"{reach_views:,}", help="Reproducciones x 1")
+
+    st.markdown(f"""
+    <div style="background-color: #dc3545; color: white; padding: 20px; border-radius: 10px; text-align: center; margin-top: 20px;">
+        <h2 style="margin: 0;">Alcance Total Estimado</h2>
+        <h1 style="margin: 10px 0 0 0; font-size: 2.5em;">{total_reach:,} personas</h1>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # Recomendaciones
+    st.subheader("Recomendaciones")
+
+    st.markdown("""
+    <div style="background-color: #d4edda; padding: 20px; border-radius: 10px;">
+        <h4 style="margin: 0 0 15px 0; color: #155724;">Acciones Sugeridas</h4>
+        <ol style="margin: 0; color: #155724;">
+            <li><strong>Monitoreo continuo:</strong> Seguir la cuenta @manuchaoofficial para detectar nuevas publicaciones</li>
+            <li><strong>Preparar respuesta:</strong> Tener contenido positivo listo para contrarrestar si el video resurge</li>
+            <li><strong>Identificar patrones:</strong> Analizar que eventos pueden reactivar este tipo de contenido</li>
+            <li><strong>No confrontar directamente:</strong> Evitar engagement negativo que amplifique el alcance</li>
+            <li><strong>Documentar:</strong> Registrar metricas periodicamente para detectar picos de actividad</li>
+        </ol>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    st.info("""
+    **Nota:** Este caso es de Agosto 2025 pero se incluye como documentacion porque:
+    - Demuestra el potencial de viralización de figuras publicas
+    - El contenido puede resurgir en momentos de debate sobre mineria
+    - Sirve como benchmark para evaluar el impacto de futuras publicaciones
+    """)
 
 
 # ========== PÁGINA: ESTRATEGIA ==========
