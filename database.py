@@ -148,6 +148,39 @@ class SocialDatabase:
             )
         ''')
 
+        # ========== TABLAS PARA MEDIOS DE COMUNICACIÓN ==========
+
+        # Tabla para Top Stories de minería (Google News destacadas)
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS top_stories (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                link TEXT UNIQUE NOT NULL,
+                source TEXT,
+                source_logo TEXT,
+                date_published TEXT,
+                thumbnail TEXT,
+                is_live BOOLEAN DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
+        # Tabla para todas las noticias de minería
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS news_results (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                link TEXT UNIQUE NOT NULL,
+                source TEXT,
+                snippet TEXT,
+                date_published TEXT,
+                thumbnail TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
         # Insertar palabras clave por defecto
         default_keywords = [
             ("minería Mendoza", "general"),
@@ -605,6 +638,147 @@ class SocialDatabase:
 
         conn.commit()
         conn.close()
+
+    # ========== MÉTODOS PARA MEDIOS DE COMUNICACIÓN ==========
+
+    def article_exists(self, link: str, table: str = 'top_stories') -> bool:
+        """Verifica si un artículo ya existe en la base de datos"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(f'SELECT COUNT(*) FROM {table} WHERE link = ?', (link,))
+        count = cursor.fetchone()[0]
+        conn.close()
+        return count > 0
+
+    def insert_top_story(self, article: Dict) -> bool:
+        """Inserta una Top Story si no existe"""
+        if self.article_exists(article.get('link', ''), 'top_stories'):
+            return False
+
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute('''
+                INSERT INTO top_stories
+                (title, link, source, source_logo, date_published, thumbnail, is_live)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                article.get('title'),
+                article.get('link'),
+                article.get('source'),
+                article.get('source_logo'),
+                article.get('date'),
+                article.get('thumbnail'),
+                article.get('live', False)
+            ))
+            conn.commit()
+            conn.close()
+            return True
+        except sqlite3.IntegrityError:
+            conn.close()
+            return False
+
+    def insert_news_result(self, article: Dict) -> bool:
+        """Inserta un News Result si no existe"""
+        if not article.get('link'):
+            return False
+
+        if self.article_exists(article['link'], 'news_results'):
+            return False
+
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        try:
+            source_name = None
+            if article.get('source'):
+                if isinstance(article['source'], dict):
+                    source_name = article['source'].get('name')
+                else:
+                    source_name = article['source']
+
+            cursor.execute('''
+                INSERT INTO news_results
+                (title, link, source, snippet, date_published, thumbnail)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (
+                article.get('title'),
+                article.get('link'),
+                source_name,
+                article.get('snippet'),
+                article.get('date'),
+                article.get('thumbnail')
+            ))
+            conn.commit()
+            conn.close()
+            return True
+        except sqlite3.IntegrityError:
+            conn.close()
+            return False
+
+    def get_top_stories_news(self, limit: int = 50) -> List[Dict]:
+        """Obtiene las Top Stories más recientes"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT title, link, source, source_logo, date_published, thumbnail, is_live, created_at
+            FROM top_stories
+            ORDER BY created_at DESC
+            LIMIT ?
+        ''', (limit,))
+
+        columns = ['title', 'link', 'source', 'source_logo', 'date_published', 'thumbnail', 'is_live', 'created_at']
+        articles = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        conn.close()
+        return articles
+
+    def get_news_results(self, limit: int = 100) -> List[Dict]:
+        """Obtiene los News Results más recientes"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT title, link, source, snippet, date_published, thumbnail, created_at
+            FROM news_results
+            ORDER BY created_at DESC
+            LIMIT ?
+        ''', (limit,))
+
+        columns = ['title', 'link', 'source', 'snippet', 'date_published', 'thumbnail', 'created_at']
+        articles = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        conn.close()
+        return articles
+
+    def get_media_stats(self, table: str = 'top_stories') -> List[Dict]:
+        """Obtiene estadísticas de medios"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        cursor.execute(f'''
+            SELECT source, COUNT(*) as count
+            FROM {table}
+            WHERE source IS NOT NULL
+            GROUP BY source
+            ORDER BY count DESC
+        ''')
+
+        stats = [{'source': row[0], 'count': row[1]} for row in cursor.fetchall()]
+
+        conn.close()
+        return stats
+
+    def get_article_count(self, table: str = 'top_stories') -> int:
+        """Obtiene el número total de artículos almacenados"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(f'SELECT COUNT(*) FROM {table}')
+        count = cursor.fetchone()[0]
+        conn.close()
+        return count
 
 
 if __name__ == "__main__":

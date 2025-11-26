@@ -14,6 +14,7 @@ import os
 
 from database import SocialDatabase
 from analysis.impact_analyzer import ImpactAnalyzer
+from news_scraper import MineriaNewsScraper
 
 # Importar scrapers solo si hay APIFY_TOKEN (para Streamlit Cloud)
 SCRAPING_ENABLED = bool(os.getenv('APIFY_TOKEN'))
@@ -82,6 +83,7 @@ st.markdown("""
 # Inicializar componentes
 db = SocialDatabase()
 analyzer = ImpactAnalyzer()
+news_scraper = MineriaNewsScraper()
 
 # Sidebar
 with st.sidebar:
@@ -103,6 +105,7 @@ with st.sidebar:
         "Navegación",
         [
             "Dashboard Principal",
+            "Datos de Medios",
             "Análisis por Plataforma",
             "Publicaciones",
             "Convocatorias",
@@ -369,6 +372,183 @@ if page == "Dashboard Principal":
         st.plotly_chart(fig_accounts, use_container_width=True)
     else:
         st.info("No hay datos de cuentas disponibles")
+
+
+# ========== PÁGINA: DATOS DE MEDIOS ==========
+elif page == "Datos de Medios":
+    st.header("Datos de Medios de Comunicación")
+
+    st.markdown("""
+    <div style="background-color: #e7f3ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #1f4e79;">
+        <p style="margin: 0; color: #333;">
+            Monitoreo de noticias sobre minería en medios de comunicación argentinos.
+            Las noticias se obtienen de Google News y se actualizan periodicamente.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Botón para actualizar manualmente
+    col_btn, col_info = st.columns([1, 3])
+    with col_btn:
+        if st.button("Actualizar Noticias", type="primary", use_container_width=True):
+            with st.spinner("Buscando nuevas noticias sobre minería..."):
+                summary = news_scraper.run()
+                if 'error' in summary:
+                    st.warning(f"Scraping limitado: {summary['error']}")
+                else:
+                    st.success(f"Top Stories: {summary['new_top_stories']} nuevas | Noticias: {summary['new_news']} nuevas")
+                st.rerun()
+
+    with col_info:
+        st.info("Las noticias se actualizan automáticamente. Puedes hacer clic en el botón para forzar una actualización manual.")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Obtener datos
+    top_stories = news_scraper.get_top_stories(limit=50)
+    all_news = news_scraper.get_all_news(limit=100)
+
+    # ========== SECCIÓN 1: TOP STORIES ==========
+    st.subheader("Noticias destacadas en Google Top Stories")
+
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+                padding: 20px;
+                border-radius: 10px;
+                border-left: 5px solid #654321;
+                margin-bottom: 20px;">
+        <p style="color: white;
+                  font-size: 16px;
+                  margin: 0;
+                  font-weight: 500;">
+            <strong>Top Stories</strong> es un espacio dedicado que Google muestra cuando identifica que ciertos contenidos
+            están recibiendo alto tráfico actualmente. Se buscan noticias con las palabras clave: "minería", "mineros",
+            "proyectos mineros" y "ley de glaciares".
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if top_stories:
+        df_top = pd.DataFrame(top_stories)
+
+        # Mostrar tabla
+        df_top_display = df_top[['title', 'source', 'link']].copy()
+        df_top_display.columns = ['Título', 'Medio', 'URL']
+
+        st.dataframe(
+            df_top_display,
+            column_config={
+                "URL": st.column_config.LinkColumn("URL"),
+                "Título": st.column_config.TextColumn("Título", width="large"),
+                "Medio": st.column_config.TextColumn("Medio", width="medium")
+            },
+            hide_index=True,
+            use_container_width=True
+        )
+
+        # Gráfico de distribución por medio
+        st.subheader("Medios que más hablan de minería en Top Stories")
+
+        media_stats = db.get_media_stats('top_stories')
+
+        if media_stats:
+            df_media = pd.DataFrame(media_stats)
+
+            col_chart, col_stats = st.columns([2, 1])
+
+            with col_chart:
+                fig = px.pie(
+                    df_media,
+                    values='count',
+                    names='source',
+                    title='Distribución de Top Stories por Medio'
+                )
+                fig.update_traces(textposition='inside', textinfo='percent+label')
+                st.plotly_chart(fig, use_container_width=True)
+
+            with col_stats:
+                st.metric("Total Top Stories", len(df_top))
+                st.metric("Medios Únicos", df_top['source'].nunique())
+        else:
+            st.info("No hay suficientes datos para mostrar estadísticas de medios")
+    else:
+        st.info("No hay Top Stories almacenadas. Haz clic en 'Actualizar Noticias' para comenzar.")
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    # ========== SECCIÓN 2: TODAS LAS NOTICIAS (ÚLTIMAS 48 HORAS) ==========
+    st.subheader("Noticias sobre minería (últimas 48 horas)")
+
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+                padding: 20px;
+                border-radius: 10px;
+                border-left: 5px solid #654321;
+                margin-bottom: 20px;">
+        <p style="color: white;
+                  font-size: 16px;
+                  margin: 0;
+                  font-weight: 500;">
+            Aquí se recopilan todas las noticias publicadas en las últimas 48 horas que hablan de minería
+            en sus títulos, independientemente si Google las destaca o no.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if all_news:
+        df_news = pd.DataFrame(all_news)
+
+        # Filtro por medio
+        all_sources = ["Todos"] + sorted(df_news['source'].dropna().unique().tolist())
+        selected_source = st.selectbox("Filtrar por medio:", all_sources)
+
+        if selected_source != "Todos":
+            df_news_filtered = df_news[df_news['source'] == selected_source]
+        else:
+            df_news_filtered = df_news
+
+        # Mostrar tabla
+        df_news_display = df_news_filtered[['title', 'source', 'link']].copy()
+        df_news_display.columns = ['Título', 'Medio', 'URL']
+
+        st.dataframe(
+            df_news_display,
+            column_config={
+                "URL": st.column_config.LinkColumn("URL"),
+                "Título": st.column_config.TextColumn("Título", width="large"),
+                "Medio": st.column_config.TextColumn("Medio", width="medium")
+            },
+            hide_index=True,
+            use_container_width=True
+        )
+
+        # Gráfico de distribución por medio
+        st.subheader("Medios que más hablan de minería en general")
+
+        media_stats_news = db.get_media_stats('news_results')
+
+        if media_stats_news:
+            df_media_news = pd.DataFrame(media_stats_news)
+
+            col_chart2, col_stats2 = st.columns([2, 1])
+
+            with col_chart2:
+                fig2 = px.pie(
+                    df_media_news,
+                    values='count',
+                    names='source',
+                    title='Distribución de Noticias por Medio (últimas 48 horas)'
+                )
+                fig2.update_traces(textposition='inside', textinfo='percent+label')
+                st.plotly_chart(fig2, use_container_width=True)
+
+            with col_stats2:
+                st.metric("Total Noticias (48h)", len(df_news_filtered))
+                st.metric("Medios Únicos", df_news_filtered['source'].nunique())
+        else:
+            st.info("No hay suficientes datos para mostrar estadísticas de medios")
+    else:
+        st.info("No hay noticias almacenadas. Haz clic en 'Actualizar Noticias' para comenzar.")
 
 
 # ========== PÁGINA: ANÁLISIS POR PLATAFORMA ==========
