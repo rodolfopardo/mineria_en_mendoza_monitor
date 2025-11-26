@@ -30,6 +30,7 @@ class MineriaNewsScraper:
             "minería Mendoza",
             "mineros Mendoza",
             "proyectos mineros Mendoza",
+            "San Jorge Mendoza minería",
             "ley de glaciares minería"
         ]
 
