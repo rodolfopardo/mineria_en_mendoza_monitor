@@ -405,7 +405,7 @@ elif page == "Datos de Medios":
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Obtener datos
-    top_stories = news_scraper.get_top_stories(limit=50)
+    top_stories = news_scraper.get_top_stories(limit=10)
     all_news = news_scraper.get_all_news(limit=100)
 
     # ========== SECCIÓN 1: TOP STORIES ==========
