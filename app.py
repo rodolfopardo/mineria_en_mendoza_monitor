@@ -104,6 +104,7 @@ with st.sidebar:
     page = st.radio(
         "Navegación",
         [
+            "En Vivo",
             "Dashboard Principal",
             "Datos de Medios",
             "Análisis por Plataforma",
@@ -147,8 +148,101 @@ with st.sidebar:
     st.caption(f"Última actualización: {datetime.now().strftime('%d/%m/%Y %H:%M')}")
 
 
+# ========== PÁGINA: EN VIVO ==========
+if page == "En Vivo":
+    st.markdown('<p class="main-header">🔴 Sesión en Vivo - Legislatura de Mendoza</p>', unsafe_allow_html=True)
+    st.markdown('<p class="sub-header">Votación del Proyecto San Jorge y paquete de leyes mineras</p>', unsafe_allow_html=True)
+    st.markdown("---")
+
+    # Alerta de transmisión en vivo
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                text-align: center;">
+        <h2 style="color: white; margin: 0;">
+            🔴 TRANSMISIÓN EN VIVO
+        </h2>
+        <p style="color: white; margin: 10px 0 0 0; font-size: 18px;">
+            Cámara de Diputados de Mendoza - 26 de Noviembre 2025
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Video de YouTube embebido
+    st.markdown("""
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 10px;">
+        <iframe
+            src="https://www.youtube.com/embed/OvG4zIP7Abc?autoplay=1&mute=1"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px;"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Información sobre la sesión
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        ### 📋 Temas en debate
+
+        1. **PSJ Cobre Mendocino (San Jorge)**
+           - Declaración de Impacto Ambiental
+           - Proyecto de cobre en Uspallata
+
+        2. **Regalías Mineras**
+           - Nueva distribución de regalías
+
+        3. **Fondo de Compensación Ambiental**
+           - Creación de fondo para comunidades
+
+        4. **MDMO II (Malargüe)**
+           - Segundo proyecto minero en Malargüe
+        """)
+
+    with col2:
+        st.markdown("""
+        ### 📊 Estado de la votación
+
+        Se espera una votación favorable del oficialismo (Cambia Mendoza) con apoyo de algunos bloques opositores.
+
+        **Bloques confirmados a favor:**
+        - Cambia Mendoza
+        - Parte del PJ
+
+        **Bloques en contra:**
+        - Frente de Izquierda
+        - Sectores ambientalistas
+        """)
+
+    st.markdown("---")
+
+    # Contexto
+    st.markdown("""
+    ### 🗺️ Contexto
+
+    Esta es una sesión histórica para Mendoza. Después de 14 años del rechazo inicial al proyecto San Jorge (2011),
+    la Legislatura vuelve a debatir la aprobación de la Declaración de Impacto Ambiental del proyecto minero
+    ahora rebautizado como "PSJ Cobre Mendocino".
+
+    El proyecto prevé la extracción de cobre en la zona de Uspallata, cerca del límite con Chile.
+    """)
+
+    # Link al video original
+    st.markdown("""
+    ---
+    📺 **Ver en YouTube:** [Sesión en vivo - Legislatura de Mendoza](https://www.youtube.com/live/OvG4zIP7Abc)
+    """)
+
+
 # ========== PÁGINA: DASHBOARD PRINCIPAL ==========
-if page == "Dashboard Principal":
+elif page == "Dashboard Principal":
     st.markdown('<p class="main-header">📊 Monitor de Redes Sociales</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Análisis de impacto y riesgo sociopolítico - Minería en Mendoza</p>', unsafe_allow_html=True)
     st.markdown("---")
