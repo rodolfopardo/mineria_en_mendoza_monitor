@@ -52,34 +52,19 @@ class YouTubeTranscriber:
         print(f"Obteniendo transcripción para video: {video_id}")
 
         try:
-            # Intentar obtener subtítulos en español
-            transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+            # API v1.x usa fetch() directamente
+            ytt_api = YouTubeTranscriptApi()
+            transcript_data = ytt_api.fetch(video_id, languages=[language, 'en'])
 
-            # Buscar subtítulos manuales o automáticos en español
-            transcript = None
-            try:
-                transcript = transcript_list.find_transcript([language])
-            except:
-                # Si no hay en español, buscar automáticos y traducir
-                try:
-                    transcript = transcript_list.find_generated_transcript(['es', 'en'])
-                except:
-                    # Usar el primero disponible
-                    for t in transcript_list:
-                        transcript = t
-                        break
-
-            if transcript:
-                transcript_data = transcript.fetch()
-
+            if transcript_data:
                 # Formatear transcripción
                 full_text = ""
                 segments = []
 
                 for entry in transcript_data:
-                    start_time = entry['start']
-                    duration = entry.get('duration', 0)
-                    text = entry['text']
+                    start_time = entry.start
+                    duration = entry.duration
+                    text = entry.text
 
                     # Formato timestamp
                     minutes = int(start_time // 60)
@@ -98,12 +83,14 @@ class YouTubeTranscriber:
                 return {
                     'video_id': video_id,
                     'video_url': video_url,
-                    'language': transcript.language,
-                    'is_generated': transcript.is_generated,
+                    'language': language,
+                    'is_generated': True,
                     'segments': segments,
                     'full_text': full_text,
                     'fetched_at': datetime.now().isoformat()
                 }
+
+            return None
 
         except Exception as e:
             print(f"Error obteniendo transcripción: {e}")
