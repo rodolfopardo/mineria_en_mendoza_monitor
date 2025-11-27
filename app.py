@@ -150,19 +150,19 @@ with st.sidebar:
 
 # ========== PÁGINA: EN VIVO ==========
 if page == "En Vivo":
-    st.markdown('<p class="main-header">🔴 Sesión en Vivo - Legislatura de Mendoza</p>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Votación del Proyecto San Jorge y paquete de leyes mineras</p>', unsafe_allow_html=True)
+    st.markdown('<p class="main-header">📺 Sesión Legislativa - Votación San Jorge</p>', unsafe_allow_html=True)
+    st.markdown('<p class="sub-header">Sesión Histórica: Aprobación del Proyecto PSJ Cobre Mendocino - 26 de Noviembre 2025</p>', unsafe_allow_html=True)
     st.markdown("---")
 
-    # Alerta de transmisión en vivo
+    # Banner de sesión finalizada
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    <div style="background: linear-gradient(135deg, #28a745 0%, #218838 100%);
                 padding: 20px;
                 border-radius: 10px;
                 margin-bottom: 20px;
                 text-align: center;">
         <h2 style="color: white; margin: 0;">
-            🔴 TRANSMISIÓN EN VIVO
+            ✅ SESIÓN FINALIZADA
         </h2>
         <p style="color: white; margin: 10px 0 0 0; font-size: 18px;">
             Cámara de Diputados de Mendoza - 26 de Noviembre 2025
@@ -174,7 +174,7 @@ if page == "En Vivo":
     st.markdown("""
     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 10px;">
         <iframe
-            src="https://www.youtube.com/embed/OvG4zIP7Abc?autoplay=1&mute=1"
+            src="https://www.youtube.com/embed/OvG4zIP7Abc"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px;"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -185,59 +185,174 @@ if page == "En Vivo":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Información sobre la sesión
-    col1, col2 = st.columns(2)
+    # Tabs para organizar contenido
+    tab1, tab2, tab3 = st.tabs(["📊 Análisis Textual", "📜 Transcripción", "📋 Contexto"])
 
-    with col1:
+    with tab1:
+        st.subheader("Análisis de la Sesión Legislativa")
+
+        # Métricas principales
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Duración", "~5 horas")
+        with col2:
+            st.metric("Segmentos", "7,781")
+        with col3:
+            st.metric("Palabras", "45,027")
+        with col4:
+            st.metric("Resultado", "APROBADO")
+
+        st.markdown("---")
+
+        # Frecuencia de términos
+        st.subheader("Frecuencia de Términos Clave")
+
+        # Datos del análisis
+        terminos_data = {
+            'Término': ['minero/a', 'ambiental', 'minería', 'desarrollo', 'impacto',
+                       'aprobado', 'agua', 'regalías', 'cobre', 'San Jorge',
+                       'CONICET', 'trabajo', 'inversión', '7722', 'empleo',
+                       'glaciares', 'científico', 'comunidad', 'contaminación'],
+            'Menciones': [164, 160, 108, 83, 67, 64, 56, 52, 47, 36,
+                         34, 31, 28, 20, 20, 17, 14, 13, 7]
+        }
+        df_terminos = pd.DataFrame(terminos_data)
+
+        col_chart, col_table = st.columns([2, 1])
+
+        with col_chart:
+            fig = px.bar(
+                df_terminos.head(15),
+                x='Menciones',
+                y='Término',
+                orientation='h',
+                title='Top 15 Términos más mencionados',
+                color='Menciones',
+                color_continuous_scale='Blues'
+            )
+            fig.update_layout(yaxis={'categoryorder': 'total ascending'})
+            st.plotly_chart(fig, use_container_width=True)
+
+        with col_table:
+            st.dataframe(df_terminos, hide_index=True, use_container_width=True)
+
+        st.markdown("---")
+
+        # Análisis de narrativas
+        st.subheader("Narrativas Identificadas")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown("""
+            **🟢 Narrativa Pro-Minería:**
+            - Desarrollo económico (83 menciones)
+            - Inversión (28 menciones)
+            - Empleo/Trabajo (51 menciones)
+            - Regalías para comunidades (52 menciones)
+            """)
+
+        with col2:
+            st.markdown("""
+            **🔴 Narrativa Ambientalista:**
+            - Agua (56 menciones)
+            - Impacto ambiental (67 menciones)
+            - CONICET/Científico (48 menciones)
+            - Glaciares (17 menciones)
+            - Ley 7722 (20 menciones)
+            """)
+
+    with tab2:
+        st.subheader("Transcripción Completa")
+
+        st.info("La transcripción fue generada automáticamente usando subtítulos de YouTube.")
+
+        # Leer transcripción
+        transcript_path = os.path.join(os.path.dirname(__file__), "transcripts", "transcript_OvG4zIP7Abc_20251127_104147.txt")
+
+        if os.path.exists(transcript_path):
+            with open(transcript_path, 'r', encoding='utf-8') as f:
+                transcript_text = f.read()
+
+            # Botón de descarga
+            st.download_button(
+                label="📥 Descargar Transcripción Completa (TXT)",
+                data=transcript_text,
+                file_name="transcripcion_sesion_san_jorge_26nov2025.txt",
+                mime="text/plain"
+            )
+
+            st.markdown("---")
+
+            # Mostrar preview
+            st.markdown("**Vista previa (primeras 200 líneas):**")
+            lines = transcript_text.split('\n')[:200]
+            st.text_area(
+                "Transcripción",
+                value='\n'.join(lines),
+                height=400,
+                disabled=True
+            )
+        else:
+            st.warning("Transcripción no disponible todavía.")
+
+    with tab3:
+        st.subheader("Contexto de la Sesión")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown("""
+            ### 📋 Temas tratados
+
+            1. **PSJ Cobre Mendocino (San Jorge)**
+               - Declaración de Impacto Ambiental
+               - Proyecto de cobre en Uspallata
+
+            2. **Regalías Mineras**
+               - Nueva distribución de regalías
+
+            3. **Fondo de Compensación Ambiental**
+               - Creación de fondo para comunidades
+
+            4. **MDMO II (Malargüe)**
+               - Segundo proyecto minero en Malargüe
+            """)
+
+        with col2:
+            st.markdown("""
+            ### 📊 Resultado de la votación
+
+            **PSJ Cobre Mendocino: APROBADO**
+
+            **Bloques a favor:**
+            - Cambia Mendoza
+            - Parte del PJ
+
+            **Bloques en contra:**
+            - Frente de Izquierda
+            - Sectores ambientalistas
+            """)
+
+        st.markdown("---")
+
         st.markdown("""
-        ### 📋 Temas en debate
+        ### 🗺️ Contexto Histórico
 
-        1. **PSJ Cobre Mendocino (San Jorge)**
-           - Declaración de Impacto Ambiental
-           - Proyecto de cobre en Uspallata
+        Esta fue una sesión histórica para Mendoza. Después de **14 años** del rechazo inicial al proyecto San Jorge (2011),
+        la Legislatura aprobó la Declaración de Impacto Ambiental del proyecto minero ahora rebautizado como
+        **"PSJ Cobre Mendocino"**.
 
-        2. **Regalías Mineras**
-           - Nueva distribución de regalías
+        El proyecto prevé la extracción de cobre en la zona de Uspallata, cerca del límite con Chile.
 
-        3. **Fondo de Compensación Ambiental**
-           - Creación de fondo para comunidades
-
-        4. **MDMO II (Malargüe)**
-           - Segundo proyecto minero en Malargüe
+        El debate incluyó referencias al informe del **CONICET** presentado el día anterior, que cuestionaba
+        aspectos técnicos del proyecto.
         """)
-
-    with col2:
-        st.markdown("""
-        ### 📊 Estado de la votación
-
-        Se espera una votación favorable del oficialismo (Cambia Mendoza) con apoyo de algunos bloques opositores.
-
-        **Bloques confirmados a favor:**
-        - Cambia Mendoza
-        - Parte del PJ
-
-        **Bloques en contra:**
-        - Frente de Izquierda
-        - Sectores ambientalistas
-        """)
-
-    st.markdown("---")
-
-    # Contexto
-    st.markdown("""
-    ### 🗺️ Contexto
-
-    Esta es una sesión histórica para Mendoza. Después de 14 años del rechazo inicial al proyecto San Jorge (2011),
-    la Legislatura vuelve a debatir la aprobación de la Declaración de Impacto Ambiental del proyecto minero
-    ahora rebautizado como "PSJ Cobre Mendocino".
-
-    El proyecto prevé la extracción de cobre en la zona de Uspallata, cerca del límite con Chile.
-    """)
 
     # Link al video original
     st.markdown("""
     ---
-    📺 **Ver en YouTube:** [Sesión en vivo - Legislatura de Mendoza](https://www.youtube.com/live/OvG4zIP7Abc)
+    📺 **Ver en YouTube:** [Sesión completa - Legislatura de Mendoza](https://www.youtube.com/watch?v=OvG4zIP7Abc)
     """)
 
 
