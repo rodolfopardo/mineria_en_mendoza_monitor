@@ -204,6 +204,42 @@ if page == "En Vivo":
 
         st.markdown("---")
 
+        # Diputados que más participaron
+        st.subheader("Diputados con más intervenciones")
+
+        diputados_data = {
+            'Diputado/a': ['Ramón', 'Gómez', 'Fugazoto', 'Cogo', 'Tomas', 'Morán', 'Lisana', 'López', 'Ambrosini', 'Césare'],
+            'Menciones': [14, 10, 8, 6, 5, 4, 4, 4, 2, 1],
+            'Posición': ['En contra', 'A favor', 'A favor', 'A favor', 'A favor', 'En contra', 'A favor', 'A favor', 'A favor', 'A favor']
+        }
+        df_diputados = pd.DataFrame(diputados_data)
+
+        col_dip, col_bloq = st.columns(2)
+
+        with col_dip:
+            fig_dip = px.bar(
+                df_diputados,
+                x='Menciones',
+                y='Diputado/a',
+                orientation='h',
+                color='Posición',
+                color_discrete_map={'A favor': '#28a745', 'En contra': '#dc3545'},
+                title='Diputados más activos en el debate'
+            )
+            fig_dip.update_layout(yaxis={'categoryorder': 'total ascending'})
+            st.plotly_chart(fig_dip, use_container_width=True)
+
+        with col_bloq:
+            st.markdown("### Bloques Políticos")
+            bloques_data = {
+                'Bloque': ['PJ/Peronismo', 'Oposición', 'Oficialismo', 'UCR/Radical', 'PRO', 'Partido Verde'],
+                'Menciones': [6, 6, 4, 3, 2, 1]
+            }
+            df_bloques = pd.DataFrame(bloques_data)
+            st.dataframe(df_bloques, hide_index=True, use_container_width=True)
+
+        st.markdown("---")
+
         # Frecuencia de términos
         st.subheader("Frecuencia de Términos Clave")
 
@@ -235,6 +271,41 @@ if page == "En Vivo":
 
         with col_table:
             st.dataframe(df_terminos, hide_index=True, use_container_width=True)
+
+        st.markdown("---")
+
+        # Argumentos a favor y en contra
+        st.subheader("Argumentos del Debate")
+
+        col_favor, col_contra = st.columns(2)
+
+        with col_favor:
+            st.markdown("""
+            <div style="background-color: #d4edda; padding: 15px; border-radius: 10px; border-left: 4px solid #28a745;">
+                <h4 style="color: #155724; margin-top: 0;">🟢 Argumentos A FAVOR</h4>
+                <ul style="color: #155724;">
+                    <li><strong>Regalías</strong>: 15 menciones</li>
+                    <li><strong>Desarrollo económico</strong>: 11 menciones</li>
+                    <li><strong>Generación de empleo</strong>: 4 menciones</li>
+                    <li><strong>Controles ambientales</strong>: 2 menciones</li>
+                    <li><strong>Tecnología moderna</strong>: 1 mención</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_contra:
+            st.markdown("""
+            <div style="background-color: #f8d7da; padding: 15px; border-radius: 10px; border-left: 4px solid #dc3545;">
+                <h4 style="color: #721c24; margin-top: 0;">🔴 Argumentos EN CONTRA</h4>
+                <ul style="color: #721c24;">
+                    <li><strong>Ley 7722</strong>: 8 menciones</li>
+                    <li><strong>Daño ambiental</strong>: 5 menciones</li>
+                    <li><strong>Sustancias tóxicas</strong>: 2 menciones</li>
+                    <li><strong>Ambiente periglacial</strong>: 1 mención</li>
+                    <li><strong>Informe CONICET</strong>: citado múltiples veces</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
 
         st.markdown("---")
 
