@@ -91,9 +91,10 @@ with st.sidebar:
     st.markdown("""
     <div style="text-align: center; margin-bottom: 10px;">
         <a href="https://www.identidadcentral.com/" target="_blank">
-            <img src="https://www.identidadcentral.com/logo.jpeg"
-                 alt="Identidad Central" width="180">
+            <img src="https://www.identidadcentral.com/favicon.png"
+                 alt="Identidad Central" width="80" style="border-radius: 50%;">
         </a>
+        <p style="margin: 5px 0 0 0; font-size: 14px; font-weight: bold; color: #1f4e79;">Identidad Central</p>
     </div>
     """, unsafe_allow_html=True)
     st.title("Monitor Social")
