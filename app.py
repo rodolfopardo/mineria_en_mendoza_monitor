@@ -823,45 +823,64 @@ elif page == "Diputados en Twitter":
 
     st.markdown("---")
 
-    # Tweets de la base de datos filtrados por estos usuarios
-    st.subheader("Últimos Tweets Capturados")
+    # Tweets que mencionan a los diputados
+    st.subheader("Tweets sobre los Diputados")
 
-    # Buscar tweets de estos usuarios en la DB
-    diputados_usernames = ['joseluisramonok', 'efugazzotto', 'lizanagaby', 'rolandoscanio',
-                           'germangomezmza', 'enrique_thomas', 'gustavocairomza']
+    # Buscar tweets que mencionen a los diputados por nombre o username
+    diputados_keywords = [
+        ('José Luis Ramón', ['joseluisramonok', 'jose luis ramon', 'ramón']),
+        ('Emanuel Fugazzotto', ['efugazzotto', 'fugazzotto']),
+        ('Gabriela Lizana', ['lizanagaby', 'lizana']),
+        ('Rolando Scanio', ['rolandoscanio', 'scanio']),
+        ('Germán Gómez', ['germangomezmza', 'german gomez', 'germán gómez']),
+        ('Enrique Thomas', ['enrique_thomas', 'enrique thomas']),
+        ('Gustavo Cairo', ['gustavocairomza', 'gustavo cairo', 'cairo'])
+    ]
 
-    posts_twitter = db.get_posts(platform='twitter', days=period_days, limit=500, only_relevant=False)
+    posts_twitter = db.get_posts(platform='twitter', days=90, limit=1000, only_relevant=False)
 
     if posts_twitter:
         df_tw = pd.DataFrame(posts_twitter)
-        # Filtrar solo los de diputados (case insensitive)
-        df_tw['author_lower'] = df_tw['author_username'].str.lower()
-        df_diputados_posts = df_tw[df_tw['author_lower'].isin(diputados_usernames)]
+        df_tw['content_lower'] = df_tw['content'].str.lower().fillna('')
 
-        if not df_diputados_posts.empty:
-            st.success(f"Se encontraron {len(df_diputados_posts)} tweets de diputados")
+        # Buscar tweets que mencionen a cada diputado
+        tweets_encontrados = []
+        for nombre, keywords in diputados_keywords:
+            for kw in keywords:
+                mask = df_tw['content_lower'].str.contains(kw, na=False)
+                matches = df_tw[mask].head(3)
+                for _, row in matches.iterrows():
+                    if row['id'] not in [t['id'] for t in tweets_encontrados]:
+                        tweets_encontrados.append({
+                            'id': row['id'],
+                            'diputado': nombre,
+                            'content': row['content'],
+                            'likes': row.get('likes', 0) or 0,
+                            'shares': row.get('shares', 0) or 0,
+                            'post_url': row.get('post_url', '')
+                        })
 
-            for _, row in df_diputados_posts.head(20).iterrows():
+        if tweets_encontrados:
+            st.success(f"Se encontraron {len(tweets_encontrados)} tweets que mencionan a los diputados")
+
+            # Ordenar por engagement
+            tweets_ordenados = sorted(tweets_encontrados, key=lambda x: x['likes'] + x['shares'], reverse=True)
+
+            for tweet in tweets_ordenados[:15]:
                 with st.container():
-                    col_user, col_content = st.columns([1, 4])
-                    with col_user:
-                        st.markdown(f"**@{row['author_username']}**")
-                        st.caption(f"❤️ {row.get('likes', 0):,} | 🔄 {row.get('shares', 0):,}")
-                    with col_content:
-                        st.write(row.get('content', '')[:300] + '...' if len(str(row.get('content', ''))) > 300 else row.get('content', ''))
-                        if row.get('post_url'):
-                            st.markdown(f"[Ver tweet]({row['post_url']})")
+                    st.markdown(f"**Menciona a: {tweet['diputado']}**")
+                    st.write(tweet['content'][:350] + '...' if len(str(tweet['content'])) > 350 else tweet['content'])
+                    col_stats, col_link = st.columns([3, 1])
+                    with col_stats:
+                        st.caption(f"❤️ {tweet['likes']:,} likes | 🔄 {tweet['shares']:,} retweets")
+                    with col_link:
+                        if tweet['post_url']:
+                            st.markdown(f"[Ver tweet]({tweet['post_url']})")
                     st.markdown("---")
         else:
-            st.warning("No se encontraron tweets de estos diputados en la base de datos.")
-            st.info("""
-            **Para capturar tweets de los diputados:**
-            1. Ve a la página de Configuración
-            2. Agrega las cuentas de Twitter de los diputados
-            3. Ejecuta el scraper de Twitter
-            """)
+            st.info("No se encontraron tweets que mencionen a estos diputados en el período seleccionado.")
     else:
-        st.info("No hay tweets en la base de datos. Ejecuta el scraper de Twitter primero.")
+        st.info("No hay tweets en la base de datos.")
 
     st.markdown("---")
 
