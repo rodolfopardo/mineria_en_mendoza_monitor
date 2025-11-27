@@ -384,7 +384,8 @@ class SocialDatabase:
 
         where_clauses = [f"post_date >= '{date_filter.isoformat()}'"]
         if only_relevant:
-            where_clauses.append("is_mendoza_relevant = 1")
+            # Twitter no tiene el campo marcado, así que lo incluimos siempre
+            where_clauses.append("(is_mendoza_relevant = 1 OR is_mendoza_relevant IS NULL OR platform = 'twitter')")
 
         where_sql = "WHERE " + " AND ".join(where_clauses)
 
@@ -409,7 +410,12 @@ class SocialDatabase:
         cursor = conn.cursor()
 
         date_filter = datetime.now() - timedelta(days=days)
-        relevance_filter = "AND is_mendoza_relevant = 1" if only_relevant else ""
+
+        # Filtro de relevancia: Twitter no tiene el campo marcado, así que lo excluimos del filtro
+        if only_relevant:
+            relevance_filter = "AND (is_mendoza_relevant = 1 OR is_mendoza_relevant IS NULL OR platform = 'twitter')"
+        else:
+            relevance_filter = ""
 
         # Usar post_date para filtrar por fecha real de publicación
         cursor.execute(f'''
