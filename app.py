@@ -29,8 +29,180 @@ st.set_page_config(
     page_title="Monitor Social - Minería Mendoza",
     page_icon="📊",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
+
+# ========== SISTEMA DE AUTENTICACIÓN ==========
+def check_password():
+    """Verifica las credenciales del usuario"""
+
+    def login_form():
+        """Muestra el formulario de login con estilo de Identidad Central"""
+
+        # CSS personalizado para la página de login
+        st.markdown("""
+        <style>
+            .stApp {
+                background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+            }
+            .login-container {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 40px;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 20px;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            }
+            .login-header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .login-title {
+                font-size: 1.8rem;
+                font-weight: bold;
+                background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin: 15px 0 5px 0;
+            }
+            .login-subtitle {
+                color: #64748b;
+                font-size: 0.95rem;
+            }
+            .feature-box {
+                background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+                padding: 25px;
+                border-radius: 15px;
+                margin: 30px 0;
+                color: white;
+            }
+            .feature-title {
+                font-size: 1.1rem;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #06b6d4;
+            }
+            .feature-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            .feature-list li {
+                padding: 8px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                font-size: 0.9rem;
+            }
+            .feature-list li:last-child {
+                border-bottom: none;
+            }
+            .feature-list li::before {
+                content: "✓ ";
+                color: #06b6d4;
+                font-weight: bold;
+            }
+            .cta-link {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 12px 25px;
+                background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+                color: white !important;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: bold;
+                transition: transform 0.2s;
+            }
+            .cta-link:hover {
+                transform: scale(1.05);
+            }
+            .footer-text {
+                text-align: center;
+                color: rgba(255,255,255,0.6);
+                font-size: 0.8rem;
+                margin-top: 30px;
+            }
+            /* Ocultar elementos de Streamlit en login */
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+        </style>
+        """, unsafe_allow_html=True)
+
+        # Contenedor principal centrado
+        col1, col2, col3 = st.columns([1, 2, 1])
+
+        with col2:
+            st.markdown("<br><br>", unsafe_allow_html=True)
+
+            # Logo y título
+            st.markdown("""
+            <div class="login-header">
+                <img src="https://www.identidadcentral.com/favicon.png" width="100" style="border-radius: 50%; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);">
+                <h1 class="login-title">Monitor Social</h1>
+                <p class="login-subtitle">Plataforma de Inteligencia en Redes Sociales y Medios</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Formulario de login
+            with st.form("login_form"):
+                st.markdown("#### Acceso a la plataforma")
+                username = st.text_input("Usuario", placeholder="Ingrese su usuario")
+                password = st.text_input("Contraseña", type="password", placeholder="Ingrese su contraseña")
+                submitted = st.form_submit_button("Ingresar", use_container_width=True, type="primary")
+
+                if submitted:
+                    if username == "identidadcentral" and password == "hipo":
+                        st.session_state["authenticated"] = True
+                        st.rerun()
+                    else:
+                        st.error("Usuario o contraseña incorrectos")
+
+            # Caja de características
+            st.markdown("""
+            <div class="feature-box">
+                <div class="feature-title">¿Qué ofrece esta plataforma?</div>
+                <ul class="feature-list">
+                    <li>Monitoreo en tiempo real de redes sociales (Instagram, Facebook, TikTok, Twitter)</li>
+                    <li>Análisis de sentimiento y detección de narrativas</li>
+                    <li>Seguimiento de medios de comunicación y Google News</li>
+                    <li>Evaluación de riesgo sociopolítico</li>
+                    <li>Detección de convocatorias a movilización</li>
+                    <li>Identificación de cuentas e influencers clave</li>
+                    <li>Dashboards interactivos con métricas de impacto</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # CTA
+            st.markdown("""
+            <div style="text-align: center;">
+                <p style="color: white; margin-bottom: 10px;">¿Necesitás un monitor para tu organización?</p>
+                <a href="https://www.identidadcentral.com/#contacto" target="_blank" class="cta-link">
+                    Contactar a Identidad Central
+                </a>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Footer
+            st.markdown("""
+            <p class="footer-text">
+                Desarrollado por <a href="https://www.identidadcentral.com" target="_blank" style="color: #06b6d4;">Identidad Central</a><br>
+                Consultora de Investigación de Opinión Pública y Gestión de Identidad Digital
+            </p>
+            """, unsafe_allow_html=True)
+
+    # Verificar si ya está autenticado
+    if "authenticated" not in st.session_state:
+        st.session_state["authenticated"] = False
+
+    if not st.session_state["authenticated"]:
+        login_form()
+        return False
+
+    return True
+
+# Verificar autenticación antes de mostrar el dashboard
+if not check_password():
+    st.stop()
 
 # CSS personalizado
 st.markdown("""
