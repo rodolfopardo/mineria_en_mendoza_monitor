@@ -138,7 +138,11 @@ def check_password():
             <div class="login-header">
                 <img src="https://www.identidadcentral.com/favicon.png" width="100" style="border-radius: 50%; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);">
                 <h1 class="login-title">Monitor Social</h1>
-                <p class="login-subtitle">Plataforma de Inteligencia en Redes Sociales y Medios</p>
+                <p class="login-subtitle">Minería en Mendoza</p>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">
+                    Plataforma de inteligencia para el seguimiento y análisis<br>
+                    del debate público sobre minería en la provincia de Mendoza
+                </p>
             </div>
             """, unsafe_allow_html=True)
 
@@ -161,13 +165,13 @@ def check_password():
             <div class="feature-box">
                 <div class="feature-title">¿Qué ofrece esta plataforma?</div>
                 <ul class="feature-list">
-                    <li>Monitoreo en tiempo real de redes sociales (Instagram, Facebook, TikTok, Twitter)</li>
-                    <li>Análisis de sentimiento y detección de narrativas</li>
-                    <li>Seguimiento de medios de comunicación y Google News</li>
-                    <li>Evaluación de riesgo sociopolítico</li>
-                    <li>Detección de convocatorias a movilización</li>
-                    <li>Identificación de cuentas e influencers clave</li>
-                    <li>Dashboards interactivos con métricas de impacto</li>
+                    <li>Monitoreo en tiempo real del debate minero en redes sociales</li>
+                    <li>Análisis de narrativas a favor y en contra de la minería</li>
+                    <li>Seguimiento de medios de comunicación y noticias sobre proyectos mineros</li>
+                    <li>Evaluación de riesgo sociopolítico para el sector</li>
+                    <li>Detección de convocatorias a movilización antiminera</li>
+                    <li>Identificación de actores clave e influencers en el debate</li>
+                    <li>Cobertura de sesiones legislativas y votaciones sobre minería</li>
                 </ul>
             </div>
             """, unsafe_allow_html=True)
