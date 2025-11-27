@@ -208,9 +208,25 @@ if page == "En Vivo":
         st.subheader("Diputados con más intervenciones")
 
         diputados_data = {
-            'Diputado/a': ['Ramón', 'Gómez', 'Fugazoto', 'Cogo', 'Tomas', 'Morán', 'Lisana', 'López', 'Ambrosini', 'Césare'],
-            'Menciones': [14, 10, 8, 6, 5, 4, 4, 4, 2, 1],
-            'Posición': ['En contra', 'A favor', 'En contra', 'A favor', 'A favor', 'En contra', 'A favor', 'A favor', 'A favor', 'A favor']
+            'Diputado/a': [
+                'José Luis Ramón', 'Germán Gómez', 'Emanuel Fugazzotto', 'Jimena Cogo',
+                'Enrique Thomas', 'Valentina Morán', 'Gabriela Lizana', 'Alberto López',
+                'Rolando Scanio', 'Érica Pulido', 'Jorge A. Difonso', 'Cintia Gómez',
+                'María E. de Marchi', 'Franco Ambrosini', 'Gustavo Cairo', 'Mauricio Di Césare'
+            ],
+            'Bloque': [
+                'Consumidores y Ciudadanos', 'Partido Justicialista', 'Partido Verde', 'PRO',
+                'PRO Libertad', 'Partido Justicialista', 'Renovador Mendoza', 'UCR',
+                'La Unión Mendocina', 'UCR', 'La Unión Mendocina', 'PRO',
+                'UCR', 'UCR', 'La Libertad Avanza', 'UCR'
+            ],
+            'Intervenciones': [16, 10, 9, 6, 5, 4, 4, 4, 3, 2, 2, 2, 1, 1, 1, 1],
+            'Posición': [
+                'En contra', 'A favor', 'En contra', 'A favor',
+                'A favor', 'En contra', 'En contra', 'A favor',
+                'En contra', 'A favor', 'En contra', 'A favor',
+                'A favor', 'A favor', 'A favor', 'A favor'
+            ]
         }
         df_diputados = pd.DataFrame(diputados_data)
 
@@ -219,7 +235,7 @@ if page == "En Vivo":
         with col_dip:
             fig_dip = px.bar(
                 df_diputados,
-                x='Menciones',
+                x='Intervenciones',
                 y='Diputado/a',
                 orientation='h',
                 color='Posición',
@@ -230,13 +246,31 @@ if page == "En Vivo":
             st.plotly_chart(fig_dip, use_container_width=True)
 
         with col_bloq:
-            st.markdown("### Bloques Políticos")
-            bloques_data = {
-                'Bloque': ['PJ/Peronismo', 'Oposición', 'Oficialismo', 'UCR/Radical', 'PRO', 'Partido Verde'],
-                'Menciones': [6, 6, 4, 3, 2, 1]
+            st.markdown("### Bloques Políticos y Votación")
+            bloques_votacion = {
+                'Bloque': [
+                    'UCR', 'PRO / PRO Libertad', 'La Libertad Avanza',
+                    'Partido Justicialista', 'Partido Verde', 'La Unión Mendocina',
+                    'Consumidores y Ciudadanos', 'Renovador Mendoza'
+                ],
+                'Posición': [
+                    'A favor', 'A favor', 'A favor',
+                    'Dividido', 'En contra', 'En contra',
+                    'En contra', 'En contra'
+                ]
             }
-            df_bloques = pd.DataFrame(bloques_data)
+            df_bloques = pd.DataFrame(bloques_votacion)
             st.dataframe(df_bloques, hide_index=True, use_container_width=True)
+
+            st.markdown("**Firmantes dictamen en minoría:**")
+            st.markdown("""
+            - José Luis Ramón (Consumidores y Ciudadanos)
+            - Emanuel Fugazzotto (Partido Verde)
+            - Valentina Morán (PJ)
+            - Jorge A. Difonso (La Unión Mendocina)
+            - Rolando Scanio (La Unión Mendocina)
+            - Nilda Escudero (PJ)
+            """)
 
         st.markdown("---")
 
@@ -306,6 +340,72 @@ if page == "En Vivo":
                 </ul>
             </div>
             """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Detalle de intervenciones por diputado
+        st.subheader("Detalle de Intervenciones por Diputado")
+
+        intervenciones_detalle = {
+            'Diputado/a': [
+                'José Luis Ramón',
+                'Emanuel Fugazzotto',
+                'Gabriela Lizana',
+                'Rolando Scanio',
+                'Jorge A. Difonso',
+                'Valentina Morán',
+                'Enrique Thomas',
+                'Alberto López',
+                'Érica Pulido',
+                'Jimena Cogo',
+                'Cintia Gómez',
+                'Gustavo Cairo'
+            ],
+            'Bloque': [
+                'Consumidores y Ciudadanos',
+                'Partido Verde',
+                'Renovador Mendoza',
+                'La Unión Mendocina',
+                'La Unión Mendocina',
+                'Partido Justicialista',
+                'PRO Libertad',
+                'UCR',
+                'UCR',
+                'PRO',
+                'PRO',
+                'La Libertad Avanza'
+            ],
+            'Principales argumentos': [
+                'Informe CONICET, principio precautorio, "van a agujerear una montaña", denunció censura del informe científico',
+                'Principio precautorio, Fondo Compensador insuficiente, regalías deberían ser 5% no 3%, comparó con Noruega',
+                'DIA incompleta según estándares internacionales, faltan estudios hídricos, cuestionó cierre/post-cierre de mina',
+                'Falencias técnicas, DGI e informe UNCUYO señalan incumplimientos, pidió más tiempo para consenso',
+                'Firmó dictamen en minoría, cuestionó procedimiento',
+                'Firmó dictamen en minoría',
+                'Presentó orden del día, defendió diversificación económica, "nuevas reglas de juego"',
+                'Presentó ley de regalías, seguridad jurídica, distribución 12% departamento + 15% fondo desarrollo',
+                'Presentó Fondo Compensación Ambiental, "el que contamina paga", estándares internacionales',
+                'Habló del impacto positivo en Malargüe, trabajo en territorio',
+                'Defendió Malargüe Distrito Minero, audiencias públicas, 70% voces a favor',
+                'Comparó con Chile, potencial del cobre, "sueldo de Chile"'
+            ],
+            'Posición': [
+                'En contra', 'En contra', 'En contra', 'En contra', 'En contra', 'En contra',
+                'A favor', 'A favor', 'A favor', 'A favor', 'A favor', 'A favor'
+            ]
+        }
+
+        df_detalle = pd.DataFrame(intervenciones_detalle)
+
+        # Mostrar tabla con colores
+        st.dataframe(
+            df_detalle.style.apply(
+                lambda x: ['background-color: #d4edda' if v == 'A favor' else 'background-color: #f8d7da' for v in x],
+                subset=['Posición']
+            ),
+            hide_index=True,
+            use_container_width=True
+        )
 
         st.markdown("---")
 
