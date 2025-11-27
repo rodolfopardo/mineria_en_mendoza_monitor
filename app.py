@@ -210,7 +210,7 @@ if page == "En Vivo":
         diputados_data = {
             'Diputado/a': ['Ramón', 'Gómez', 'Fugazoto', 'Cogo', 'Tomas', 'Morán', 'Lisana', 'López', 'Ambrosini', 'Césare'],
             'Menciones': [14, 10, 8, 6, 5, 4, 4, 4, 2, 1],
-            'Posición': ['En contra', 'A favor', 'A favor', 'A favor', 'A favor', 'En contra', 'A favor', 'A favor', 'A favor', 'A favor']
+            'Posición': ['En contra', 'A favor', 'En contra', 'A favor', 'A favor', 'En contra', 'A favor', 'A favor', 'A favor', 'A favor']
         }
         df_diputados = pd.DataFrame(diputados_data)
 
