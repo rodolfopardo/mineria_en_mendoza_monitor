@@ -207,6 +207,9 @@ if page == "En Vivo":
         # Diputados que más participaron
         st.subheader("Diputados con más intervenciones")
 
+        # Resultado oficial de la votación
+        st.success("**Resultado: APROBADO** - 32 votos A FAVOR vs 13 EN CONTRA")
+
         diputados_data = {
             'Diputado/a': [
                 'José Luis Ramón', 'Germán Gómez', 'Emanuel Fugazzotto', 'Jimena Cogo',
@@ -215,14 +218,14 @@ if page == "En Vivo":
                 'María E. de Marchi', 'Franco Ambrosini', 'Gustavo Cairo', 'Mauricio Di Césare'
             ],
             'Bloque': [
-                'Consumidores y Ciudadanos', 'Partido Justicialista', 'Partido Verde', 'PRO',
-                'PRO Libertad', 'Partido Justicialista', 'Renovador Mendoza', 'UCR',
+                'Protectora', 'Partido Justicialista', 'Partido Verde', 'PRO',
+                'PRO Libertad', 'Partido Justicialista', 'Frente Renovador', 'UCR',
                 'La Unión Mendocina', 'UCR', 'La Unión Mendocina', 'PRO',
                 'UCR', 'UCR', 'La Libertad Avanza', 'UCR'
             ],
             'Intervenciones': [16, 10, 9, 6, 5, 4, 4, 4, 3, 2, 2, 2, 1, 1, 1, 1],
             'Posición': [
-                'En contra', 'A favor', 'En contra', 'A favor',
+                'En contra', 'En contra', 'En contra', 'A favor',
                 'A favor', 'En contra', 'En contra', 'A favor',
                 'En contra', 'A favor', 'En contra', 'A favor',
                 'A favor', 'A favor', 'A favor', 'A favor'
@@ -246,30 +249,24 @@ if page == "En Vivo":
             st.plotly_chart(fig_dip, use_container_width=True)
 
         with col_bloq:
-            st.markdown("### Bloques Políticos y Votación")
+            st.markdown("### Votación por Bloque")
             bloques_votacion = {
                 'Bloque': [
-                    'UCR', 'PRO / PRO Libertad', 'La Libertad Avanza',
-                    'Partido Justicialista', 'Partido Verde', 'La Unión Mendocina',
-                    'Consumidores y Ciudadanos', 'Renovador Mendoza'
+                    'UCR (20)', 'PRO / PRO Libertad (8)', 'Otros aliados (4)',
+                    'Partido Justicialista (8)', 'La Unión Mendocina (2)',
+                    'Partido Verde (1)', 'Protectora (1)', 'Frente Renovador (1)'
                 ],
-                'Posición': [
-                    'A favor', 'A favor', 'A favor',
-                    'Dividido', 'En contra', 'En contra',
-                    'En contra', 'En contra'
-                ]
+                'Votos': ['A favor', 'A favor', 'A favor', 'En contra', 'En contra', 'En contra', 'En contra', 'En contra'],
+                'Cantidad': [20, 8, 4, 8, 2, 1, 1, 1]
             }
             df_bloques = pd.DataFrame(bloques_votacion)
             st.dataframe(df_bloques, hide_index=True, use_container_width=True)
 
-            st.markdown("**Firmantes dictamen en minoría:**")
+            st.markdown("**Votaron EN CONTRA (13):**")
             st.markdown("""
-            - José Luis Ramón (Consumidores y Ciudadanos)
-            - Emanuel Fugazzotto (Partido Verde)
-            - Valentina Morán (PJ)
-            - Jorge A. Difonso (La Unión Mendocina)
-            - Rolando Scanio (La Unión Mendocina)
-            - Nilda Escudero (PJ)
+            - **PJ**: Germán Gómez, Verónica Valverde, Gustavo Perret, Valentina Morán, Juan Pablo Gulino, Natalia Vicencio, Roxana Escudero, Julio Villafañe
+            - **La Unión Mendocina**: Jorge Difonso, Rolando Scanio
+            - **Otros**: José Luis Ramón, Emanuel Fugazzotto, Gabriela Lizana
             """)
 
         st.markdown("---")
@@ -352,6 +349,7 @@ if page == "En Vivo":
                 'Emanuel Fugazzotto',
                 'Gabriela Lizana',
                 'Rolando Scanio',
+                'Germán Gómez',
                 'Jorge A. Difonso',
                 'Valentina Morán',
                 'Enrique Thomas',
@@ -362,10 +360,11 @@ if page == "En Vivo":
                 'Gustavo Cairo'
             ],
             'Bloque': [
-                'Consumidores y Ciudadanos',
+                'Protectora',
                 'Partido Verde',
-                'Renovador Mendoza',
+                'Frente Renovador',
                 'La Unión Mendocina',
+                'Partido Justicialista',
                 'La Unión Mendocina',
                 'Partido Justicialista',
                 'PRO Libertad',
@@ -380,6 +379,7 @@ if page == "En Vivo":
                 'Principio precautorio, Fondo Compensador insuficiente, regalías deberían ser 5% no 3%, comparó con Noruega',
                 'DIA incompleta según estándares internacionales, faltan estudios hídricos, cuestionó cierre/post-cierre de mina',
                 'Falencias técnicas, DGI e informe UNCUYO señalan incumplimientos, pidió más tiempo para consenso',
+                'PJ no es antiminero pero faltan garantías, pidió construir consenso político, citó fallos Corte sobre DIAs',
                 'Firmó dictamen en minoría, cuestionó procedimiento',
                 'Firmó dictamen en minoría',
                 'Presentó orden del día, defendió diversificación económica, "nuevas reglas de juego"',
@@ -390,7 +390,7 @@ if page == "En Vivo":
                 'Comparó con Chile, potencial del cobre, "sueldo de Chile"'
             ],
             'Posición': [
-                'En contra', 'En contra', 'En contra', 'En contra', 'En contra', 'En contra',
+                'En contra', 'En contra', 'En contra', 'En contra', 'En contra', 'En contra', 'En contra',
                 'A favor', 'A favor', 'A favor', 'A favor', 'A favor', 'A favor'
             ]
         }
