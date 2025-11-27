@@ -106,6 +106,7 @@ with st.sidebar:
         [
             "En Vivo",
             "Dashboard Principal",
+            "Diputados en Twitter",
             "Datos de Medios",
             "Análisis por Plataforma",
             "Publicaciones",
@@ -752,6 +753,139 @@ elif page == "Dashboard Principal":
         st.plotly_chart(fig_accounts, use_container_width=True)
     else:
         st.info("No hay datos de cuentas disponibles")
+
+
+# ========== PÁGINA: DIPUTADOS EN TWITTER ==========
+elif page == "Diputados en Twitter":
+    st.header("Diputados de Mendoza en Twitter/X")
+
+    st.markdown("""
+    <div style="background-color: #e8f4fd; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #1DA1F2;">
+        <p style="margin: 0; color: #333;">
+            Seguimiento de las cuentas de Twitter/X de los diputados que participaron en el debate
+            sobre el proyecto minero San Jorge (26 de noviembre de 2025).
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Datos de los diputados con Twitter
+    diputados_twitter = {
+        'Diputado/a': [
+            'José Luis Ramón', 'Emanuel Fugazzotto', 'Gabriela Lizana',
+            'Rolando Scanio', 'Germán Gómez', 'Enrique Thomas', 'Gustavo Cairo'
+        ],
+        'Twitter': [
+            '@JoseLuisRamonOk', '@EFugazzotto', '@LizanaGaby',
+            '@RolandoScanio', '@germangomezmza', '@Enrique_thomas', '@GustavoCairoMza'
+        ],
+        'Bloque': [
+            'Protectora', 'Partido Verde', 'Frente Renovador',
+            'La Unión Mendocina', 'Partido Justicialista', 'PRO Libertad', 'La Libertad Avanza'
+        ],
+        'Posición San Jorge': [
+            'En contra', 'En contra', 'En contra',
+            'En contra', 'En contra', 'A favor', 'A favor'
+        ],
+        'URL': [
+            'https://twitter.com/JoseLuisRamonOk', 'https://twitter.com/EFugazzotto', 'https://twitter.com/LizanaGaby',
+            'https://twitter.com/RolandoScanio', 'https://twitter.com/germangomezmza', 'https://twitter.com/Enrique_thomas', 'https://twitter.com/GustavoCairoMza'
+        ]
+    }
+
+    df_diputados_tw = pd.DataFrame(diputados_twitter)
+
+    # Métricas
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Cuentas monitoreadas", len(df_diputados_tw))
+    with col2:
+        en_contra = len(df_diputados_tw[df_diputados_tw['Posición San Jorge'] == 'En contra'])
+        st.metric("Votaron EN CONTRA", en_contra)
+    with col3:
+        a_favor = len(df_diputados_tw[df_diputados_tw['Posición San Jorge'] == 'A favor'])
+        st.metric("Votaron A FAVOR", a_favor)
+
+    st.markdown("---")
+
+    # Tabla de diputados
+    st.subheader("Cuentas de Diputados")
+
+    st.dataframe(
+        df_diputados_tw,
+        column_config={
+            "Twitter": st.column_config.TextColumn("Twitter", width="medium"),
+            "URL": st.column_config.LinkColumn("Ir al perfil", width="small"),
+            "Posición San Jorge": st.column_config.TextColumn("Voto", width="small")
+        },
+        hide_index=True,
+        use_container_width=True
+    )
+
+    st.markdown("---")
+
+    # Tweets de la base de datos filtrados por estos usuarios
+    st.subheader("Últimos Tweets Capturados")
+
+    # Buscar tweets de estos usuarios en la DB
+    diputados_usernames = ['joseluisramonok', 'efugazzotto', 'lizanagaby', 'rolandoscanio',
+                           'germangomezmza', 'enrique_thomas', 'gustavocairomza']
+
+    posts_twitter = db.get_posts(platform='twitter', days=period_days, limit=500, only_relevant=False)
+
+    if posts_twitter:
+        df_tw = pd.DataFrame(posts_twitter)
+        # Filtrar solo los de diputados (case insensitive)
+        df_tw['author_lower'] = df_tw['author_username'].str.lower()
+        df_diputados_posts = df_tw[df_tw['author_lower'].isin(diputados_usernames)]
+
+        if not df_diputados_posts.empty:
+            st.success(f"Se encontraron {len(df_diputados_posts)} tweets de diputados")
+
+            for _, row in df_diputados_posts.head(20).iterrows():
+                with st.container():
+                    col_user, col_content = st.columns([1, 4])
+                    with col_user:
+                        st.markdown(f"**@{row['author_username']}**")
+                        st.caption(f"❤️ {row.get('likes', 0):,} | 🔄 {row.get('shares', 0):,}")
+                    with col_content:
+                        st.write(row.get('content', '')[:300] + '...' if len(str(row.get('content', ''))) > 300 else row.get('content', ''))
+                        if row.get('post_url'):
+                            st.markdown(f"[Ver tweet]({row['post_url']})")
+                    st.markdown("---")
+        else:
+            st.warning("No se encontraron tweets de estos diputados en la base de datos.")
+            st.info("""
+            **Para capturar tweets de los diputados:**
+            1. Ve a la página de Configuración
+            2. Agrega las cuentas de Twitter de los diputados
+            3. Ejecuta el scraper de Twitter
+            """)
+    else:
+        st.info("No hay tweets en la base de datos. Ejecuta el scraper de Twitter primero.")
+
+    st.markdown("---")
+
+    # Links directos a los perfiles
+    st.subheader("Acceso Directo a Perfiles")
+
+    col_contra, col_favor = st.columns(2)
+
+    with col_contra:
+        st.markdown("### 🔴 Votaron EN CONTRA")
+        st.markdown("""
+        - [José Luis Ramón](https://twitter.com/JoseLuisRamonOk) - Protectora
+        - [Emanuel Fugazzotto](https://twitter.com/EFugazzotto) - Partido Verde
+        - [Gabriela Lizana](https://twitter.com/LizanaGaby) - Frente Renovador
+        - [Rolando Scanio](https://twitter.com/RolandoScanio) - La Unión Mendocina
+        - [Germán Gómez](https://twitter.com/germangomezmza) - PJ
+        """)
+
+    with col_favor:
+        st.markdown("### 🟢 Votaron A FAVOR")
+        st.markdown("""
+        - [Enrique Thomas](https://twitter.com/Enrique_thomas) - PRO Libertad
+        - [Gustavo Cairo](https://twitter.com/GustavoCairoMza) - La Libertad Avanza
+        """)
 
 
 # ========== PÁGINA: DATOS DE MEDIOS ==========
