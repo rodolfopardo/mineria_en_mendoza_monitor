@@ -935,173 +935,118 @@ elif page == "Dashboard Principal":
 
 # ========== PÁGINA: ANÁLISIS 48 HORAS ==========
 elif page == "Análisis 48 Horas":
-    st.header("Análisis Cualitativo - Últimas 48 Horas")
+    st.header("Analisis Cualitativo - Ultimas 48 Horas")
 
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-                padding: 25px;
-                border-radius: 15px;
-                margin-bottom: 25px;
-                border-left: 5px solid #e94560;">
-        <p style="color: #eee; font-size: 16px; margin: 0; line-height: 1.6;">
-            <strong style="color: #e94560;">Resumen ejecutivo</strong> de la conversación digital sobre minería en Mendoza,
-            integrando redes sociales y medios de comunicación. Análisis cualitativo sin métricas numéricas.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.info("""
+    **Resumen ejecutivo** de la conversación digital sobre minería en Mendoza,
+    integrando redes sociales y medios de comunicación. Análisis cualitativo sin métricas numéricas.
+    """)
 
     # ===== LO QUE MÁS SE HABLÓ =====
     st.markdown("---")
-    st.subheader("🔥 Lo que más se habló")
+    st.subheader("Lo que mas se hablo")
+
+    st.warning("**Temas dominantes en la conversación**")
 
     st.markdown("""
-    <div style="background-color: #fff3cd; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-        <h4 style="color: #856404; margin-top: 0;">Temas dominantes en la conversación</h4>
-        <ul style="color: #333; line-height: 1.8;">
-            <li><strong>La aprobación de San Jorge en Diputados:</strong> El tema central fue la media sanción del proyecto
-            minero PSJ Cobre Mendocino. La votación histórica generó una avalancha de contenido tanto a favor como en contra.</li>
-            <li><strong>Marcha en San Carlos:</strong> Vecinos del Valle de Uco realizaron una importante movilización
-            durante el desfile departamental, visibilizando el rechazo al proyecto en la zona más afectada.</li>
-            <li><strong>El debate Senado vs Calle:</strong> La narrativa "el Palacio o la calle, la minería o el agua"
-            se instaló como eje central del conflicto político.</li>
-            <li><strong>Censura al CONICET:</strong> Generó indignación la denuncia sobre censura a un documento científico
-            crítico de la megaminería, amplificando el discurso de falta de transparencia.</li>
-            <li><strong>Misión a Londres:</strong> El gobierno provincial promocionó su "modelo de minería sostenible"
-            en el exterior mientras internamente crecía la tensión social.</li>
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
+- **La aprobación de San Jorge en Diputados:** El tema central fue la media sanción del proyecto minero PSJ Cobre Mendocino. La votación histórica generó una avalancha de contenido tanto a favor como en contra.
+
+- **Marcha en San Carlos:** Vecinos del Valle de Uco realizaron una importante movilización durante el desfile departamental, visibilizando el rechazo al proyecto en la zona más afectada.
+
+- **El debate Senado vs Calle:** La narrativa "el Palacio o la calle, la minería o el agua" se instaló como eje central del conflicto político.
+
+- **Censura al CONICET:** Generó indignación la denuncia sobre censura a un documento científico crítico de la megaminería, amplificando el discurso de falta de transparencia.
+
+- **Misión a Londres:** El gobierno provincial promocionó su "modelo de minería sostenible" en el exterior mientras internamente crecía la tensión social.
+    """)
 
     # ===== ALERTA DE CONVOCATORIAS =====
     st.markdown("---")
-    st.subheader("⚠️ Riesgo de Convocatorias y Movilizaciones")
+    st.subheader("Riesgo de Convocatorias y Movilizaciones")
+
+    st.error("""
+    **ALERTA ALTA - Movilizaciones activas**
+
+    **Sí hay peligro de escalamiento.** Se detectaron múltiples convocatorias activas.
+    """)
 
     st.markdown("""
-    <div style="background-color: #f8d7da; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #dc3545;">
-        <h4 style="color: #721c24; margin-top: 0;">🚨 ALERTA ALTA - Movilizaciones activas</h4>
-        <p style="color: #721c24; line-height: 1.8;">
-            <strong>Sí hay peligro de escalamiento.</strong> Se detectaron múltiples convocatorias activas:
-        </p>
-        <ul style="color: #333; line-height: 1.8;">
-            <li><strong>Vigilia en la Legislatura:</strong> Se espera concentración permanente durante el tratamiento
-            en el Senado. Las asambleas ambientales mantienen presencia sostenida.</li>
-            <li><strong>Movilización provincial:</strong> Convocatoria de asambleas por el agua para los próximos días
-            en Plaza Independencia.</li>
-            <li><strong>Acciones territoriales:</strong> San Carlos y Valle de Uco se han convertido en focos de
-            resistencia activa con acciones coordinadas.</li>
-        </ul>
-        <p style="color: #721c24; font-weight: bold; margin-bottom: 0;">
-            📌 El paso al Senado será el momento de mayor tensión. Anticipar cobertura y monitoreo reforzado.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+- **Vigilia en la Legislatura:** Se espera concentración permanente durante el tratamiento en el Senado. Las asambleas ambientales mantienen presencia sostenida.
+
+- **Movilización provincial:** Convocatoria de asambleas por el agua para los próximos días en Plaza Independencia.
+
+- **Acciones territoriales:** San Carlos y Valle de Uco se han convertido en focos de resistencia activa con acciones coordinadas.
+
+**El paso al Senado será el momento de mayor tensión. Anticipar cobertura y monitoreo reforzado.**
+    """)
 
     # ===== PUNTOS DE DOLOR =====
     st.markdown("---")
-    st.subheader("💔 Puntos de Dolor - Lo que genera rechazo")
+    st.subheader("Puntos de Dolor - Lo que genera rechazo")
 
-    st.markdown("""
-    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-        <h4 style="color: #333; margin-top: 0;">Temas que generan mayor resistencia emocional</h4>
+    st.markdown("**Temas que generan mayor resistencia emocional**")
 
-        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #dc3545;">
-            <strong style="color: #dc3545;">El agua como identidad mendocina</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">"Mendoza es hija del agua" no es solo una consigna, es un valor identitario
-            profundo. Cualquier amenaza percibida al recurso hídrico activa una respuesta visceral.</p>
-        </div>
+    with st.expander("El agua como identidad mendocina", expanded=True):
+        st.markdown('"Mendoza es hija del agua" no es solo una consigna, es un valor identitario profundo. Cualquier amenaza percibida al recurso hídrico activa una respuesta visceral.')
 
-        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #dc3545;">
-            <strong style="color: #dc3545;">Desconfianza institucional</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">La censura al documento del CONICET refuerza la narrativa de que
-            "nos ocultan información". La falta de transparencia percibida alimenta teorías conspirativas.</p>
-        </div>
+    with st.expander("Desconfianza institucional", expanded=True):
+        st.markdown('La censura al documento del CONICET refuerza la narrativa de que "nos ocultan información". La falta de transparencia percibida alimenta teorías conspirativas.')
 
-        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #dc3545;">
-            <strong style="color: #dc3545;">Imposición desde arriba</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">El sentimiento de que "se decide de espaldas al pueblo" genera
-            frustración. La velocidad del tratamiento legislativo se percibe como atropello.</p>
-        </div>
+    with st.expander("Imposición desde arriba", expanded=True):
+        st.markdown('El sentimiento de que "se decide de espaldas al pueblo" genera frustración. La velocidad del tratamiento legislativo se percibe como atropello.')
 
-        <div style="padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #dc3545;">
-            <strong style="color: #dc3545;">Miedo al precedente</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">"Si aprueban San Jorge, después vienen todos los demás". El temor
-            es que sea el primer dominó que abre la puerta a la megaminería generalizada.</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.expander("Miedo al precedente", expanded=True):
+        st.markdown('"Si aprueban San Jorge, después vienen todos los demás". El temor es que sea el primer dominó que abre la puerta a la megaminería generalizada.')
 
     # ===== OPORTUNIDADES - LO POSITIVO =====
     st.markdown("---")
-    st.subheader("✨ Oportunidades - Narrativas aprovechables")
+    st.subheader("Oportunidades - Narrativas aprovechables")
 
-    st.markdown("""
-    <div style="background-color: #d4edda; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-        <h4 style="color: #155724; margin-top: 0;">Espacios para construcción de consenso</h4>
+    st.success("**Espacios para construcción de consenso**")
 
-        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #28a745;">
-            <strong style="color: #28a745;">Desarrollo económico local</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">Existe apertura al diálogo cuando se habla de empleo genuino
-            y desarrollo para las comunidades locales. El argumento económico tiene receptividad si se territoraliza.</p>
-        </div>
+    with st.expander("Desarrollo económico local", expanded=True):
+        st.markdown('Existe apertura al diálogo cuando se habla de empleo genuino y desarrollo para las comunidades locales. El argumento económico tiene receptividad si se territorializa.')
 
-        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #28a745;">
-            <strong style="color: #28a745;">Regalías y beneficios concretos</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">La discusión sobre regalías (3-5%) genera interés. La gente
-            quiere saber qué gana Mendoza concretamente, más allá de promesas abstractas.</p>
-        </div>
+    with st.expander("Regalías y beneficios concretos", expanded=True):
+        st.markdown('La discusión sobre regalías (3-5%) genera interés. La gente quiere saber qué gana Mendoza concretamente, más allá de promesas abstractas.')
 
-        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #28a745;">
-            <strong style="color: #28a745;">Controles y fiscalización</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">El tema de "quién y cómo controla" a San Jorge aparece como
-            preocupación genuina. Hay espacio para comunicar mecanismos de control creíbles.</p>
-        </div>
+    with st.expander("Controles y fiscalización", expanded=True):
+        st.markdown('El tema de "quién y cómo controla" a San Jorge aparece como preocupación genuina. Hay espacio para comunicar mecanismos de control creíbles.')
 
-        <div style="padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #28a745;">
-            <strong style="color: #28a745;">Transición energética</strong>
-            <p style="margin: 5px 0 0 0; color: #666;">El cobre como mineral estratégico para energías limpias es un
-            argumento que resuena en sectores progresistas. Oportunidad de reencuadrar el debate.</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.expander("Transición energética", expanded=True):
+        st.markdown('El cobre como mineral estratégico para energías limpias es un argumento que resuena en sectores progresistas. Oportunidad de reencuadrar el debate.')
 
     # ===== CONCLUSIÓN =====
     st.markdown("---")
-    st.subheader("📋 Síntesis y Recomendaciones")
+    st.subheader("Sintesis y Recomendaciones")
 
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                padding: 25px;
-                border-radius: 15px;
-                color: white;">
-        <h4 style="margin-top: 0; color: white;">Estado de situación</h4>
-        <p style="line-height: 1.8;">
-            El clima digital está <strong>altamente polarizado</strong>. La aprobación en Diputados intensificó
-            la movilización opositora mientras el oficialismo acelera la comunicación de beneficios económicos.
-        </p>
+    col1, col2 = st.columns(2)
 
-        <h4 style="color: white;">Próximos 7 días críticos</h4>
-        <ul style="line-height: 1.8;">
-            <li>El Senado definirá el futuro del proyecto - máxima tensión esperada</li>
-            <li>Las asambleas mantienen la presión en calle</li>
-            <li>Los medios nacionales empiezan a cubrir el conflicto (El Destape, ANRed)</li>
-        </ul>
+    with col1:
+        st.markdown("**Estado de situación**")
+        st.markdown("""
+El clima digital está **altamente polarizado**. La aprobación en Diputados intensificó
+la movilización opositora mientras el oficialismo acelera la comunicación de beneficios económicos.
+        """)
 
-        <h4 style="color: white;">Recomendaciones</h4>
-        <ul style="line-height: 1.8;">
-            <li><strong>Monitoreo 24/7</strong> durante tratamiento en Senado</li>
-            <li><strong>Anticipar narrativas</strong> sobre controles y fiscalización</li>
-            <li><strong>Territorializar el mensaje</strong> en Valle de Uco con voceros locales</li>
-            <li><strong>No subestimar</strong> la capacidad de movilización de las asambleas</li>
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("**Próximos 7 días críticos**")
+        st.markdown("""
+- El Senado definirá el futuro del proyecto - máxima tensión esperada
+- Las asambleas mantienen la presión en calle
+- Los medios nacionales empiezan a cubrir el conflicto (El Destape, ANRed)
+        """)
+
+    with col2:
+        st.markdown("**Recomendaciones**")
+        st.markdown("""
+- **Monitoreo 24/7** durante tratamiento en Senado
+- **Anticipar narrativas** sobre controles y fiscalización
+- **Territorializar el mensaje** en Valle de Uco con voceros locales
+- **No subestimar** la capacidad de movilización de las asambleas
+        """)
 
     # Timestamp
-    st.markdown(f"""
-    <div style="text-align: right; color: #888; font-size: 12px; margin-top: 20px;">
-        Análisis generado: {datetime.now().strftime('%d/%m/%Y %H:%M')} | Fuentes: Redes sociales + Medios de comunicación
-    </div>
-    """, unsafe_allow_html=True)
+    st.caption(f"Análisis generado: {datetime.now().strftime('%d/%m/%Y %H:%M')} | Fuentes: Redes sociales + Medios de comunicación")
 
 
 # ========== PÁGINA: DIPUTADOS EN TWITTER ==========
