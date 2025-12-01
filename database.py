@@ -18,11 +18,9 @@ def get_db_path():
     # En Streamlit Cloud, el filesystem es read-only, copiamos a /tmp
     if os.path.exists("/tmp"):
         tmp_db = "/tmp/social_monitor.db"
-        # Siempre copiar la base de datos para asegurar datos actualizados
+        # SIEMPRE copiar la base de datos para asegurar datos actualizados
         if os.path.exists(original_db):
-            # Copiar si no existe o si el original es mas nuevo
-            if not os.path.exists(tmp_db) or os.path.getmtime(original_db) > os.path.getmtime(tmp_db):
-                shutil.copy2(original_db, tmp_db)
+            shutil.copy2(original_db, tmp_db)
         return tmp_db
 
     return original_db
