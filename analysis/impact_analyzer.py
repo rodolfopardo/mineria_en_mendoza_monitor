@@ -199,7 +199,10 @@ class ImpactAnalyzer:
         """Analiza las narrativas predominantes"""
         posts = self.db.get_posts(days=days, limit=500)
 
-        # Narrativas conocidas y su frecuencia
+        # Obtener narrativas de la base de datos si existen
+        db_narratives = self.db.get_narratives()
+
+        # Narrativas conocidas y su frecuencia (inicializar desde DB o con 0)
         known_narratives = {
             "El agua vale más que el oro": 0,
             "El agua de Mendoza no se negocia": 0,
@@ -211,6 +214,16 @@ class ImpactAnalyzer:
             "No a la mina": 0,
             "La 7722 se defiende en la calle": 0,
         }
+
+        # Si hay narrativas en la DB, usar esos valores como base
+        if db_narratives:
+            for narr in db_narratives:
+                narr_text = narr.get('narrative_text', '')
+                narr_count = narr.get('occurrences', 0)
+                if narr_text in known_narratives:
+                    known_narratives[narr_text] = narr_count
+                elif narr_text:
+                    known_narratives[narr_text] = narr_count
 
         # Categorías de narrativa
         categories = {

@@ -408,6 +408,25 @@ class SocialDatabase:
         conn.close()
         return posts
 
+    # ========== MÉTODOS PARA NARRATIVAS ==========
+
+    def get_narratives(self) -> List[Dict]:
+        """Obtiene las narrativas almacenadas en la base de datos"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT narrative_text, category, occurrences, first_seen, last_seen
+            FROM narratives
+            ORDER BY occurrences DESC
+        ''')
+
+        columns = ['narrative_text', 'category', 'occurrences', 'first_seen', 'last_seen']
+        narratives = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        conn.close()
+        return narratives
+
     # ========== MÉTODOS PARA ESTADÍSTICAS ==========
 
     def get_consolidated_metrics(self, days: int = 14, only_relevant: bool = True) -> Dict:
