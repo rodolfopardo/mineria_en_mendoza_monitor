@@ -281,16 +281,16 @@ with st.sidebar:
     page = st.radio(
         "Navegación",
         [
-            "En Vivo",
-            "Dashboard Principal",
             "Análisis 48 Horas",
-            "Diputados en Twitter",
+            "Dashboard Principal",
             "Datos de Medios",
             "Análisis por Plataforma",
             "Publicaciones",
+            "Estrategia",
             "Convocatorias",
             "Casos de Estudio",
-            "Estrategia",
+            "En Vivo",
+            "Diputados en Twitter",
             "Configuración"
         ],
         index=0
