@@ -1,0 +1,67 @@
+{
+  "total_posts": 130,
+  "total_likes": 14574,
+  "total_comments": 0,
+  "avg_likes": 112.1076923076923,
+  "avg_comments": 0.0,
+  "posts_by_type": {
+    "Sidecar": 58,
+    "Image": 41,
+    "Video": 31
+  },
+  "posts_by_day": {
+    "Monday": 32,
+    "Tuesday": 13,
+    "Wednesday": 25,
+    "Thursday": 17,
+    "Friday": 24,
+    "Saturday": 8,
+    "Sunday": 11
+  },
+  "engagement_by_day": {
+    "Monday": 90.8125,
+    "Tuesday": 298.7692307692308,
+    "Wednesday": 110.28,
+    "Thursday": 84.52941176470588,
+    "Friday": 69.79166666666667,
+    "Saturday": 120.75,
+    "Sunday": 86.27272727272727
+  },
+  "posts_by_hour": {
+    "0": 6,
+    "1": 4,
+    "2": 1,
+    "3": 3,
+    "10": 1,
+    "11": 2,
+    "12": 5,
+    "13": 19,
+    "14": 7,
+    "15": 19,
+    "16": 15,
+    "17": 1,
+    "18": 6,
+    "19": 4,
+    "20": 11,
+    "21": 14,
+    "22": 3,
+    "23": 9
+  },
+  "top_hashtags": {
+    "PSJCobreMendocino": 101,
+    "Miner\u00edaResponsable": 49,
+    "Mendoza": 46,
+    "Uspallata": 33,
+    "AudienciaP\u00fablica": 23,
+    "DesarrolloLocal": 23,
+    "Participaci\u00f3nCiudadana": 23,
+    "Cobre": 22,
+    "DesarrolloSostenible": 21,
+    "Transparencia": 18,
+    "Argentina": 15,
+    "Miner\u00edaSostenible": 14,
+    "Miner\u00edaModerna": 14,
+    "PSJ": 12,
+    "CrecimientoEcon\u00f3mico": 11
+  }
+}

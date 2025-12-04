@@ -282,6 +282,7 @@ with st.sidebar:
         "Navegación",
         [
             "Análisis 48 Horas",
+            "Análisis PSJCobre",
             "Dashboard Principal",
             "Datos de Medios",
             "Análisis por Plataforma",
@@ -1130,6 +1131,356 @@ político relevante que legitimó la resistencia territorial.
     # Timestamp con más detalle
     st.markdown("---")
     st.caption(f"Análisis generado: {datetime.now().strftime('%d/%m/%Y %H:%M')} | Fuentes: {db.get_post_count():,} posts de redes + {db.get_article_count('news_results')} noticias de medios")
+
+
+# ========== PÁGINA: ANÁLISIS PSJCobre ==========
+elif page == "Análisis PSJCobre":
+    st.header("Análisis de Cuenta @PSJCobreMendocino")
+
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #E1306C 0%, #F77737 50%, #FCAF45 100%);
+                padding: 15px 20px; border-radius: 10px; margin-bottom: 20px;">
+        <p style="color: white; margin: 0; font-size: 14px;">
+            <strong>Instagram Analytics</strong> | Análisis de rendimiento de la cuenta oficial del proyecto
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Cargar datos del CSV
+    try:
+        psjcobre_df = pd.read_csv('/Users/mariova/Downloads/dataset_instagram-scraper_2025-12-04_15-02-27-353.csv')
+
+        # Procesar datos
+        psjcobre_df['fecha'] = pd.to_datetime(psjcobre_df['timestamp'])
+        psjcobre_df['dia_semana'] = psjcobre_df['fecha'].dt.day_name()
+        psjcobre_df['hora'] = psjcobre_df['fecha'].dt.hour
+        psjcobre_df['engagement'] = psjcobre_df['likesCount'] + psjcobre_df['commentsCount']
+
+        # ===== MÉTRICAS PRINCIPALES =====
+        st.subheader("Métricas Principales")
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            st.metric("Total Posts", f"{len(psjcobre_df):,}")
+        with col2:
+            st.metric("Total Likes", f"{psjcobre_df['likesCount'].sum():,}")
+        with col3:
+            st.metric("Promedio Likes", f"{psjcobre_df['likesCount'].mean():.0f}")
+        with col4:
+            total_views = psjcobre_df['videoViewCount'].sum()
+            st.metric("Video Views", f"{total_views:,.0f}" if pd.notna(total_views) else "N/A")
+
+        col5, col6, col7, col8 = st.columns(4)
+
+        with col5:
+            total_plays = psjcobre_df['videoPlayCount'].sum()
+            st.metric("Video Plays", f"{total_plays:,.0f}" if pd.notna(total_plays) else "N/A")
+        with col6:
+            videos_count = len(psjcobre_df[psjcobre_df['type'] == 'Video'])
+            st.metric("Videos/Reels", f"{videos_count}")
+        with col7:
+            carruseles = len(psjcobre_df[psjcobre_df['type'] == 'Sidecar'])
+            st.metric("Carruseles", f"{carruseles}")
+        with col8:
+            imagenes = len(psjcobre_df[psjcobre_df['type'] == 'Image'])
+            st.metric("Imágenes", f"{imagenes}")
+
+        # ===== EXPLICACIÓN VIDEO PLAYS vs VIDEO VIEWS =====
+        st.markdown("---")
+        st.subheader("Video Plays vs Video Views - ¿Qué significa?")
+
+        col_exp1, col_exp2 = st.columns(2)
+
+        with col_exp1:
+            st.info("""
+            **📱 Video Plays (Reproducciones automáticas)**
+
+            Son las veces que el video comenzó a reproducirse automáticamente
+            cuando alguien scrolleó por el feed. Instagram reproduce videos
+            automáticamente sin sonido.
+
+            **Total Plays:** {:,}
+            """.format(int(total_plays) if pd.notna(total_plays) else 0))
+
+        with col_exp2:
+            st.success("""
+            **👁️ Video Views (Visualizaciones reales)**
+
+            Son las reproducciones donde el usuario realmente vio el video
+            (generalmente 3+ segundos o interactuó). Representa interés genuino.
+
+            **Total Views:** {:,}
+            """.format(int(total_views) if pd.notna(total_views) else 0))
+
+        # Ratio
+        if pd.notna(total_plays) and total_plays > 0 and pd.notna(total_views):
+            ratio = (total_views / total_plays) * 100
+            st.warning(f"""
+            **📊 Tasa de Retención:** {ratio:.1f}%
+
+            De cada 100 personas que ven el video pasar en su feed, solo {ratio:.0f} lo miran realmente.
+            {"✅ Buen ratio (>10%)" if ratio > 10 else "⚠️ Ratio bajo - Mejorar hooks iniciales" if ratio > 5 else "🔴 Ratio muy bajo - Revisar primeros 3 segundos"}
+            """)
+
+        # ===== TABLA COMPARATIVA DE VIDEOS =====
+        st.markdown("---")
+        st.subheader("Análisis de Videos - Plays vs Views")
+
+        videos_df = psjcobre_df[psjcobre_df['type'] == 'Video'][['fecha', 'likesCount', 'videoPlayCount', 'videoViewCount', 'caption']].copy()
+        videos_df = videos_df.dropna(subset=['videoPlayCount', 'videoViewCount'])
+        videos_df['Retención %'] = (videos_df['videoViewCount'] / videos_df['videoPlayCount'] * 100).round(1)
+        videos_df['caption_short'] = videos_df['caption'].str[:60] + '...'
+        videos_df = videos_df.sort_values('videoPlayCount', ascending=False)
+
+        st.dataframe(
+            videos_df[['fecha', 'caption_short', 'likesCount', 'videoPlayCount', 'videoViewCount', 'Retención %']].head(15).rename(columns={
+                'fecha': 'Fecha',
+                'caption_short': 'Contenido',
+                'likesCount': 'Likes',
+                'videoPlayCount': 'Plays (auto)',
+                'videoViewCount': 'Views (real)',
+                'Retención %': 'Retención %'
+            }),
+            use_container_width=True,
+            hide_index=True
+        )
+
+        # ===== TOP POSTS MÁS VIRALES =====
+        st.markdown("---")
+        st.subheader("🔥 Top 10 Posts Más Virales")
+
+        top_posts = psjcobre_df.nlargest(10, 'engagement')[['fecha', 'type', 'likesCount', 'commentsCount', 'engagement', 'videoViewCount', 'caption']].copy()
+        top_posts['caption_preview'] = top_posts['caption'].str[:80] + '...'
+
+        for i, (idx, row) in enumerate(top_posts.iterrows(), 1):
+            with st.expander(f"#{i} - {row['type']} | {row['likesCount']:,} likes | {row['fecha'].strftime('%Y-%m-%d')}"):
+                st.write(f"**Likes:** {row['likesCount']:,}")
+                st.write(f"**Comments:** {row['commentsCount']:,}")
+                if pd.notna(row['videoViewCount']) and row['videoViewCount'] > 0:
+                    st.write(f"**Video Views:** {row['videoViewCount']:,.0f}")
+                st.write(f"**Caption:** {row['caption'][:300] if pd.notna(row['caption']) else 'Sin caption'}...")
+
+        # ===== GRÁFICO: TIPOS DE CONTENIDO =====
+        st.markdown("---")
+        st.subheader("Distribución por Tipo de Contenido")
+
+        tipos = psjcobre_df['type'].value_counts()
+
+        fig_tipos = go.Figure(data=[go.Pie(
+            labels=tipos.index,
+            values=tipos.values,
+            hole=0.4,
+            marker_colors=['#E1306C', '#F77737', '#FCAF45']
+        )])
+        fig_tipos.update_layout(title="Posts por Tipo", height=400)
+        st.plotly_chart(fig_tipos, use_container_width=True)
+
+        # ===== GRÁFICO: ACTIVIDAD POR DÍA DE LA SEMANA =====
+        st.markdown("---")
+        st.subheader("📅 Actividad por Día de la Semana")
+
+        dias_orden = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        dias_es = {'Monday': 'Lunes', 'Tuesday': 'Martes', 'Wednesday': 'Miércoles',
+                   'Thursday': 'Jueves', 'Friday': 'Viernes', 'Saturday': 'Sábado', 'Sunday': 'Domingo'}
+
+        actividad_dia = psjcobre_df.groupby('dia_semana').size().reindex(dias_orden)
+        actividad_dia.index = [dias_es[d] for d in actividad_dia.index]
+
+        fig_dias = go.Figure(data=[go.Bar(
+            x=actividad_dia.index,
+            y=actividad_dia.values,
+            marker_color='#E1306C'
+        )])
+        fig_dias.update_layout(
+            title="Cantidad de Posts por Día",
+            xaxis_title="Día de la Semana",
+            yaxis_title="Cantidad de Posts",
+            height=400
+        )
+        st.plotly_chart(fig_dias, use_container_width=True)
+
+        # ===== GRÁFICO: ENGAGEMENT POR DÍA =====
+        st.subheader("💡 Engagement Promedio por Día")
+
+        eng_dia = psjcobre_df.groupby('dia_semana')['engagement'].mean().reindex(dias_orden)
+        eng_dia.index = [dias_es[d] for d in eng_dia.index]
+
+        fig_eng = go.Figure(data=[go.Bar(
+            x=eng_dia.index,
+            y=eng_dia.values,
+            marker_color='#F77737'
+        )])
+        fig_eng.update_layout(
+            title="Engagement Promedio por Día (Likes + Comments)",
+            xaxis_title="Día de la Semana",
+            yaxis_title="Engagement Promedio",
+            height=400
+        )
+        st.plotly_chart(fig_eng, use_container_width=True)
+
+        # Insight
+        mejor_dia = eng_dia.idxmax()
+        peor_dia = eng_dia.idxmin()
+        st.info(f"**💡 Insight:** El mejor día para publicar es **{mejor_dia}** (engagement promedio: {eng_dia.max():.0f}). El peor día es **{peor_dia}** ({eng_dia.min():.0f}).")
+
+        # ===== GRÁFICO: ACTIVIDAD POR HORA =====
+        st.markdown("---")
+        st.subheader("⏰ Actividad por Hora del Día")
+
+        actividad_hora = psjcobre_df.groupby('hora').size()
+
+        fig_hora = go.Figure(data=[go.Bar(
+            x=[f"{h:02d}:00" for h in actividad_hora.index],
+            y=actividad_hora.values,
+            marker_color='#FCAF45'
+        )])
+        fig_hora.update_layout(
+            title="Posts por Hora del Día",
+            xaxis_title="Hora",
+            yaxis_title="Cantidad de Posts",
+            height=400
+        )
+        st.plotly_chart(fig_hora, use_container_width=True)
+
+        # ===== HASHTAGS MÁS USADOS =====
+        st.markdown("---")
+        st.subheader("#️⃣ Hashtags Más Usados")
+
+        hashtag_cols = [col for col in psjcobre_df.columns if col.startswith('hashtags/')]
+        all_hashtags = []
+        for col in hashtag_cols:
+            all_hashtags.extend(psjcobre_df[col].dropna().tolist())
+
+        from collections import Counter
+        hashtag_counts = Counter(all_hashtags)
+        top_hashtags = dict(hashtag_counts.most_common(15))
+
+        fig_hash = go.Figure(data=[go.Bar(
+            x=list(top_hashtags.values()),
+            y=[f"#{h}" for h in top_hashtags.keys()],
+            orientation='h',
+            marker_color='#833AB4'
+        )])
+        fig_hash.update_layout(
+            title="Top 15 Hashtags",
+            xaxis_title="Veces usado",
+            yaxis_title="",
+            height=500,
+            yaxis={'categoryorder': 'total ascending'}
+        )
+        st.plotly_chart(fig_hash, use_container_width=True)
+
+        # ===== EVOLUCIÓN TEMPORAL =====
+        st.markdown("---")
+        st.subheader("📈 Evolución Temporal de Publicaciones")
+
+        psjcobre_df['mes'] = psjcobre_df['fecha'].dt.to_period('M').astype(str)
+        posts_por_mes = psjcobre_df.groupby('mes').size()
+        likes_por_mes = psjcobre_df.groupby('mes')['likesCount'].sum()
+
+        fig_evol = go.Figure()
+        fig_evol.add_trace(go.Bar(
+            x=posts_por_mes.index,
+            y=posts_por_mes.values,
+            name='Posts',
+            marker_color='#E1306C'
+        ))
+        fig_evol.update_layout(
+            title="Posts por Mes",
+            xaxis_title="Mes",
+            yaxis_title="Cantidad",
+            height=400
+        )
+        st.plotly_chart(fig_evol, use_container_width=True)
+
+        # ===== RECOMENDACIONES =====
+        st.markdown("---")
+        st.subheader("📋 Recomendaciones de Mejora")
+
+        col_rec1, col_rec2 = st.columns(2)
+
+        with col_rec1:
+            st.error("""
+            **🔴 Problemas Detectados:**
+
+            1. **0 comentarios en todos los posts** - Indica bajo engagement real o comentarios desactivados
+
+            2. **Ratio de retención bajo** - Los videos no retienen a la audiencia después del autoplay
+
+            3. **Poca actividad en fin de semana** - Se pierde audiencia que está más activa sábados y domingos
+
+            4. **Contenido muy institucional** - Falta contenido humano y testimonial
+            """)
+
+        with col_rec2:
+            st.success("""
+            **✅ Recomendaciones:**
+
+            1. **Mejorar los primeros 3 segundos** - Hook más fuerte para retener viewers
+
+            2. **Activar y responder comentarios** - Generar conversación
+
+            3. **Publicar más los martes** - Es el día con mejor engagement (299 prom)
+
+            4. **Horarios óptimos:** 13:00-16:00 y 20:00-21:00
+
+            5. **Más contenido de personas reales** - Testimoniales, día a día de trabajadores
+
+            6. **Usar trending audios** en Reels para más alcance
+            """)
+
+        # Tabla de temáticas
+        st.markdown("---")
+        st.subheader("📊 Temáticas Identificadas")
+
+        tematicas = {
+            'Temática': [
+                'Institucional/Corporativo',
+                'Audiencia Pública',
+                'Capacitaciones/Cursos',
+                'Testimoniales de personas',
+                'Desarrollo local',
+                'Medio ambiente/Sostenibilidad',
+                'Eventos y participación'
+            ],
+            'Hashtags relacionados': [
+                '#PSJCobreMendocino, #MineríaResponsable',
+                '#AudienciaPública, #ParticipaciónCiudadana',
+                '#Capacitación, #DesarrolloLocal',
+                'Videos con personas reales',
+                '#DesarrolloLocal, #Uspallata',
+                '#DesarrolloSostenible, #MineríaSostenible',
+                '#MujeresEnRedes, eventos locales'
+            ],
+            'Performance': [
+                '⭐⭐ Bajo engagement',
+                '⭐⭐⭐ Engagement medio',
+                '⭐⭐⭐⭐ Alto engagement',
+                '⭐⭐⭐⭐⭐ Máximo engagement',
+                '⭐⭐⭐ Engagement medio',
+                '⭐⭐ Bajo engagement',
+                '⭐⭐⭐⭐ Alto engagement'
+            ],
+            'Recomendación': [
+                'Reducir, humanizar más',
+                'Mantener pero con más videos',
+                'Aumentar, funciona bien',
+                'PRIORIZAR - Es lo que mejor funciona',
+                'Aumentar con casos reales',
+                'Reencuadrar con datos concretos',
+                'Mantener, genera comunidad'
+            ]
+        }
+
+        st.dataframe(pd.DataFrame(tematicas), use_container_width=True, hide_index=True)
+
+        st.caption(f"Datos actualizados: {datetime.now().strftime('%d/%m/%Y %H:%M')} | Total posts analizados: {len(psjcobre_df)}")
+
+    except FileNotFoundError:
+        st.error("No se encontró el archivo de datos de PSJCobre. Asegurate de que el CSV esté en la ubicación correcta.")
+    except Exception as e:
+        st.error(f"Error al cargar datos: {str(e)}")
 
 
 # ========== PÁGINA: DIPUTADOS EN TWITTER ==========
