@@ -1148,7 +1148,7 @@ elif page == "Análisis PSJCobre":
 
     # Cargar datos del CSV
     try:
-        psjcobre_df = pd.read_csv('/Users/mariova/Downloads/dataset_instagram-scraper_2025-12-04_15-02-27-353.csv')
+        psjcobre_df = pd.read_csv('data/psjcobre_instagram.csv')
 
         # Procesar datos
         psjcobre_df['fecha'] = pd.to_datetime(psjcobre_df['timestamp'])
