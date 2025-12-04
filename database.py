@@ -770,17 +770,27 @@ class SocialDatabase:
         conn.close()
         return articles
 
-    def get_news_results(self, limit: int = 100) -> List[Dict]:
-        """Obtiene los News Results más recientes"""
+    def get_news_results(self, limit: int = 100, hours: int = None) -> List[Dict]:
+        """Obtiene los News Results más recientes, opcionalmente filtrados por horas"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
 
-        cursor.execute('''
-            SELECT title, link, source, snippet, date_published, thumbnail, created_at
-            FROM news_results
-            ORDER BY created_at DESC
-            LIMIT ?
-        ''', (limit,))
+        if hours:
+            # Filtrar por las últimas X horas
+            cursor.execute('''
+                SELECT title, link, source, snippet, date_published, thumbnail, created_at
+                FROM news_results
+                WHERE created_at >= datetime('now', ? || ' hours')
+                ORDER BY created_at DESC
+                LIMIT ?
+            ''', (f'-{hours}', limit))
+        else:
+            cursor.execute('''
+                SELECT title, link, source, snippet, date_published, thumbnail, created_at
+                FROM news_results
+                ORDER BY created_at DESC
+                LIMIT ?
+            ''', (limit,))
 
         columns = ['title', 'link', 'source', 'snippet', 'date_published', 'thumbnail', 'created_at']
         articles = [dict(zip(columns, row)) for row in cursor.fetchall()]
@@ -811,6 +821,15 @@ class SocialDatabase:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute(f'SELECT COUNT(*) FROM {table}')
+        count = cursor.fetchone()[0]
+        conn.close()
+        return count
+
+    def get_post_count(self) -> int:
+        """Obtiene el número total de posts en la base de datos"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute('SELECT COUNT(*) FROM posts')
         count = cursor.fetchone()[0]
         conn.close()
         return count

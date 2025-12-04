@@ -302,9 +302,9 @@ with st.sidebar:
     st.subheader("Período de análisis")
     period_days = st.selectbox(
         "Seleccionar período:",
-        [7, 14, 30],
-        index=1,
-        format_func=lambda x: f"Últimos {x} días"
+        [7, 14, 30, 60, 90, 365],
+        index=4,  # Por defecto 90 días
+        format_func=lambda x: f"Últimos {x} días" if x < 365 else "Todo el histórico"
     )
 
     st.markdown("---")
@@ -712,6 +712,27 @@ elif page == "Dashboard Principal":
     st.markdown('<p class="sub-header">Análisis de impacto y riesgo sociopolítico - Minería en Mendoza</p>', unsafe_allow_html=True)
     st.markdown("---")
 
+    # ===== TOTALES DE LA BASE DE DATOS =====
+    st.subheader("Base de Datos - Totales Históricos")
+
+    # Obtener totales de la BD
+    total_posts_db = db.get_post_count()
+    total_news_db = db.get_article_count('news_results')
+    total_top_stories_db = db.get_article_count('top_stories')
+
+    col_db1, col_db2, col_db3, col_db4 = st.columns(4)
+
+    with col_db1:
+        st.metric("Posts Totales", f"{total_posts_db:,}", help="Total de publicaciones en la base de datos")
+    with col_db2:
+        st.metric("Noticias", f"{total_news_db:,}", help="Noticias de medios recopiladas")
+    with col_db3:
+        st.metric("Top Stories", f"{total_top_stories_db:,}", help="Top Stories de Google News")
+    with col_db4:
+        st.metric("Período Análisis", f"{period_days} días", help="Período seleccionado para el análisis")
+
+    st.markdown("---")
+
     # Generar reporte
     report = analyzer.generate_full_report(days=period_days)
 
@@ -937,28 +958,75 @@ elif page == "Dashboard Principal":
 elif page == "Análisis 48 Horas":
     st.header("Analisis Cualitativo - Ultimas 48 Horas")
 
+    # Mostrar fecha de actualización prominente
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+                padding: 15px 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;">
+        <p style="color: white; margin: 0; font-size: 14px;">
+            <strong>Actualizado:</strong> {datetime.now().strftime('%d de diciembre de %Y - %H:%M hs')} |
+            <strong>Período:</strong> 1-3 de diciembre 2025
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.info("""
     **Resumen ejecutivo** de la conversación digital sobre minería en Mendoza,
-    integrando redes sociales y medios de comunicación. Análisis cualitativo sin métricas numéricas.
+    integrando redes sociales y medios de comunicación. Análisis cualitativo basado en datos extraídos.
     """)
 
     # ===== LO QUE MÁS SE HABLÓ =====
     st.markdown("---")
     st.subheader("Lo que mas se hablo")
 
-    st.warning("**Temas dominantes en la conversación**")
+    st.warning("**Temas dominantes en la conversación (1-3 diciembre)**")
 
     st.markdown("""
-- **La aprobación de San Jorge en Diputados:** El tema central fue la media sanción del proyecto minero PSJ Cobre Mendocino. La votación histórica generó una avalancha de contenido tanto a favor como en contra.
+- **El Senado como próximo campo de batalla:** Tras la media sanción en Diputados, toda la atención se centra en el tratamiento en el Senado. Las asambleas mantienen presión y vigilia permanente. El despacho de comisiones dio luz verde a los proyectos PSJ Cobre Mendocino y Malargüe Distrito Minero.
 
-- **Marcha en San Carlos:** Vecinos del Valle de Uco realizaron una importante movilización durante el desfile departamental, visibilizando el rechazo al proyecto en la zona más afectada.
+- **Marcha histórica en San Carlos:** Vecinos marcharon durante el desfile departamental con consignas como "El agua de Mendoza no se negocia". El intendente Alejandro Morillas se posicionó públicamente contra la megaminería, generando una fractura en el radicalismo.
 
-- **El debate Senado vs Calle:** La narrativa "el Palacio o la calle, la minería o el agua" se instaló como eje central del conflicto político.
+- **Misión en Londres:** Jimena Latorre lideró una delegación en la Mining Week de Londres, promocionando a Mendoza en la Bolsa de Londres y reuniéndose con inversores. El gobierno habla de "minería sostenible" mientras en la provincia crece la tensión.
 
-- **Censura al CONICET:** Generó indignación la denuncia sobre censura a un documento científico crítico de la megaminería, amplificando el discurso de falta de transparencia.
+- **Pedido de intervención del COIRCO:** Ambientalistas solicitaron formalmente la intervención del Comité Interjurisdiccional del Río Colorado para evaluar el impacto en la cuenca hídrica compartida.
 
-- **Misión a Londres:** El gobierno provincial promocionó su "modelo de minería sostenible" en el exterior mientras internamente crecía la tensión social.
+- **Convocatoria al "Mendozazo":** En redes sociales circula con fuerza el hashtag #Mendozazo, evocando la histórica pueblada de 1972. Los mensajes llaman a la movilización masiva contra la megaminería.
     """)
+
+    # ===== LO QUE DICEN LOS MEDIOS =====
+    st.markdown("---")
+    st.subheader("Lo que dicen los medios (últimas 48 horas)")
+
+    st.markdown("**Cobertura mediática del conflicto minero**")
+
+    col_med1, col_med2 = st.columns(2)
+
+    with col_med1:
+        st.markdown("**Medios locales/regionales:**")
+        st.markdown("""
+- **Los Andes / Sitio Andino:** Cobertura institucional de la misión en Londres. Enfoque en "vínculos estratégicos" y "transición energética". Tono favorable al gobierno.
+
+- **El Sol Mendoza:** Destacó la "tensión" en el plenario del Senado. Reportó las posturas encontradas de senadores.
+
+- **Diario UNO:** Cobertura equilibrada del debate en el Senado. Mencionó las "posturas encontradas" sobre PSJ Cobre Mendocino.
+
+- **Editor Mendoza:** Tono crítico. Títulos como "Blindan el Senado con policías armados" y "Ruidazo contra la minería". Visibiliza la resistencia social.
+        """)
+
+    with col_med2:
+        st.markdown("**Medios nacionales/alternativos:**")
+        st.markdown("""
+- **TeleSUR:** "Argentina: se movilizan en defensa del agua contra proyecto minero". Cobertura internacional del conflicto.
+
+- **La Izquierda Diario:** "Nueva Gesta Libertadora por el Agua". Enmarca la lucha como continuidad histórica.
+
+- **Prensa Obrera:** "San Jorge: retroceso ambiental que solo beneficia a las mineras". Crítica frontal.
+
+- **Diario San Rafael:** Cobertura de protestas locales y preocupación de productores agrícolas por el agua.
+        """)
+
+    st.info("**Tendencia:** Los medios oficialistas enfatizan el desarrollo económico y la misión internacional. Los medios alternativos y de izquierda amplifican la resistencia social. Los medios locales del sur (San Rafael, General Alvear) muestran mayor sensibilidad al tema hídrico.")
 
     # ===== ALERTA DE CONVOCATORIAS =====
     st.markdown("---")
@@ -967,17 +1035,19 @@ elif page == "Análisis 48 Horas":
     st.error("""
     **ALERTA ALTA - Movilizaciones activas**
 
-    **Sí hay peligro de escalamiento.** Se detectaron múltiples convocatorias activas.
+    **Sí hay peligro de escalamiento.** Se detectaron múltiples convocatorias activas en redes y medios.
     """)
 
     st.markdown("""
-- **Vigilia en la Legislatura:** Se espera concentración permanente durante el tratamiento en el Senado. Las asambleas ambientales mantienen presencia sostenida.
+- **Vigilia permanente en Legislatura:** Las asambleas mantienen presencia 24/7 mientras se espera el tratamiento en el Senado. Coordinación entre grupos de distintos departamentos.
 
-- **Movilización provincial:** Convocatoria de asambleas por el agua para los próximos días en Plaza Independencia.
+- **Hashtag #Mendozazo en tendencia:** La convocatoria a una movilización masiva estilo 1972 circula con fuerza en TikTok y Twitter. Mensajes como "Se viene el Mendozazo" tienen alto engagement.
 
-- **Acciones territoriales:** San Carlos y Valle de Uco se han convertido en focos de resistencia activa con acciones coordinadas.
+- **Valle de Uco como epicentro:** San Carlos se consolida como foco de resistencia. La posición del intendente Morillas contra la minería legitimó aún más las protestas locales.
 
-**El paso al Senado será el momento de mayor tensión. Anticipar cobertura y monitoreo reforzado.**
+- **Articulación nacional:** Medios alternativos (ANRed, La Izquierda Diario, TeleSUR) están amplificando el conflicto a nivel nacional e internacional.
+
+**CRÍTICO: El tratamiento en el Senado es inminente. Se espera máxima tensión social en los próximos días.**
     """)
 
     # ===== PUNTOS DE DOLOR =====
@@ -1023,30 +1093,43 @@ elif page == "Análisis 48 Horas":
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**Estado de situación**")
+        st.markdown("**Estado de situación - 3 de diciembre**")
         st.markdown("""
-El clima digital está **altamente polarizado**. La aprobación en Diputados intensificó
-la movilización opositora mientras el oficialismo acelera la comunicación de beneficios económicos.
+El conflicto ha escalado significativamente. La estrategia del gobierno de promocionar
+la minería en el exterior (Londres) mientras acelera el tratamiento legislativo genera
+una **doble narrativa**: desarrollo económico vs. imposición sin consenso social.
+
+La fractura en el radicalismo (intendente de San Carlos contra la minería) es un hecho
+político relevante que legitimó la resistencia territorial.
         """)
 
-        st.markdown("**Próximos 7 días críticos**")
+        st.markdown("**Próximas 48-72 horas críticas**")
         st.markdown("""
-- El Senado definirá el futuro del proyecto - máxima tensión esperada
-- Las asambleas mantienen la presión en calle
-- Los medios nacionales empiezan a cubrir el conflicto (El Destape, ANRed)
+- **Votación en Senado inminente** - se espera máxima tensión
+- **Vigilia 24/7** de asambleas en la Legislatura
+- **Posible escalada** si se aprueba sin modificaciones
+- **Atención nacional** creciente (TeleSUR, medios alternativos)
         """)
 
     with col2:
-        st.markdown("**Recomendaciones**")
+        st.markdown("**Recomendaciones operativas**")
         st.markdown("""
-- **Monitoreo 24/7** durante tratamiento en Senado
-- **Anticipar narrativas** sobre controles y fiscalización
-- **Territorializar el mensaje** en Valle de Uco con voceros locales
-- **No subestimar** la capacidad de movilización de las asambleas
+- **Monitoreo en tiempo real** durante sesión del Senado
+- **Alerta temprana** ante convocatorias de movilización masiva
+- **Seguimiento del hashtag #Mendozazo** como indicador de escalada
+- **Mapeo de actores clave**: Asambleas, intendente Morillas, senadores indecisos
         """)
 
-    # Timestamp
-    st.caption(f"Análisis generado: {datetime.now().strftime('%d/%m/%Y %H:%M')} | Fuentes: Redes sociales + Medios de comunicación")
+        st.markdown("**Escenarios posibles**")
+        st.markdown("""
+- **Si se aprueba:** Alta probabilidad de movilización masiva tipo "Mendozazo"
+- **Si se rechaza/posterga:** Descompresión parcial, pero el conflicto sigue latente
+- **Variable crítica:** Cómo vote el peronismo en el Senado
+        """)
+
+    # Timestamp con más detalle
+    st.markdown("---")
+    st.caption(f"Análisis generado: {datetime.now().strftime('%d/%m/%Y %H:%M')} | Fuentes: {db.get_post_count():,} posts de redes + {db.get_article_count('news_results')} noticias de medios")
 
 
 # ========== PÁGINA: DIPUTADOS EN TWITTER ==========
@@ -1231,9 +1314,10 @@ elif page == "Datos de Medios":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Obtener datos - sin límite para mostrar todo
+    # Obtener datos - Top Stories (todas) y Noticias (últimas 48 horas reales)
     top_stories = news_scraper.get_top_stories(limit=500)
-    all_news = news_scraper.get_all_news(limit=500)
+    all_news = news_scraper.get_all_news(limit=500, hours=48)  # Filtrar últimas 48 horas
+    all_news_total = news_scraper.get_all_news(limit=500)  # Todas las noticias para estadísticas
 
     # ========== SECCIÓN 1: TOP STORIES ==========
     st.subheader("Noticias destacadas en Google Top Stories")
@@ -1325,6 +1409,8 @@ elif page == "Datos de Medios":
     if all_news:
         df_news = pd.DataFrame(all_news)
 
+        st.success(f"Se encontraron **{len(all_news)} noticias** en las últimas 48 horas")
+
         # Filtro por medio
         all_sources = ["Todos"] + sorted(df_news['source'].dropna().unique().tolist())
         selected_source = st.selectbox("Filtrar por medio:", all_sources)
@@ -1364,18 +1450,22 @@ elif page == "Datos de Medios":
                     df_media_news,
                     values='count',
                     names='source',
-                    title='Distribución de Noticias por Medio (últimas 48 horas)'
+                    title='Distribución de Noticias por Medio (Total histórico)'
                 )
                 fig2.update_traces(textposition='inside', textinfo='percent+label')
                 st.plotly_chart(fig2, use_container_width=True)
 
             with col_stats2:
-                st.metric("Total Noticias (48h)", len(df_news_filtered))
+                st.metric("Noticias (48h)", len(df_news_filtered))
+                st.metric("Total Histórico", len(all_news_total))
                 st.metric("Medios Únicos", df_news_filtered['source'].nunique())
         else:
             st.info("No hay suficientes datos para mostrar estadísticas de medios")
     else:
-        st.info("No hay noticias almacenadas. Haz clic en 'Actualizar Noticias' para comenzar.")
+        # No hay noticias en las últimas 48 horas
+        st.warning("No hay noticias de las últimas 48 horas. La última actualización fue hace más de 48 horas.")
+        if all_news_total:
+            st.info(f"Hay **{len(all_news_total)} noticias** en el histórico. Haz clic en 'Actualizar Noticias' para obtener las más recientes.")
 
 
 # ========== PÁGINA: ANÁLISIS POR PLATAFORMA ==========

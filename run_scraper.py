@@ -25,19 +25,27 @@ def run_all_scrapers(platforms=None, fetch_keywords=True, fetch_accounts=True,
     if platforms is None:
         platforms = list(all_scrapers.keys())
 
+    # Filtrar plataformas válidas
+    valid_platforms = [p for p in platforms if p in all_scrapers]
+    total_platforms = len(valid_platforms)
+
     print("\n" + "="*80)
     print("MONITOR SOCIAL - SCRAPING DE REDES SOCIALES")
     print("="*80)
     print(f"Inicio: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Plataformas: {', '.join(platforms)}")
+    print(f"Plataformas: {', '.join(platforms)} ({total_platforms} total)")
     print("="*80)
 
     results = {}
 
-    for platform in platforms:
+    for i, platform in enumerate(platforms):
+        platform_progress = ((i + 1) / total_platforms) * 100 if total_platforms > 0 else 0
+
         if platform not in all_scrapers:
-            print(f"\n⚠️ Plataforma '{platform}' no reconocida, saltando...")
+            print(f"\n[{platform_progress:5.1f}%] Plataforma '{platform}' no reconocida, saltando...")
             continue
+
+        print(f"\n[{platform_progress:5.1f}%] Iniciando scraping de {platform.upper()}...")
 
         try:
             scraper = all_scrapers[platform]()
@@ -48,8 +56,9 @@ def run_all_scrapers(platforms=None, fetch_keywords=True, fetch_accounts=True,
                 max_per_account=max_per_account
             )
             results[platform] = result
+            print(f"[{platform_progress:5.1f}%] {platform.upper()} completado")
         except Exception as e:
-            print(f"\n❌ Error en {platform}: {e}")
+            print(f"\n[{platform_progress:5.1f}%] Error en {platform}: {e}")
             results[platform] = {'error': str(e)}
 
     # Resumen final

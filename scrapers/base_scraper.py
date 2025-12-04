@@ -244,11 +244,19 @@ class BaseScraper(ABC):
             'totals': {'new': 0, 'updated': 0}
         }
 
+        # Calcular total de tareas para mostrar progreso
+        keywords_to_process = self.keywords[:5] if fetch_by_keywords else []
+        accounts = self.db.get_monitored_accounts(platform=self.platform) if fetch_by_accounts else []
+        total_tasks = len(keywords_to_process) + len(accounts)
+        completed_tasks = 0
+
         # Búsqueda por palabras clave
         if fetch_by_keywords:
-            print(f"\n1. Buscando por palabras clave...")
-            for keyword in self.keywords[:5]:  # Limitar a 5 keywords principales
-                print(f"   Buscando: '{keyword}'...")
+            print(f"\n1. Buscando por palabras clave ({len(keywords_to_process)} keywords)...")
+            for i, keyword in enumerate(keywords_to_process):
+                completed_tasks += 1
+                progress = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0
+                print(f"   [{progress:5.1f}%] Buscando: '{keyword}'...")
                 try:
                     posts = self.fetch_by_keyword(keyword, max_per_keyword)
                     if posts:
@@ -256,19 +264,22 @@ class BaseScraper(ABC):
                         results['by_keyword'][keyword] = result
                         results['totals']['new'] += result['new']
                         results['totals']['updated'] += result['updated']
-                        print(f"   -> {result['new']} nuevos, {result['updated']} actualizados")
+                        print(f"   [{progress:5.1f}%] -> {result['new']} nuevos, {result['updated']} actualizados")
+                    else:
+                        print(f"   [{progress:5.1f}%] -> Sin resultados")
                 except Exception as e:
-                    print(f"   -> Error: {e}")
+                    print(f"   [{progress:5.1f}%] -> Error: {e}")
                     results['by_keyword'][keyword] = {'error': str(e)}
 
         # Búsqueda por cuentas monitoreadas
         if fetch_by_accounts:
-            print(f"\n2. Obteniendo posts de cuentas monitoreadas...")
-            accounts = self.db.get_monitored_accounts(platform=self.platform)
+            print(f"\n2. Obteniendo posts de cuentas monitoreadas ({len(accounts)} cuentas)...")
 
             for account in accounts:
+                completed_tasks += 1
+                progress = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0
                 username = account['username']
-                print(f"   Cuenta: @{username}...")
+                print(f"   [{progress:5.1f}%] Cuenta: @{username}...")
                 try:
                     posts = self.fetch_by_account(username, max_per_account)
                     if posts:
@@ -276,9 +287,11 @@ class BaseScraper(ABC):
                         results['by_account'][username] = result
                         results['totals']['new'] += result['new']
                         results['totals']['updated'] += result['updated']
-                        print(f"   -> {result['new']} nuevos, {result['updated']} actualizados")
+                        print(f"   [{progress:5.1f}%] -> {result['new']} nuevos, {result['updated']} actualizados")
+                    else:
+                        print(f"   [{progress:5.1f}%] -> Sin resultados")
                 except Exception as e:
-                    print(f"   -> Error: {e}")
+                    print(f"   [{progress:5.1f}%] -> Error: {e}")
                     results['by_account'][username] = {'error': str(e)}
 
         # Log del scraping

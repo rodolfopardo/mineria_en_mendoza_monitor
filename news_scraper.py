@@ -161,23 +161,35 @@ class MineriaNewsScraper:
         total_new_top_stories = 0
         total_new_news = 0
 
+        # Calcular progreso total (2 búsquedas por keyword: top stories + news)
+        total_tasks = len(self.keywords) * 2
+        completed_tasks = 0
+
+        print(f"\nProcesando {len(self.keywords)} keywords ({total_tasks} búsquedas totales)...")
+
         # Buscar con cada palabra clave
-        for keyword in self.keywords:
+        for i, keyword in enumerate(self.keywords):
             print(f"\n{'='*60}")
-            print(f"Buscando: {keyword}")
+            print(f"Keyword {i+1}/{len(self.keywords)}: {keyword}")
             print(f"{'='*60}")
 
             # Obtener Top Stories
-            print(f"\nBuscando Top Stories para '{keyword}'...")
+            completed_tasks += 1
+            progress = (completed_tasks / total_tasks) * 100
+            print(f"\n[{progress:5.1f}%] Buscando Top Stories para '{keyword}'...")
             top_stories_results = self.fetch_top_stories(keyword)
             new_top_stories = self.parse_and_store_top_stories(top_stories_results)
             total_new_top_stories += new_top_stories
+            print(f"[{progress:5.1f}%] -> {new_top_stories} Top Stories nuevas")
 
             # Obtener noticias recientes (últimas 48 horas)
-            print(f"\nBuscando noticias de últimas 48 horas para '{keyword}'...")
+            completed_tasks += 1
+            progress = (completed_tasks / total_tasks) * 100
+            print(f"\n[{progress:5.1f}%] Buscando noticias de últimas 48 horas para '{keyword}'...")
             recent_news_results = self.fetch_recent_news(keyword, hours=48)
             new_news = self.parse_and_store_news_results(recent_news_results)
             total_new_news += new_news
+            print(f"[{progress:5.1f}%] -> {new_news} noticias nuevas")
 
         summary = {
             'timestamp': datetime.now().isoformat(),
@@ -199,9 +211,9 @@ class MineriaNewsScraper:
         """Obtiene las últimas Top Stories almacenadas"""
         return self.db.get_top_stories_news(limit)
 
-    def get_all_news(self, limit: int = 100) -> List[Dict]:
-        """Obtiene todas las noticias almacenadas"""
-        return self.db.get_news_results(limit)
+    def get_all_news(self, limit: int = 100, hours: int = None) -> List[Dict]:
+        """Obtiene todas las noticias almacenadas, opcionalmente filtradas por horas"""
+        return self.db.get_news_results(limit, hours=hours)
 
 
 if __name__ == "__main__":
