@@ -154,7 +154,12 @@ def check_password():
                 submitted = st.form_submit_button("Ingresar", use_container_width=True, type="primary")
 
                 if submitted:
-                    if username == "identidadcentral" and password == "hipo":
+                    # Credenciales válidas
+                    valid_users = {
+                        "identidadcentral": "hipo",
+                        "valentina": "mineria"
+                    }
+                    if username in valid_users and password == valid_users[username]:
                         st.session_state["authenticated"] = True
                         st.rerun()
                     else:
