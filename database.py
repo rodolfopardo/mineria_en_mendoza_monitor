@@ -350,12 +350,8 @@ class SocialDatabase:
 
         date_filter = datetime.now() - timedelta(days=days)
 
-        # Filtro de relevancia (solo posts sobre Mendoza/minería local)
-        # Twitter no tiene el campo marcado, así que lo excluimos del filtro
-        if only_relevant and platform != 'twitter':
-            relevance_filter = "AND (is_mendoza_relevant = 1 OR is_mendoza_relevant IS NULL)"
-        else:
-            relevance_filter = ""
+        # Filtro de relevancia desactivado - todos los datos scrapeados son relevantes para Mendoza
+        relevance_filter = ""
 
         # Usar post_date (fecha real del post) en lugar de scraped_at
         date_column = "post_date" if filter_by_post_date else "scraped_at"
@@ -389,9 +385,7 @@ class SocialDatabase:
         date_filter = datetime.now() - timedelta(days=days)
 
         where_clauses = [f"post_date >= '{date_filter.isoformat()}'"]
-        if only_relevant:
-            # Twitter no tiene el campo marcado, así que lo incluimos siempre
-            where_clauses.append("(is_mendoza_relevant = 1 OR is_mendoza_relevant IS NULL OR platform = 'twitter')")
+        # Filtro de relevancia desactivado - todos los datos scrapeados son relevantes para Mendoza
 
         where_sql = "WHERE " + " AND ".join(where_clauses)
 
