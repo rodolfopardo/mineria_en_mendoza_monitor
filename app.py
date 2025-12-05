@@ -295,9 +295,8 @@ with st.sidebar:
             "Estrategia",
             "Convocatorias",
             "Casos de Estudio",
-            "En Vivo",
-            "Diputados en Twitter",
-            "Configuración"
+            "En Vivo: Sesión Diputados",
+            "Diputados en Twitter"
         ],
         index=0
     )
@@ -308,9 +307,9 @@ with st.sidebar:
     st.subheader("Período de análisis")
     period_days = st.selectbox(
         "Seleccionar período:",
-        [7, 14, 30, 60, 90, 365],
-        index=4,  # Por defecto 90 días
-        format_func=lambda x: f"Últimos {x} días" if x < 365 else "Todo el histórico"
+        [2, 7, 14, 30, 60, 90, 365],
+        index=0,  # Por defecto últimas 48 horas
+        format_func=lambda x: "Últimas 48 horas" if x == 2 else (f"Últimos {x} días" if x < 365 else "Todo el histórico")
     )
 
     st.markdown("---")
@@ -333,8 +332,8 @@ with st.sidebar:
     st.caption(f"Última actualización: {datetime.now().strftime('%d/%m/%Y %H:%M')}")
 
 
-# ========== PÁGINA: EN VIVO ==========
-if page == "En Vivo":
+# ========== PÁGINA: EN VIVO: SESIÓN DIPUTADOS ==========
+if page == "En Vivo: Sesión Diputados":
     st.markdown('<p class="main-header">📺 Sesión Legislativa - Votación San Jorge</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Sesión Histórica: Aprobación del Proyecto PSJ Cobre Mendocino - 26 de Noviembre 2025</p>', unsafe_allow_html=True)
     st.markdown("---")
@@ -972,7 +971,7 @@ elif page == "Análisis 48 Horas":
                 margin-bottom: 20px;">
         <p style="color: white; margin: 0; font-size: 14px;">
             <strong>Actualizado:</strong> {datetime.now().strftime('%d de diciembre de %Y - %H:%M hs')} |
-            <strong>Período:</strong> 1-3 de diciembre 2025
+            <strong>Período:</strong> 3-5 de diciembre 2025
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -986,18 +985,18 @@ elif page == "Análisis 48 Horas":
     st.markdown("---")
     st.subheader("Lo que mas se hablo")
 
-    st.warning("**Temas dominantes en la conversación (1-3 diciembre)**")
+    st.warning("**Temas dominantes en la conversación (3-5 diciembre)**")
 
     st.markdown("""
-- **El Senado como próximo campo de batalla:** Tras la media sanción en Diputados, toda la atención se centra en el tratamiento en el Senado. Las asambleas mantienen presión y vigilia permanente. El despacho de comisiones dio luz verde a los proyectos PSJ Cobre Mendocino y Malargüe Distrito Minero.
+- **Ley de Glaciares en el centro del debate:** La modificación de la Ley de Glaciares domina la agenda. El Gobierno Nacional ya tiene redactada una "ley aclaratoria" para destrabar proyectos mineros. Gobernadores de provincias mineras coordinan postura común. Milei convocó a sesiones extraordinarias.
 
-- **Marcha histórica en San Carlos:** Vecinos marcharon durante el desfile departamental con consignas como "El agua de Mendoza no se negocia". El intendente Alejandro Morillas se posicionó públicamente contra la megaminería, generando una fractura en el radicalismo.
+- **Movilizaciones en defensa de la Ley de Glaciares:** Marchas simultáneas en San Juan y otras provincias reclamando que no se modifique la normativa. El hashtag #LeyDeGlaciares en tendencia. Organizaciones ambientalistas alertan sobre retroceso ambiental.
 
-- **Misión en Londres:** Jimena Latorre lideró una delegación en la Mining Week de Londres, promocionando a Mendoza en la Bolsa de Londres y reuniéndose con inversores. El gobierno habla de "minería sostenible" mientras en la provincia crece la tensión.
+- **Senado de Mendoza aprobó los proyectos:** PSJ Cobre Mendocino y Malargüe Distrito Minero recibieron aprobación definitiva. Alta tensión social y operativo policial durante la votación. Protestas en distintos puntos de la provincia.
 
-- **Pedido de intervención del COIRCO:** Ambientalistas solicitaron formalmente la intervención del Comité Interjurisdiccional del Río Colorado para evaluar el impacto en la cuenca hídrica compartida.
+- **Cornejo apuesta todo a la minería:** En el evento de fin de año de Los Andes, el gobernador pidió la aprobación de los proyectos en el Senado nacional. Latorre cerró la misión en Londres promocionando el potencial minero mendocino.
 
-- **Convocatoria al "Mendozazo":** En redes sociales circula con fuerza el hashtag #Mendozazo, evocando la histórica pueblada de 1972. Los mensajes llaman a la movilización masiva contra la megaminería.
+- **Valle de Uco mantiene resistencia activa:** San Carlos, Tupungato y Tunuyán continúan con movilizaciones periódicas. La consigna "El agua vale más que el oro" sigue vigente en redes.
     """)
 
     # ===== LO QUE DICEN LOS MEDIOS =====
@@ -1009,51 +1008,51 @@ elif page == "Análisis 48 Horas":
     col_med1, col_med2 = st.columns(2)
 
     with col_med1:
-        st.markdown("**Medios locales/regionales:**")
+        st.markdown("**Medios pro-minería/oficialistas:**")
         st.markdown("""
-- **Los Andes / Sitio Andino:** Cobertura institucional de la misión en Londres. Enfoque en "vínculos estratégicos" y "transición energética". Tono favorable al gobierno.
+- **Los Andes:** Cornejo pidió que se aprueben los proyectos mineros. Cobertura del fin de año del diario con foco en desarrollo económico.
 
-- **El Sol Mendoza:** Destacó la "tensión" en el plenario del Senado. Reportó las posturas encontradas de senadores.
+- **Sitio Andino / Mejor Energía:** Amplia cobertura de la misión de Latorre en Londres. "Mendoza como hub de minerales críticos".
 
-- **Diario UNO:** Cobertura equilibrada del debate en el Senado. Mencionó las "posturas encontradas" sobre PSJ Cobre Mendocino.
+- **Diario de Cuyo / Tiempo de San Juan:** Foco en la modificación de Ley de Glaciares como oportunidad para el "despegue minero".
 
-- **Editor Mendoza:** Tono crítico. Títulos como "Blindan el Senado con policías armados" y "Ruidazo contra la minería". Visibiliza la resistencia social.
+- **Editorial RN / Futuro Sustentable:** Cobertura técnica del texto de la ley aclaratoria. Tono favorable a la "clarificación normativa".
         """)
 
     with col_med2:
-        st.markdown("**Medios nacionales/alternativos:**")
+        st.markdown("**Medios críticos/ambientalistas:**")
         st.markdown("""
-- **TeleSUR:** "Argentina: se movilizan en defensa del agua contra proyecto minero". Cobertura internacional del conflicto.
+- **Indymedia Argentina:** "Se realizan acciones en todo el país en defensa de la Ley de Glaciares". Cobertura de protestas.
 
-- **La Izquierda Diario:** "Nueva Gesta Libertadora por el Agua". Enmarca la lucha como continuidad histórica.
+- **La Mecha:** "Ley de Glaciares: resistencias y movimiento estratégico". Análisis crítico del avance minero.
 
-- **Prensa Obrera:** "San Jorge: retroceso ambiental que solo beneficia a las mineras". Crítica frontal.
+- **0264 Noticias (San Juan):** "Manifestantes reclamaron contra modificación de Ley de Glaciares". Cobertura de protestas locales.
 
-- **Diario San Rafael:** Cobertura de protestas locales y preocupación de productores agrícolas por el agua.
+- **El País Diario:** "En San Juan hubo marcha reclamando vigencia de la Ley de Glaciares".
         """)
 
-    st.info("**Tendencia:** Los medios oficialistas enfatizan el desarrollo económico y la misión internacional. Los medios alternativos y de izquierda amplifican la resistencia social. Los medios locales del sur (San Rafael, General Alvear) muestran mayor sensibilidad al tema hídrico.")
+    st.info("**Tendencia:** El debate nacional sobre la Ley de Glaciares polariza la cobertura. Los medios sanjuaninos (donde más impactaría) son más activos. Los medios pro-desarrollo enmarcan la modificación como 'clarificación'. Los ambientalistas alertan sobre retroceso en protección ambiental.")
 
     # ===== ALERTA DE CONVOCATORIAS =====
     st.markdown("---")
     st.subheader("Riesgo de Convocatorias y Movilizaciones")
 
     st.error("""
-    **ALERTA ALTA - Movilizaciones activas**
+    **ALERTA ALTA - Movilizaciones a nivel nacional**
 
-    **Sí hay peligro de escalamiento.** Se detectaron múltiples convocatorias activas en redes y medios.
+    **Riesgo de escalamiento por debate de Ley de Glaciares.** Sesiones extraordinarias convocadas por Milei.
     """)
 
     st.markdown("""
-- **Vigilia permanente en Legislatura:** Las asambleas mantienen presencia 24/7 mientras se espera el tratamiento en el Senado. Coordinación entre grupos de distintos departamentos.
+- **Movilizaciones en defensa de Ley de Glaciares:** Protestas en San Juan y otras provincias mineras. Coordinación nacional entre asambleas ambientalistas. Hashtag #LeyDeGlaciares activo.
 
-- **Hashtag #Mendozazo en tendencia:** La convocatoria a una movilización masiva estilo 1972 circula con fuerza en TikTok y Twitter. Mensajes como "Se viene el Mendozazo" tienen alto engagement.
+- **Sesiones extraordinarias inminentes:** El tratamiento de la ley aclaratoria en el Congreso Nacional generará nueva ola de movilizaciones. Organizaciones anticipan protestas en Buenos Aires.
 
-- **Valle de Uco como epicentro:** San Carlos se consolida como foco de resistencia. La posición del intendente Morillas contra la minería legitimó aún más las protestas locales.
+- **Mendoza post-aprobación:** Tras la aprobación en el Senado provincial, las asambleas mantienen estado de alerta. Preparación para resistencia a la implementación de proyectos.
 
-- **Articulación nacional:** Medios alternativos (ANRed, La Izquierda Diario, TeleSUR) están amplificando el conflicto a nivel nacional e internacional.
+- **Articulación interprovincial:** San Juan, Mendoza, Catamarca y La Rioja coordinan acciones conjuntas. El conflicto adquiere dimensión federal.
 
-**CRÍTICO: El tratamiento en el Senado es inminente. Se espera máxima tensión social en los próximos días.**
+**CRÍTICO: Las sesiones extraordinarias del Congreso Nacional serán el próximo punto de máxima tensión.**
     """)
 
     # ===== PUNTOS DE DOLOR =====
@@ -2348,115 +2347,6 @@ elif page == "Estrategia":
     independientes y creíbles. El éxito depende de la autenticidad del contenido y de
     evitar que parezca comunicación corporativa o gubernamental.
     """)
-
-
-# ========== PÁGINA: CONFIGURACIÓN ==========
-elif page == "Configuración":
-    st.header("Configuración del Monitor")
-
-    tab1, tab2, tab3 = st.tabs(["Palabras Clave", "Cuentas Monitoreadas", "Scraping Manual"])
-
-    with tab1:
-        st.subheader("Palabras Clave de Búsqueda")
-
-        keywords = db.get_active_keywords()
-        df_keywords = pd.DataFrame(keywords)
-
-        st.dataframe(df_keywords, hide_index=True, use_container_width=True)
-
-        st.markdown("---")
-
-        col1, col2 = st.columns(2)
-        with col1:
-            new_keyword = st.text_input("Nueva palabra clave:")
-        with col2:
-            new_category = st.selectbox("Categoría:", ["general", "consigna", "movilizacion", "proyecto", "legal", "ambiental"])
-
-        if st.button("Agregar palabra clave"):
-            if new_keyword:
-                if db.add_keyword(new_keyword, new_category):
-                    st.success(f"Palabra clave '{new_keyword}' agregada")
-                    st.rerun()
-                else:
-                    st.error("Error al agregar palabra clave")
-
-    with tab2:
-        st.subheader("Cuentas Monitoreadas")
-
-        accounts = db.get_monitored_accounts()
-        df_accounts = pd.DataFrame(accounts)
-
-        if not df_accounts.empty:
-            st.dataframe(
-                df_accounts[['platform', 'username', 'display_name', 'account_type', 'is_key_account']],
-                hide_index=True,
-                use_container_width=True
-            )
-
-        st.markdown("---")
-
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            new_platform = st.selectbox("Plataforma:", ["instagram", "facebook", "tiktok", "twitter"])
-        with col2:
-            new_username = st.text_input("Username:")
-        with col3:
-            new_type = st.selectbox("Tipo:", ["influencer", "organizacion", "asamblea", "medio", "politico"])
-
-        if st.button("Agregar cuenta"):
-            if new_username:
-                if db.add_monitored_account(new_platform, new_username, account_type=new_type, is_key=True):
-                    st.success(f"Cuenta @{new_username} agregada")
-                    st.rerun()
-                else:
-                    st.error("Error al agregar cuenta")
-
-    with tab3:
-        st.subheader("Scraping Manual")
-
-        if not SCRAPING_ENABLED:
-            st.warning("⚠️ Scraping no disponible. Configure APIFY_TOKEN en los secretos de Streamlit Cloud para habilitar esta funcion.")
-            st.info("El dashboard funciona con los datos precargados en la base de datos.")
-        else:
-            st.warning("⚠️ El scraping consume creditos de la API de Apify. Usar con moderacion.")
-
-            col1, col2 = st.columns(2)
-
-            with col1:
-                scrape_platform = st.selectbox(
-                    "Seleccionar plataforma:",
-                    ["Instagram", "Facebook", "TikTok", "Twitter"]
-                )
-
-            with col2:
-                max_results = st.number_input("Maximo de resultados:", min_value=5, max_value=100, value=20)
-
-            if st.button("Ejecutar Scraping", type="primary"):
-                with st.spinner(f"Scrapeando {scrape_platform}..."):
-                    try:
-                        scrapers = {
-                            "Instagram": InstagramScraper,
-                            "Facebook": FacebookScraper,
-                            "TikTok": TikTokScraper,
-                            "Twitter": TwitterScraper
-                        }
-
-                        scraper = scrapers[scrape_platform]()
-                        results = scraper.run(
-                            fetch_by_keywords=True,
-                            fetch_by_accounts=True,
-                            max_per_keyword=max_results,
-                            max_per_account=max_results // 2
-                        )
-
-                        st.success(f"""
-                        Scraping completado:
-                        - Posts nuevos: {results['totals']['new']}
-                        - Posts actualizados: {results['totals']['updated']}
-                        """)
-
-                    except Exception as e:
-                        st.error(f"Error durante el scraping: {e}")
 
 
 # Footer
