@@ -436,11 +436,9 @@ class SocialDatabase:
 
         date_filter = datetime.now() - timedelta(days=days)
 
-        # Filtro de relevancia: Twitter no tiene el campo marcado, así que lo excluimos del filtro
-        if only_relevant:
-            relevance_filter = "AND (is_mendoza_relevant = 1 OR is_mendoza_relevant IS NULL OR platform = 'twitter')"
-        else:
-            relevance_filter = ""
+        # Filtro de relevancia: Incluir todas las plataformas (el campo is_mendoza_relevant no está bien marcado)
+        # Por ahora desactivamos el filtro ya que todos los datos son relevantes para Mendoza
+        relevance_filter = ""
 
         # Usar post_date para filtrar por fecha real de publicación
         cursor.execute(f'''
