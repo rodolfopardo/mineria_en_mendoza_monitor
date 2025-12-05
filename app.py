@@ -970,7 +970,7 @@ elif page == "Análisis 48 Horas":
                 border-radius: 10px;
                 margin-bottom: 20px;">
         <p style="color: white; margin: 0; font-size: 14px;">
-            <strong>Actualizado:</strong> {datetime.now().strftime('%d de diciembre de %Y - %H:%M hs')} |
+            <strong>Actualizado:</strong> 05 de diciembre de 2025 |
             <strong>Período:</strong> 3-5 de diciembre 2025
         </p>
     </div>
