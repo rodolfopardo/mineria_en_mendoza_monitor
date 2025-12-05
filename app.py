@@ -992,7 +992,7 @@ elif page == "Análisis 48 Horas":
 
 - **Movilizaciones en defensa de la Ley de Glaciares:** Marchas simultáneas en San Juan y otras provincias reclamando que no se modifique la normativa. El hashtag #LeyDeGlaciares en tendencia. Organizaciones ambientalistas alertan sobre retroceso ambiental.
 
-- **Senado de Mendoza aprobó los proyectos:** PSJ Cobre Mendocino y Malargüe Distrito Minero recibieron aprobación definitiva. Alta tensión social y operativo policial durante la votación. Protestas en distintos puntos de la provincia.
+- **Senado de Mendoza: despacho favorable en comisiones:** PSJ Cobre Mendocino y Malargüe Distrito Minero recibieron luz verde en el plenario de comisiones. Alta tensión social y operativo policial durante la sesión. La votación definitiva en el recinto aún está pendiente.
 
 - **Cornejo apuesta todo a la minería:** En el evento de fin de año de Los Andes, el gobernador pidió la aprobación de los proyectos en el Senado nacional. Latorre cerró la misión en Londres promocionando el potencial minero mendocino.
 
@@ -1048,7 +1048,7 @@ elif page == "Análisis 48 Horas":
 
 - **Sesiones extraordinarias inminentes:** El tratamiento de la ley aclaratoria en el Congreso Nacional generará nueva ola de movilizaciones. Organizaciones anticipan protestas en Buenos Aires.
 
-- **Mendoza post-aprobación:** Tras la aprobación en el Senado provincial, las asambleas mantienen estado de alerta. Preparación para resistencia a la implementación de proyectos.
+- **Mendoza: votación en Senado inminente:** Tras el despacho favorable de comisiones, la votación definitiva en el recinto está próxima. Las asambleas mantienen vigilia permanente y estado de alerta máxima.
 
 - **Articulación interprovincial:** San Juan, Mendoza, Catamarca y La Rioja coordinan acciones conjuntas. El conflicto adquiere dimensión federal.
 
