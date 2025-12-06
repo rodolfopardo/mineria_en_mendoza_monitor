@@ -288,15 +288,9 @@ with st.sidebar:
         [
             "Análisis 48 Horas",
             "Análisis PSJCobre",
-            "Dashboard Principal",
             "Datos de Medios",
             "Análisis por Plataforma",
-            "Publicaciones",
-            "Estrategia",
-            "Convocatorias",
-            "Casos de Estudio",
-            "En Vivo: Sesión Diputados",
-            "Diputados en Twitter"
+            "Detector de Convocatorias"
         ],
         index=0
     )
@@ -1964,9 +1958,9 @@ elif page == "Publicaciones":
         st.info("No hay publicaciones para mostrar")
 
 
-# ========== PÁGINA: CONVOCATORIAS ==========
-elif page == "Convocatorias":
-    st.header("Convocatorias a Movilización Detectadas")
+# ========== PÁGINA: DETECTOR DE CONVOCATORIAS ==========
+elif page == "Detector de Convocatorias":
+    st.header("Detector de Convocatorias a Movilización")
 
     st.markdown("""
     <div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
