@@ -1,0 +1,45 @@
+name: Daily Scraper
+
+on:
+  schedule:
+    # Corre todos los días a las 10:00 UTC (7:00 AM Argentina)
+    - cron: '0 10 * * *'
+  workflow_dispatch:  # Permite ejecutar manualmente
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-search-results apify-client python-dotenv pandas
+
+      - name: Run news scraper
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+        run: python news_scraper.py
+
+      - name: Run social media scraper
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+        run: python run_scraper.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add social_monitor.db
+          git diff --staged --quiet || git commit -m "🤖 Daily scraper update - $(date +'%Y-%m-%d')"
+          git push
