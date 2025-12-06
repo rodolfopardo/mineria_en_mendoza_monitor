@@ -970,8 +970,8 @@ elif page == "Análisis 48 Horas":
                 border-radius: 10px;
                 margin-bottom: 20px;">
         <p style="color: white; margin: 0; font-size: 14px;">
-            <strong>Actualizado:</strong> 05 de diciembre de 2025 |
-            <strong>Período:</strong> 3-5 de diciembre 2025
+            <strong>Actualizado:</strong> 06 de diciembre de 2025 |
+            <strong>Período:</strong> 5-6 de diciembre 2025
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -985,18 +985,18 @@ elif page == "Análisis 48 Horas":
     st.markdown("---")
     st.subheader("Lo que mas se hablo")
 
-    st.warning("**Temas dominantes en la conversación (3-5 diciembre)**")
+    st.warning("**Temas dominantes en la conversación (5-6 diciembre)**")
 
     st.markdown("""
-- **Ley de Glaciares en el centro del debate:** La modificación de la Ley de Glaciares domina la agenda. El Gobierno Nacional ya tiene redactada una "ley aclaratoria" para destrabar proyectos mineros. Gobernadores de provincias mineras coordinan postura común. Milei convocó a sesiones extraordinarias.
+- **Gobierno redactó "ley aclaratoria" de Glaciares:** El Ejecutivo Nacional ya tiene listo el texto para destrabar proyectos mineros. La modificación entrará en sesiones extraordinarias convocadas por Milei. Esto genera máxima alarma en el movimiento ambientalista.
 
-- **Movilizaciones en defensa de la Ley de Glaciares:** Marchas simultáneas en San Juan y otras provincias reclamando que no se modifique la normativa. El hashtag #LeyDeGlaciares en tendencia. Organizaciones ambientalistas alertan sobre retroceso ambiental.
+- **Jornada plurinacional en defensa de la Ley de Glaciares:** Más de 30 ciudades se movilizaron simultáneamente en todo el país (San Juan, Mendoza, El Calafate, El Chaltén, Santa Cruz). Coordinación nacional sin precedentes entre asambleas.
 
-- **Senado de Mendoza: despacho favorable en comisiones:** PSJ Cobre Mendocino y Malargüe Distrito Minero recibieron luz verde en el plenario de comisiones. Alta tensión social y operativo policial durante la sesión. La votación definitiva en el recinto aún está pendiente.
+- **Mendoza prepara "inmensa marcha" para el martes:** Las asambleas convocan a movilización masiva contra la megaminería. El gobierno anticipa "corralito" en plaza Independencia para contener manifestantes durante el debate en el Senado.
 
-- **Cornejo apuesta todo a la minería:** En el evento de fin de año de Los Andes, el gobernador pidió la aprobación de los proyectos en el Senado nacional. Latorre cerró la misión en Londres promocionando el potencial minero mendocino.
+- **Sesiones extraordinarias confirmadas:** Milei impulsará 6 ejes en diciembre, incluyendo la modificación de la Ley de Glaciares. Forbes y medios económicos anticipan extensión del RIGI durante el verano.
 
-- **Valle de Uco mantiene resistencia activa:** San Carlos, Tupungato y Tunuyán continúan con movilizaciones periódicas. La consigna "El agua vale más que el oro" sigue vigente en redes.
+- **Hebe Casado confía en aprobación de San Jorge:** La vicegobernadora mantiene optimismo pese a las protestas. El oficialismo prepara operativo policial para la votación definitiva.
     """)
 
     # ===== LO QUE DICEN LOS MEDIOS =====
@@ -1010,49 +1010,49 @@ elif page == "Análisis 48 Horas":
     with col_med1:
         st.markdown("**Medios pro-minería/oficialistas:**")
         st.markdown("""
-- **Los Andes:** Cornejo pidió que se aprueben los proyectos mineros. Cobertura del fin de año del diario con foco en desarrollo económico.
+- **MDZ Online:** "Hebe Casado confía en aprobación de San Jorge pese a las protestas". Cobertura de la postura oficial del gobierno.
 
-- **Sitio Andino / Mejor Energía:** Amplia cobertura de la misión de Latorre en Londres. "Mendoza como hub de minerales críticos".
+- **Forbes Argentina:** "El gobierno anunciaría extensión del RIGI durante el verano". Foco en incentivos a la inversión minera.
 
-- **Diario de Cuyo / Tiempo de San Juan:** Foco en la modificación de Ley de Glaciares como oportunidad para el "despegue minero".
+- **Panorama Minero:** "Epiroc acelera transición hacia minería inteligente en el Cono Sur". Cobertura técnica favorable.
 
-- **Editorial RN / Futuro Sustentable:** Cobertura técnica del texto de la ley aclaratoria. Tono favorable a la "clarificación normativa".
+- **Editorial RN / Futuro Sustentable:** "Brindis minero: un muy buen año 2026". Tono optimista sobre el futuro del sector.
         """)
 
     with col_med2:
         st.markdown("**Medios críticos/ambientalistas:**")
         st.markdown("""
-- **Indymedia Argentina:** "Se realizan acciones en todo el país en defensa de la Ley de Glaciares". Cobertura de protestas.
+- **El Grito del Sur:** "El agua bajo amenaza: el plan del Gobierno para modificar la Ley de Glaciares". Investigación sobre el proyecto de ley.
 
-- **La Mecha:** "Ley de Glaciares: resistencias y movimiento estratégico". Análisis crítico del avance minero.
+- **Noticias Ambientales:** "Jornada en defensa de la Ley de Glaciares: más de 30 ciudades se movilizan". Cobertura de protestas nacionales.
 
-- **0264 Noticias (San Juan):** "Manifestantes reclamaron contra modificación de Ley de Glaciares". Cobertura de protestas locales.
+- **Resumen Latinoamericano:** "Argentina: Mendoza prepara inmensa marcha contra la megaminería". Convocatoria para el martes.
 
-- **El País Diario:** "En San Juan hubo marcha reclamando vigencia de la Ley de Glaciares".
+- **Editor Mendoza:** "Debate en Senado: encerrarán a los manifestantes en un corralito". Crítica al operativo policial.
         """)
 
-    st.info("**Tendencia:** El debate nacional sobre la Ley de Glaciares polariza la cobertura. Los medios sanjuaninos (donde más impactaría) son más activos. Los medios pro-desarrollo enmarcan la modificación como 'clarificación'. Los ambientalistas alertan sobre retroceso en protección ambiental.")
+    st.info("**Tendencia:** El conflicto escala a nivel nacional. La modificación de la Ley de Glaciares unifica a todas las provincias cordilleranas en resistencia. Los medios oficialistas minimizan las protestas; los críticos alertan sobre retroceso ambiental histórico.")
 
     # ===== ALERTA DE CONVOCATORIAS =====
     st.markdown("---")
     st.subheader("Riesgo de Convocatorias y Movilizaciones")
 
     st.error("""
-    **ALERTA ALTA - Movilizaciones a nivel nacional**
+    **ALERTA MÁXIMA - Marcha masiva el martes en Mendoza**
 
-    **Riesgo de escalamiento por debate de Ley de Glaciares.** Sesiones extraordinarias convocadas por Milei.
+    **Doble frente de conflicto:** Votación en Senado provincial + Sesiones extraordinarias nacionales por Ley de Glaciares.
     """)
 
     st.markdown("""
-- **Movilizaciones en defensa de Ley de Glaciares:** Protestas en San Juan y otras provincias mineras. Coordinación nacional entre asambleas ambientalistas. Hashtag #LeyDeGlaciares activo.
+- **MARTES: Marcha masiva en Mendoza:** Las asambleas convocan a movilización "histórica" contra San Jorge y la megaminería. El gobierno prepara corralito en plaza Independencia para contener manifestantes.
 
-- **Sesiones extraordinarias inminentes:** El tratamiento de la ley aclaratoria en el Congreso Nacional generará nueva ola de movilizaciones. Organizaciones anticipan protestas en Buenos Aires.
+- **Jornada plurinacional ya realizada (5 dic):** Más de 30 ciudades se movilizaron simultáneamente en defensa de la Ley de Glaciares. Coordinación nacional sin precedentes.
 
-- **Mendoza: votación en Senado inminente:** Tras el despacho favorable de comisiones, la votación definitiva en el recinto está próxima. Las asambleas mantienen vigilia permanente y estado de alerta máxima.
+- **Sesiones extraordinarias confirmadas:** Milei convocó al Congreso para diciembre. La modificación de la Ley de Glaciares es uno de los 6 ejes prioritarios. Expectativa de nuevas protestas en Buenos Aires.
 
-- **Articulación interprovincial:** San Juan, Mendoza, Catamarca y La Rioja coordinan acciones conjuntas. El conflicto adquiere dimensión federal.
+- **Senado provincial en cuenta regresiva:** La votación definitiva de PSJ Cobre y Malargüe Distrito Minero está pendiente. El oficialismo confía en la aprobación; la oposición denuncia "imposición".
 
-**CRÍTICO: Las sesiones extraordinarias del Congreso Nacional serán el próximo punto de máxima tensión.**
+**CRÍTICO: El martes será el día de máxima tensión. Convergencia de conflicto provincial y nacional.**
     """)
 
     # ===== PUNTOS DE DOLOR =====
@@ -1098,38 +1098,37 @@ elif page == "Análisis 48 Horas":
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**Estado de situación - 3 de diciembre**")
+        st.markdown("**Estado de situación - 6 de diciembre**")
         st.markdown("""
-El conflicto ha escalado significativamente. La estrategia del gobierno de promocionar
-la minería en el exterior (Londres) mientras acelera el tratamiento legislativo genera
-una **doble narrativa**: desarrollo económico vs. imposición sin consenso social.
+El conflicto alcanza dimensión **nacional y federal**. La convocatoria a sesiones extraordinarias
+para modificar la Ley de Glaciares unificó a todas las provincias cordilleranas en resistencia.
 
-La fractura en el radicalismo (intendente de San Carlos contra la minería) es un hecho
-político relevante que legitimó la resistencia territorial.
+La jornada plurinacional del 5 de diciembre con más de 30 ciudades movilizadas marca un
+**punto de inflexión**: ya no es solo Mendoza vs. San Jorge, sino Argentina vs. megaminería.
         """)
 
-        st.markdown("**Próximas 48-72 horas críticas**")
+        st.markdown("**Próximos días críticos**")
         st.markdown("""
-- **Votación en Senado inminente** - se espera máxima tensión
-- **Vigilia 24/7** de asambleas en la Legislatura
-- **Posible escalada** si se aprueba sin modificaciones
-- **Atención nacional** creciente (TeleSUR, medios alternativos)
+- **MARTES:** Marcha masiva en Mendoza con corralito policial
+- **Sesiones extraordinarias** en el Congreso Nacional
+- **Votación definitiva** en Senado provincial pendiente
+- **Extensión del RIGI** anunciada para el verano
         """)
 
     with col2:
         st.markdown("**Recomendaciones operativas**")
         st.markdown("""
-- **Monitoreo en tiempo real** durante sesión del Senado
-- **Alerta temprana** ante convocatorias de movilización masiva
-- **Seguimiento del hashtag #Mendozazo** como indicador de escalada
-- **Mapeo de actores clave**: Asambleas, intendente Morillas, senadores indecisos
+- **Monitoreo reforzado** para el martes (marcha masiva)
+- **Alerta sobre hashtags:** #LeyDeGlaciares, #NoALaMina, #Mendozazo
+- **Seguimiento de sesiones extraordinarias** del Congreso Nacional
+- **Coordinación interprovincial:** San Juan, Catamarca, La Rioja activas
         """)
 
         st.markdown("**Escenarios posibles**")
         st.markdown("""
-- **Si se aprueba:** Alta probabilidad de movilización masiva tipo "Mendozazo"
-- **Si se rechaza/posterga:** Descompresión parcial, pero el conflicto sigue latente
-- **Variable crítica:** Cómo vote el peronismo en el Senado
+- **Si se aprueba San Jorge + modifican Glaciares:** Escalada máxima, posible "Mendozazo"
+- **Si postergan Glaciares:** Descompresión parcial a nivel nacional
+- **Variable crítica:** Postura de gobernadores peronistas en el Congreso
         """)
 
     # Timestamp con más detalle
