@@ -1002,6 +1002,36 @@ elif page == "Análisis 48 Horas":
     </div>
     """, unsafe_allow_html=True)
 
+    # ===== TOP 3 POSTS QUE EMPUJAN LA EBULLICIÓN =====
+    st.markdown("""
+    <div style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+        <p style="color: #94a3b8; margin: 0 0 10px 0; font-size: 13px; font-weight: bold;">
+            🔥 TOP 3 POSTS QUE EMPUJAN LA EBULLICIÓN SOCIAL
+        </p>
+        <div style="border-left: 3px solid #ef4444; padding-left: 12px; margin-bottom: 12px;">
+            <p style="color: white; margin: 0; font-size: 13px;">
+                <strong>1. @pedromanzano.93</strong> (TikTok) - <span style="color: #fbbf24;">27,062 interacciones</span><br>
+                <span style="color: #cbd5e1;">"El agua de Mendoza, no se negocia! #7722 #ley #agua"</span><br>
+                <a href="https://www.tiktok.com/@pedromanzano.93/video/7527086536127417656" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+            </p>
+        </div>
+        <div style="border-left: 3px solid #f97316; padding-left: 12px; margin-bottom: 12px;">
+            <p style="color: white; margin: 0; font-size: 13px;">
+                <strong>2. @LuuliVidela</strong> (Twitter/X) - <span style="color: #fbbf24;">16,749 interacciones</span><br>
+                <span style="color: #cbd5e1;">"Mendoza hace la marcha más grande de la historia para defender el agua"</span><br>
+                <a href="https://x.com/LuuliVidela/status/1690905415012265986" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+            </p>
+        </div>
+        <div style="border-left: 3px solid #eab308; padding-left: 12px;">
+            <p style="color: white; margin: 0; font-size: 13px;">
+                <strong>3. @manuchaoofficial</strong> (TikTok) - <span style="color: #fbbf24;">12,652 interacciones</span><br>
+                <span style="color: #cbd5e1;">"Todos con Uspallata!!! Fuera minería de Mendoza!!! #noalamina"</span><br>
+                <a href="https://www.tiktok.com/@manuchaoofficial/video/7534059456691227926" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+            </p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.info("""
     **Resumen ejecutivo** de la conversación digital sobre minería en Mendoza,
     integrando redes sociales y medios de comunicación. Análisis cualitativo basado en datos extraídos.
