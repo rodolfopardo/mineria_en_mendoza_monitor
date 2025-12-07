@@ -964,9 +964,41 @@ elif page == "Análisis 48 Horas":
                 border-radius: 10px;
                 margin-bottom: 20px;">
         <p style="color: white; margin: 0; font-size: 14px;">
-            <strong>Actualizado:</strong> 06 de diciembre de 2025 |
-            <strong>Período:</strong> 5-6 de diciembre 2025
+            <strong>Actualizado:</strong> 07 de diciembre de 2025 |
+            <strong>Período:</strong> 6-7 de diciembre 2025
         </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ===== INDICADOR DE EBULLICIÓN SOCIAL =====
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 25px;
+                border: 2px solid #fbbf24;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h3 style="color: white; margin: 0 0 5px 0; font-size: 18px;">NIVEL DE EBULLICIÓN SOCIAL</h3>
+                <p style="color: #fef3c7; margin: 0; font-size: 14px;">Indicador de tensión sociopolítica minera en Mendoza</p>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-size: 48px; font-weight: bold; color: white;">CRÍTICO</span>
+            </div>
+        </div>
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
+            <div style="display: flex; justify-content: space-between; color: #fef3c7; font-size: 13px;">
+                <span>📈 <strong>Tendencia:</strong> EN ASCENSO (vs período anterior)</span>
+                <span>⚠️ <strong>Score de riesgo:</strong> 12/12 (100%)</span>
+                <span>🔥 <strong>Alcance estimado:</strong> 37.8M personas</span>
+            </div>
+        </div>
+        <div style="margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+            <p style="color: white; margin: 0; font-size: 13px;">
+                <strong>Factores críticos:</strong> Represión del martes 9 en puerta del Senado • 68 noticias nuevas en 24hs •
+                El Senado postergó votación al lunes 9 • Convocatoria masiva confirmada • Operativo policial máximo anunciado
+            </p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -979,74 +1011,74 @@ elif page == "Análisis 48 Horas":
     st.markdown("---")
     st.subheader("Lo que mas se hablo")
 
-    st.warning("**Temas dominantes en la conversación (5-6 diciembre)**")
+    st.warning("**Temas dominantes en la conversación (6-7 diciembre)**")
 
     st.markdown("""
-- **Gobierno redactó "ley aclaratoria" de Glaciares:** El Ejecutivo Nacional ya tiene listo el texto para destrabar proyectos mineros. La modificación entrará en sesiones extraordinarias convocadas por Milei. Esto genera máxima alarma en el movimiento ambientalista.
+- **"La represión será televisada":** Página 12 y medios nacionales cubren el violento operativo policial del martes en el Senado de Mendoza. Imágenes de manifestantes encerrados en "corralito" generan indignación masiva.
 
-- **Jornada plurinacional en defensa de la Ley de Glaciares:** Más de 30 ciudades se movilizaron simultáneamente en todo el país (San Juan, Mendoza, El Calafate, El Chaltén, Santa Cruz). Coordinación nacional sin precedentes entre asambleas.
+- **Cornejo cruza el Rubicón:** Los medios describen la estrategia del gobernador como "a todo o nada por la megaminería". El oficialismo forzó el debate en comisiones con fuerte operativo de seguridad.
 
-- **Mendoza prepara "inmensa marcha" para el martes:** Las asambleas convocan a movilización masiva contra la megaminería. El gobierno anticipa "corralito" en plaza Independencia para contener manifestantes durante el debate en el Senado.
+- **Senado postergó votación al lunes 9:** Tras horas de tensión, se suspendió la sesión definitiva. Las asambleas convocan a nueva movilización masiva para el lunes.
 
-- **Sesiones extraordinarias confirmadas:** Milei impulsará 6 ejes en diciembre, incluyendo la modificación de la Ley de Glaciares. Forbes y medios económicos anticipan extensión del RIGI durante el verano.
+- **"El 9 vamos con todo al Senado":** Convocatoria viral en redes sociales. Las asambleas de todo Mendoza preparan una jornada de máxima movilización para presionar a los senadores.
 
-- **Hebe Casado confía en aprobación de San Jorge:** La vicegobernadora mantiene optimismo pese a las protestas. El oficialismo prepara operativo policial para la votación definitiva.
+- **Cobertura mediática nacional sin precedentes:** El conflicto mendocino llega a medios nacionales e internacionales. Noticias Ambientales y El Grito del Sur publican investigaciones sobre el plan del Gobierno para modificar la Ley de Glaciares.
     """)
 
     # ===== LO QUE DICEN LOS MEDIOS =====
     st.markdown("---")
     st.subheader("Lo que dicen los medios (últimas 48 horas)")
 
-    st.markdown("**Cobertura mediática del conflicto minero**")
+    st.markdown("**Cobertura mediática del conflicto minero - 68 noticias nuevas**")
 
     col_med1, col_med2 = st.columns(2)
 
     with col_med1:
         st.markdown("**Medios pro-minería/oficialistas:**")
         st.markdown("""
-- **MDZ Online:** "Hebe Casado confía en aprobación de San Jorge pese a las protestas". Cobertura de la postura oficial del gobierno.
+- **Los Andes:** "El Senado se prepara para debatir los proyectos mineros con un fuerte operativo policial". Cobertura del operativo de seguridad.
 
-- **Forbes Argentina:** "El gobierno anunciaría extensión del RIGI durante el verano". Foco en incentivos a la inversión minera.
+- **MDZ Online:** Cobertura del avance de los proyectos en comisiones. Énfasis en el apoyo del gobierno nacional.
 
-- **Panorama Minero:** "Epiroc acelera transición hacia minería inteligente en el Cono Sur". Cobertura técnica favorable.
+- **Sitio Andino:** "Mendoza fortalece su presencia global en minería en Londres". Cobertura de la misión comercial de Latorre.
 
-- **Editorial RN / Futuro Sustentable:** "Brindis minero: un muy buen año 2026". Tono optimista sobre el futuro del sector.
+- **El Economista:** "Mendoza pisa fuerte en Londres: abre la puerta a inversiones en minerales críticos". Foco en oportunidades de inversión.
         """)
 
     with col_med2:
         st.markdown("**Medios críticos/ambientalistas:**")
         st.markdown("""
-- **El Grito del Sur:** "El agua bajo amenaza: el plan del Gobierno para modificar la Ley de Glaciares". Investigación sobre el proyecto de ley.
+- **Página 12:** "La represión será televisada". Cobertura del operativo policial y la represión a manifestantes.
 
-- **Noticias Ambientales:** "Jornada en defensa de la Ley de Glaciares: más de 30 ciudades se movilizan". Cobertura de protestas nacionales.
+- **Canal Abierto:** "Cornejo cruza el Rubicón: a todo o nada por la megaminería". Análisis crítico de la estrategia oficialista.
 
-- **Resumen Latinoamericano:** "Argentina: Mendoza prepara inmensa marcha contra la megaminería". Convocatoria para el martes.
+- **Noticias Ambientales:** "Una multitudinaria protesta en Mendoza reaviva el rechazo social al proyecto San Jorge". Cobertura de las movilizaciones.
 
-- **Editor Mendoza:** "Debate en Senado: encerrarán a los manifestantes en un corralito". Crítica al operativo policial.
+- **Radio Regional:** "Mendoza: la marcha del martes será multitudinaria en contra de la minería". Convocatoria confirmada.
         """)
 
-    st.info("**Tendencia:** El conflicto escala a nivel nacional. La modificación de la Ley de Glaciares unifica a todas las provincias cordilleranas en resistencia. Los medios oficialistas minimizan las protestas; los críticos alertan sobre retroceso ambiental histórico.")
+    st.info("**Tendencia:** La cobertura mediática alcanzó volumen histórico (68 noticias en 24hs). Los medios nacionales tomaron el conflicto mendocino. La represión del martes generó repudio generalizado y amplificó la convocatoria para el lunes 9.")
 
     # ===== ALERTA DE CONVOCATORIAS =====
     st.markdown("---")
     st.subheader("Riesgo de Convocatorias y Movilizaciones")
 
     st.error("""
-    **ALERTA MÁXIMA - Marcha masiva el martes en Mendoza**
+    **ALERTA MÁXIMA - LUNES 9: Votación definitiva en el Senado**
 
-    **Doble frente de conflicto:** Votación en Senado provincial + Sesiones extraordinarias nacionales por Ley de Glaciares.
+    **Convocatoria confirmada:** "El 9 vamos con todo al Senado" se viralizó en redes. Se espera la movilización más grande desde 2019.
     """)
 
     st.markdown("""
-- **MARTES: Marcha masiva en Mendoza:** Las asambleas convocan a movilización "histórica" contra San Jorge y la megaminería. El gobierno prepara corralito en plaza Independencia para contener manifestantes.
+- **LUNES 9: Votación definitiva + Marcha masiva:** El Senado postergó la votación al lunes. Las asambleas refuerzan la convocatoria. Hashtag #El9VamosConTodo trending en Mendoza.
 
-- **Jornada plurinacional ya realizada (5 dic):** Más de 30 ciudades se movilizaron simultáneamente en defensa de la Ley de Glaciares. Coordinación nacional sin precedentes.
+- **Represión del martes escaló el conflicto:** El operativo policial con "corralito" y detenciones generó repudio masivo. Imágenes virales multiplicaron el alcance del rechazo.
 
-- **Sesiones extraordinarias confirmadas:** Milei convocó al Congreso para diciembre. La modificación de la Ley de Glaciares es uno de los 6 ejes prioritarios. Expectativa de nuevas protestas en Buenos Aires.
+- **Sesiones extraordinarias nacionales confirmadas:** Milei convocará al Congreso para modificar la Ley de Glaciares. El conflicto mendocino se nacionaliza definitivamente.
 
-- **Senado provincial en cuenta regresiva:** La votación definitiva de PSJ Cobre y Malargüe Distrito Minero está pendiente. El oficialismo confía en la aprobación; la oposición denuncia "imposición".
+- **Coordinación interprovincial activa:** Asambleas de San Juan, Catamarca, La Rioja y provincias cordilleranas en alerta. Posibles acciones coordinadas el lunes.
 
-**CRÍTICO: El martes será el día de máxima tensión. Convergencia de conflicto provincial y nacional.**
+**CRÍTICO: El lunes 9 será el día decisivo. Si el Senado aprueba, se espera escalada inmediata. Si rechaza o posterga, descompresión temporal.**
     """)
 
     # ===== PUNTOS DE DOLOR =====
@@ -1092,37 +1124,37 @@ elif page == "Análisis 48 Horas":
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**Estado de situación - 6 de diciembre**")
+        st.markdown("**Estado de situación - 7 de diciembre**")
         st.markdown("""
-El conflicto alcanza dimensión **nacional y federal**. La convocatoria a sesiones extraordinarias
-para modificar la Ley de Glaciares unificó a todas las provincias cordilleranas en resistencia.
+El conflicto entró en **fase crítica**. La represión del martes escaló la tensión y amplificó
+la convocatoria para el lunes 9. El Senado postergó la votación definitiva aumentando la incertidumbre.
 
-La jornada plurinacional del 5 de diciembre con más de 30 ciudades movilizadas marca un
-**punto de inflexión**: ya no es solo Mendoza vs. San Jorge, sino Argentina vs. megaminería.
+La cobertura mediática alcanzó **volumen histórico** (68 noticias en 24hs). Medios nacionales como
+Página 12 titularon "La represión será televisada", nacionalizando el conflicto mendocino.
         """)
 
         st.markdown("**Próximos días críticos**")
         st.markdown("""
-- **MARTES:** Marcha masiva en Mendoza con corralito policial
-- **Sesiones extraordinarias** en el Congreso Nacional
-- **Votación definitiva** en Senado provincial pendiente
-- **Extensión del RIGI** anunciada para el verano
+- **LUNES 9:** Votación definitiva en Senado + marcha masiva
+- **Sesiones extraordinarias** nacionales por Ley de Glaciares
+- **Posible "Mendozazo"** si se aprueba San Jorge
+- **Operativo policial reforzado** anticipado por el gobierno
         """)
 
     with col2:
         st.markdown("**Recomendaciones operativas**")
         st.markdown("""
-- **Monitoreo reforzado** para el martes (marcha masiva)
-- **Alerta sobre hashtags:** #LeyDeGlaciares, #NoALaMina, #Mendozazo
-- **Seguimiento de sesiones extraordinarias** del Congreso Nacional
-- **Coordinación interprovincial:** San Juan, Catamarca, La Rioja activas
+- **Monitoreo 24/7** desde el domingo hasta el lunes por la noche
+- **Alerta sobre hashtags:** #El9VamosConTodo, #NoALaMina, #LaRepresiónSeráTelevisada
+- **Seguimiento de redes en tiempo real** durante la sesión del Senado
+- **Monitoreo de medios nacionales** que amplificarán cualquier incidente
         """)
 
-        st.markdown("**Escenarios posibles**")
+        st.markdown("**Escenarios posibles para el lunes 9**")
         st.markdown("""
-- **Si se aprueba San Jorge + modifican Glaciares:** Escalada máxima, posible "Mendozazo"
-- **Si postergan Glaciares:** Descompresión parcial a nivel nacional
-- **Variable crítica:** Postura de gobernadores peronistas en el Congreso
+- **Si se aprueba:** Escalada inmediata. Posible intento de ingreso al Senado. Alta probabilidad de incidentes.
+- **Si se rechaza/posterga:** Descompresión temporal. Victoria simbólica del movimiento.
+- **Variable crítica:** Nivel de represión policial y cobertura mediática en vivo.
         """)
 
     # Timestamp con más detalle
