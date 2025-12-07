@@ -990,7 +990,7 @@ elif page == "Análisis 48 Horas":
             <div style="display: flex; justify-content: space-between; color: #fef3c7; font-size: 13px;">
                 <span>📈 <strong>Tendencia:</strong> EN ASCENSO (vs período anterior)</span>
                 <span>⚠️ <strong>Score de riesgo:</strong> 12/12 (100%)</span>
-                <span>🔥 <strong>Alcance estimado:</strong> 37.8M personas</span>
+                <span>🔥 <strong>Alcance estimado:</strong> 10M personas</span>
             </div>
         </div>
         <div style="margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
