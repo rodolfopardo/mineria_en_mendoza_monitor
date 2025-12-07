@@ -972,7 +972,7 @@ elif page == "Análisis 48 Horas":
 
     # ===== INDICADOR DE EBULLICIÓN SOCIAL =====
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+    <div style="background: linear-gradient(135deg, #f97316 0%, #eab308 100%);
                 padding: 20px;
                 border-radius: 12px;
                 margin-bottom: 25px;
@@ -983,20 +983,20 @@ elif page == "Análisis 48 Horas":
                 <p style="color: #fef3c7; margin: 0; font-size: 14px;">Indicador de tensión sociopolítica minera en Mendoza</p>
             </div>
             <div style="text-align: center;">
-                <span style="font-size: 48px; font-weight: bold; color: white;">CRÍTICO</span>
+                <span style="font-size: 48px; font-weight: bold; color: white;">ALTO</span>
             </div>
         </div>
         <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
             <div style="display: flex; justify-content: space-between; color: #fef3c7; font-size: 13px;">
-                <span>📈 <strong>Tendencia:</strong> EN ASCENSO (vs período anterior)</span>
-                <span>⚠️ <strong>Score de riesgo:</strong> 12/12 (100%)</span>
-                <span>🔥 <strong>Alcance estimado:</strong> 10M personas</span>
+                <span>📈 <strong>Tendencia:</strong> ESTABLE (vs período anterior)</span>
+                <span>⚠️ <strong>Score de riesgo:</strong> 9/12 (75%)</span>
+                <span>🔥 <strong>Alcance estimado:</strong> 261K interacciones</span>
             </div>
         </div>
         <div style="margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>Factores críticos:</strong> Represión del martes 9 en puerta del Senado • 68 noticias nuevas en 24hs •
-                El Senado postergó votación al lunes 9 • Convocatoria masiva confirmada • Operativo policial máximo anunciado
+                <strong>Factores a monitorear:</strong> Votación en Senado el lunes 9 • Convocatoria a movilización confirmada •
+                Cobertura mediática activa (68 noticias) • Engagement moderado en redes
             </p>
         </div>
     </div>
