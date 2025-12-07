@@ -1006,27 +1006,27 @@ elif page == "Análisis 48 Horas":
     st.markdown("""
     <div style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
         <p style="color: #94a3b8; margin: 0 0 10px 0; font-size: 13px; font-weight: bold;">
-            🔥 TOP 3 POSTS RECIENTES QUE EMPUJAN LA EBULLICIÓN (últimos 7 días)
+            🔥 TOP 3 POSTS RECIENTES - RUMBO AL 9 DE DICIEMBRE
         </p>
         <div style="border-left: 3px solid #ef4444; padding-left: 12px; margin-bottom: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>1. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">5,106 interacciones</span> - 1 dic<br>
-                <span style="color: #cbd5e1;">"ES INMINENTE - SE VIENE EL MENDOZAZO #la7722nosetoca"</span><br>
-                <a href="https://www.facebook.com/reel/1335527924451453/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>1. @LautaroJimenezB</strong> (Twitter) - <span style="color: #fbbf24;">1,380 interacciones</span> - 5 dic<br>
+                <span style="color: #cbd5e1;">"La fiscalía incorporó filmaciones de la Policía de Mendoza que muestran cómo usaron la Legislatura..."</span><br>
+                <a href="https://x.com/LautaroJimenezB/status/1996924205678363079" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
         <div style="border-left: 3px solid #f97316; padding-left: 12px; margin-bottom: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>2. @santiagocarrazan4</strong> (TikTok) - <span style="color: #fbbf24;">4,230 interacciones</span> - 2 dic<br>
-                <span style="color: #cbd5e1;">"El agua de Mendoza no se negocia, en pie de lucha #megamineria"</span><br>
-                <a href="https://www.tiktok.com/@santiagocarrazan4/video/7579208688859122964" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>2. @therealbuni</strong> (Twitter) - <span style="color: #fbbf24;">859 interacciones</span> - 5 dic<br>
+                <span style="color: #cbd5e1;">"En Mendoza el martes se aprueba el proyecto para hacer minería..."</span><br>
+                <a href="https://x.com/therealbuni/status/1997044359749906613" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
         <div style="border-left: 3px solid #eab308; padding-left: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>3. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">3,920 interacciones</span> - 3 dic<br>
-                <span style="color: #cbd5e1;">"TODA ESTA MAREA DICE QUE EL AGUA DE MENDOZA NO SE NEGOCIA"</span><br>
-                <a href="https://www.facebook.com/reel/4332258677046990/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>3. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">630 interacciones</span> - 5 dic<br>
+                <span style="color: #cbd5e1;">"Los parientes volvemos a marchar. Toda Mendoza caminando a la ciudad..."</span><br>
+                <a href="https://www.facebook.com/pibessancarlos/posts/pfbid0YptiNrxJBgCaY6NTGCidhA71anPYqXEWk2HPHXgvWaHNn2BWkdLzbTnqNWU8ZZVxl" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
     </div>
