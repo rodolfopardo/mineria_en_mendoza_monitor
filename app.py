@@ -1006,27 +1006,27 @@ elif page == "Análisis 48 Horas":
     st.markdown("""
     <div style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
         <p style="color: #94a3b8; margin: 0 0 10px 0; font-size: 13px; font-weight: bold;">
-            🔥 TOP 3 POSTS QUE EMPUJAN LA EBULLICIÓN SOCIAL
+            🔥 TOP 3 POSTS RECIENTES QUE EMPUJAN LA EBULLICIÓN (últimos 7 días)
         </p>
         <div style="border-left: 3px solid #ef4444; padding-left: 12px; margin-bottom: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>1. @pedromanzano.93</strong> (TikTok) - <span style="color: #fbbf24;">27,062 interacciones</span><br>
-                <span style="color: #cbd5e1;">"El agua de Mendoza, no se negocia! #7722 #ley #agua"</span><br>
-                <a href="https://www.tiktok.com/@pedromanzano.93/video/7527086536127417656" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>1. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">5,106 interacciones</span> - 1 dic<br>
+                <span style="color: #cbd5e1;">"ES INMINENTE - SE VIENE EL MENDOZAZO #la7722nosetoca"</span><br>
+                <a href="https://www.facebook.com/reel/1335527924451453/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
         <div style="border-left: 3px solid #f97316; padding-left: 12px; margin-bottom: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>2. @LuuliVidela</strong> (Twitter/X) - <span style="color: #fbbf24;">16,749 interacciones</span><br>
-                <span style="color: #cbd5e1;">"Mendoza hace la marcha más grande de la historia para defender el agua"</span><br>
-                <a href="https://x.com/LuuliVidela/status/1690905415012265986" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>2. @santiagocarrazan4</strong> (TikTok) - <span style="color: #fbbf24;">4,230 interacciones</span> - 2 dic<br>
+                <span style="color: #cbd5e1;">"El agua de Mendoza no se negocia, en pie de lucha #megamineria"</span><br>
+                <a href="https://www.tiktok.com/@santiagocarrazan4/video/7579208688859122964" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
         <div style="border-left: 3px solid #eab308; padding-left: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>3. @manuchaoofficial</strong> (TikTok) - <span style="color: #fbbf24;">12,652 interacciones</span><br>
-                <span style="color: #cbd5e1;">"Todos con Uspallata!!! Fuera minería de Mendoza!!! #noalamina"</span><br>
-                <a href="https://www.tiktok.com/@manuchaoofficial/video/7534059456691227926" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>3. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">3,920 interacciones</span> - 3 dic<br>
+                <span style="color: #cbd5e1;">"TODA ESTA MAREA DICE QUE EL AGUA DE MENDOZA NO SE NEGOCIA"</span><br>
+                <a href="https://www.facebook.com/reel/4332258677046990/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
     </div>
