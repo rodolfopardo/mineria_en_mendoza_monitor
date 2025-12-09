@@ -301,9 +301,9 @@ with st.sidebar:
     st.subheader("Período de análisis")
     period_days = st.selectbox(
         "Seleccionar período:",
-        [2, 7, 14, 30, 60, 90, 365],
-        index=0,  # Por defecto últimas 48 horas
-        format_func=lambda x: "Últimas 48 horas" if x == 2 else (f"Últimos {x} días" if x < 365 else "Todo el histórico")
+        [7, 14, 30, 60, 90, 365],
+        index=0,  # Por defecto últimos 7 días
+        format_func=lambda x: f"Últimos {x} días" if x < 365 else "Todo el histórico"
     )
 
     st.markdown("---")
@@ -1723,9 +1723,9 @@ elif page == "Datos de Medios":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Obtener datos - Top Stories (todas) y Noticias (últimas 48 horas reales)
+    # Obtener datos - Top Stories (todas) y Noticias (últimas 7 días)
     top_stories = news_scraper.get_top_stories(limit=500)
-    all_news = news_scraper.get_all_news(limit=500, hours=48)  # Filtrar últimas 48 horas
+    all_news = news_scraper.get_all_news(limit=500, hours=168)  # Últimos 7 días (168 horas)
     all_news_total = news_scraper.get_all_news(limit=500)  # Todas las noticias para estadísticas
 
     # ========== SECCIÓN 1: TOP STORIES ==========
@@ -1796,8 +1796,8 @@ elif page == "Datos de Medios":
 
     st.markdown("<br><br>", unsafe_allow_html=True)
 
-    # ========== SECCIÓN 2: TODAS LAS NOTICIAS (ÚLTIMAS 48 HORAS) ==========
-    st.subheader("Noticias sobre minería (últimas 48 horas)")
+    # ========== SECCIÓN 2: TODAS LAS NOTICIAS (ÚLTIMOS 7 DÍAS) ==========
+    st.subheader("Noticias sobre minería (últimos 7 días)")
 
     st.markdown("""
     <div style="background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
@@ -1809,7 +1809,7 @@ elif page == "Datos de Medios":
                   font-size: 16px;
                   margin: 0;
                   font-weight: 500;">
-            Aquí se recopilan todas las noticias publicadas en las últimas 48 horas que hablan de minería
+            Aquí se recopilan todas las noticias de los últimos 7 días que hablan de minería
             en sus títulos, independientemente si Google las destaca o no.
         </p>
     </div>
@@ -1818,7 +1818,7 @@ elif page == "Datos de Medios":
     if all_news:
         df_news = pd.DataFrame(all_news)
 
-        st.success(f"Se encontraron **{len(all_news)} noticias** en las últimas 48 horas")
+        st.success(f"Se encontraron **{len(all_news)} noticias** en los últimos 7 días")
 
         # Filtro por medio
         all_sources = ["Todos"] + sorted(df_news['source'].dropna().unique().tolist())
@@ -1865,14 +1865,14 @@ elif page == "Datos de Medios":
                 st.plotly_chart(fig2, use_container_width=True)
 
             with col_stats2:
-                st.metric("Noticias (48h)", len(df_news_filtered))
+                st.metric("Noticias (7 días)", len(df_news_filtered))
                 st.metric("Total Histórico", len(all_news_total))
                 st.metric("Medios Únicos", df_news_filtered['source'].nunique())
         else:
             st.info("No hay suficientes datos para mostrar estadísticas de medios")
     else:
-        # No hay noticias en las últimas 48 horas
-        st.warning("No hay noticias de las últimas 48 horas. La última actualización fue hace más de 48 horas.")
+        # No hay noticias en los últimos 7 días
+        st.warning("No hay noticias de los últimos 7 días. La última actualización fue hace más de 7 días.")
         if all_news_total:
             st.info(f"Hay **{len(all_news_total)} noticias** en el histórico. Haz clic en 'Actualizar Noticias' para obtener las más recientes.")
 
@@ -2031,7 +2031,7 @@ elif page == "Detector de Convocatorias":
     </div>
     """, unsafe_allow_html=True)
 
-    mobilizations = db.get_mobilization_calls(days=period_days)
+    mobilizations = db.get_mobilization_calls(days=max(period_days, 30))  # Mínimo 30 días para convocatorias
 
     if mobilizations:
         st.metric("Convocatorias detectadas", len(mobilizations))
