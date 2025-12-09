@@ -985,24 +985,14 @@ elif page == "Análisis 48 Horas":
     youtube_url = "https://www.youtube.com/watch?v=fS2hoyOskdo"
     live_stats = get_youtube_live_stats(youtube_url)
 
-    # Mostrar viewers si está en vivo
-    viewers_html = ""
-    if live_stats['is_live'] and live_stats['viewers']:
-        viewers_html = f"""
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-            <span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: white; font-size: 18px;">
-                👁️ <strong>{live_stats['viewers']:,}</strong> personas viendo ahora
-            </span>
-        </div>
-        """
-    elif live_stats['viewers'] is None:
-        viewers_html = """
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-            <span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: white; font-size: 14px;">
-                ⏳ Cargando viewers...
-            </span>
-        </div>
-        """
+    # Construir HTML del contador de viewers
+    viewers_count = live_stats.get('viewers', 0) or 0
+    is_live = live_stats.get('is_live', False)
+
+    if is_live and viewers_count > 0:
+        viewers_text = f"👁️ <strong>{viewers_count:,}</strong> personas viendo ahora"
+    else:
+        viewers_text = "⏳ Conectando al stream..."
 
     st.markdown(f"""
     <div style="background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%);
@@ -1017,8 +1007,12 @@ elif page == "Análisis 48 Horas":
             </div>
             <h2 style="color: white; margin: 0; font-size: 24px;">SENADO DE MENDOZA - SESIÓN HISTÓRICA</h2>
         </div>
-        {viewers_html}
-        <p style="color: #fef3c7; margin: 0 0 15px 0; font-size: 16px;">
+        <div style="margin-bottom: 10px;">
+            <span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: white; font-size: 18px;">
+                {viewers_text}
+            </span>
+        </div>
+        <p style="color: #fef3c7; margin: 0; font-size: 16px;">
             <strong>Seguí en directo la votación del proyecto PSJ Cobre Mendocino</strong>
         </p>
     </div>
