@@ -983,16 +983,35 @@ elif page == "Análisis 48 Horas":
         return {'viewers': None, 'title': 'Sesión del Senado', 'is_live': False}
 
     youtube_url = "https://www.youtube.com/watch?v=fS2hoyOskdo"
+    video_id = "fS2hoyOskdo"
     live_stats = get_youtube_live_stats(youtube_url)
 
     # Construir HTML del contador de viewers
     viewers_count = live_stats.get('viewers', 0) or 0
     is_live = live_stats.get('is_live', False)
+    video_title = live_stats.get('title', 'Sesion del Senado')
+
+    # Guardar viewers en el historico (solo si hay datos validos)
+    if viewers_count > 0:
+        db.record_youtube_viewers(video_id, viewers_count, video_title, is_live)
 
     if is_live and viewers_count > 0:
         viewers_text = f"<strong>{viewers_count:,}</strong> personas viendo ahora"
     else:
         viewers_text = "Conectando al stream..."
+
+    # Obtener estadisticas del historico
+    viewers_stats = db.get_youtube_viewers_stats(video_id)
+    stats_html = ""
+    if viewers_stats and viewers_stats.get('max_viewers'):
+        stats_html = f"""
+        <div style="display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+            <span style="color: #fef3c7; font-size: 14px;">Max: <strong>{viewers_stats['max_viewers']:,}</strong></span>
+            <span style="color: #fef3c7; font-size: 14px;">Min: <strong>{viewers_stats['min_viewers']:,}</strong></span>
+            <span style="color: #fef3c7; font-size: 14px;">Promedio: <strong>{viewers_stats['avg_viewers']:,}</strong></span>
+            <span style="color: #fef3c7; font-size: 14px;">Registros: <strong>{viewers_stats['total_records']}</strong></span>
+        </div>
+        """
 
     st.markdown(f"""
     <div style="background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%);
@@ -1012,7 +1031,8 @@ elif page == "Análisis 48 Horas":
                 {viewers_text}
             </span>
         </div>
-        <p style="color: #fef3c7; margin: 0; font-size: 16px;">
+        {stats_html}
+        <p style="color: #fef3c7; margin: 10px 0 0 0; font-size: 16px;">
             <strong>Segui en directo la votacion del proyecto PSJ Cobre Mendocino</strong>
         </p>
     </div>
@@ -1020,6 +1040,32 @@ elif page == "Análisis 48 Horas":
 
     # Embed del video de YouTube
     st.video(youtube_url)
+
+    # Grafico de evolucion de viewers
+    viewers_history = db.get_youtube_viewers_history(video_id, hours=24)
+    if len(viewers_history) > 1:
+        st.subheader("Evolucion de Audiencia")
+        df_viewers = pd.DataFrame(viewers_history)
+        df_viewers['recorded_at'] = pd.to_datetime(df_viewers['recorded_at'])
+
+        fig_viewers = px.line(
+            df_viewers,
+            x='recorded_at',
+            y='viewers_count',
+            title='Viewers en tiempo real - Sesion del Senado',
+            labels={'recorded_at': 'Hora', 'viewers_count': 'Viewers'}
+        )
+        fig_viewers.update_layout(
+            xaxis_title="Hora",
+            yaxis_title="Personas viendo",
+            hovermode='x unified'
+        )
+        fig_viewers.update_traces(
+            line_color='#dc2626',
+            fill='tozeroy',
+            fillcolor='rgba(220, 38, 38, 0.2)'
+        )
+        st.plotly_chart(fig_viewers, use_container_width=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 

@@ -187,6 +187,18 @@ class SocialDatabase:
             )
         ''')
 
+        # Tabla para historico de viewers de YouTube Live
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS youtube_viewers_history (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                video_id TEXT NOT NULL,
+                video_title TEXT,
+                viewers_count INTEGER NOT NULL,
+                is_live BOOLEAN DEFAULT 1,
+                recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
         # Insertar palabras clave por defecto
         default_keywords = [
             ("minería Mendoza", "general"),
@@ -825,6 +837,74 @@ class SocialDatabase:
         count = cursor.fetchone()[0]
         conn.close()
         return count
+
+    # ========== METODOS PARA YOUTUBE VIEWERS HISTORY ==========
+
+    def record_youtube_viewers(self, video_id: str, viewers_count: int, video_title: str = None, is_live: bool = True) -> bool:
+        """Registra el conteo de viewers de un video de YouTube"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        try:
+            cursor.execute('''
+                INSERT INTO youtube_viewers_history (video_id, video_title, viewers_count, is_live)
+                VALUES (?, ?, ?, ?)
+            ''', (video_id, video_title, viewers_count, is_live))
+            conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al registrar viewers: {e}")
+            return False
+        finally:
+            conn.close()
+
+    def get_youtube_viewers_history(self, video_id: str, hours: int = 24) -> List[Dict]:
+        """Obtiene el historico de viewers de un video"""
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        cutoff = datetime.now() - timedelta(hours=hours)
+        cursor.execute('''
+            SELECT viewers_count, recorded_at, is_live
+            FROM youtube_viewers_history
+            WHERE video_id = ? AND recorded_at >= ?
+            ORDER BY recorded_at ASC
+        ''', (video_id, cutoff.isoformat()))
+
+        rows = cursor.fetchall()
+        conn.close()
+        return [dict(row) for row in rows]
+
+    def get_youtube_viewers_stats(self, video_id: str) -> Dict:
+        """Obtiene estadisticas de viewers de un video"""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT
+                MAX(viewers_count) as max_viewers,
+                MIN(viewers_count) as min_viewers,
+                AVG(viewers_count) as avg_viewers,
+                COUNT(*) as total_records,
+                MIN(recorded_at) as first_record,
+                MAX(recorded_at) as last_record
+            FROM youtube_viewers_history
+            WHERE video_id = ?
+        ''', (video_id,))
+
+        row = cursor.fetchone()
+        conn.close()
+
+        if row and row[0]:
+            return {
+                'max_viewers': row[0],
+                'min_viewers': row[1],
+                'avg_viewers': int(row[2]) if row[2] else 0,
+                'total_records': row[3],
+                'first_record': row[4],
+                'last_record': row[5]
+            }
+        return {}
 
 
 if __name__ == "__main__":
