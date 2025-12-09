@@ -1418,113 +1418,83 @@ elif page == "Análisis 48 Horas":
 
     st.markdown("---")
 
-    # ===== TOP 3 POSTS QUE EMPUJAN LA EBULLICIÓN =====
-    st.markdown("""
-    <div style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-        <p style="color: #94a3b8; margin: 0 0 10px 0; font-size: 13px; font-weight: bold;">
-            🔥 TOP 3 POSTS - SEMANA DE LA VOTACIÓN (1-8 DIC)
-        </p>
-        <div style="border-left: 3px solid #ef4444; padding-left: 12px; margin-bottom: 12px;">
-            <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>1. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">5,106 interacciones</span> - 1 dic<br>
-                <span style="color: #cbd5e1;">"ES INMINENTE - SE VIENE EL MENDOZAZO #elaguademendozanosenegocia #la7722nosetoca"</span><br>
-                <a href="https://www.facebook.com/reel/1335527924451453/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
-            </p>
-        </div>
-        <div style="border-left: 3px solid #f97316; padding-left: 12px; margin-bottom: 12px;">
-            <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>2. @santiagocarrazan4</strong> (TikTok) - <span style="color: #fbbf24;">4,230 interacciones</span> - 2 dic<br>
-                <span style="color: #cbd5e1;">"El agua de Mendoza no se negocia - en pie de lucha por el futuro de nuestra gente #megamineria"</span><br>
-                <a href="https://www.tiktok.com/@santiagocarrazan4/video/7579208688859122964" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
-            </p>
-        </div>
-        <div style="border-left: 3px solid #eab308; padding-left: 12px;">
-            <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>3. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">3,920 interacciones</span> - 3 dic<br>
-                <span style="color: #cbd5e1;">"TODA ESTA MAREA DICE QUE EL AGUA DE MENDOZA NO SE NEGOCIA 💧"</span><br>
-                <a href="https://www.facebook.com/reel/4332258677046990/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
     st.info("""
-    **Resumen ejecutivo** de la conversación digital sobre minería en Mendoza,
-    integrando redes sociales y medios de comunicación. Análisis cualitativo basado en datos extraídos.
+    **Resumen ejecutivo** del dia historico en Mendoza. El Senado aprobo PSJ Cobre Mendocino
+    con 29 votos a favor, 6 en contra y 1 abstencion. Primera explotacion de cobre en la provincia.
     """)
 
     # ===== LO QUE MÁS SE HABLÓ =====
     st.markdown("---")
     st.subheader("Lo que mas se hablo")
 
-    st.warning("**Temas dominantes en la conversación (8-9 diciembre) - DÍA DE LA VOTACIÓN**")
+    st.success("**Temas dominantes en la conversacion (9 diciembre) - DIA DE LA APROBACION**")
 
     st.markdown("""
-- **Milei y Bullrich presionan por la aprobación:** El presidente salió públicamente a respaldar PSJ Cobre: "Enorme oportunidad para Mendoza". Bullrich apuntó contra el kirchnerismo por las protestas. Presión máxima del gobierno nacional.
+- **HISTORICO: San Jorge aprobado con 29 votos a favor:** El Senado de Mendoza dio sancion definitiva al proyecto PSJ Cobre Mendocino. Primera explotacion de cobre aprobada desde la Ley 7722. USD 559 millones de inversion.
 
-- **Caravana de 100 km hacia la Legislatura:** La Asamblea por el Agua inició una caravana masiva desde Uspallata. Miles de personas marchan por los departamentos del Valle de Uco hacia la capital.
+- **Amplio consenso politico:** Oficialismo (18), PRO (4), PD (1), La Union Mendocina (2) y 5 peronistas votaron a favor. Solo 6 votos negativos (PJ, Kirchnerismo, Partido Verde, Hacemos) y 1 abstencion.
 
-- **"El agua no se negocia" - Movilización histórica:** TN, TeleSur, elDiarioAR y medios nacionales cubren las marchas. El conflicto se nacionalizó completamente. Hashtag #ElAguaNoSeNegocia en tendencia.
+- **Malargue Distrito Minero tambien aprobado:** 31 votos a favor, 3 en contra, 1 abstencion. Se aprobaron 27 proyectos de exploracion minera en la zona.
 
-- **Hebe Casado: "Con Alfredo no daremos ni medio paso atrás":** La vicegobernadora reafirmó el compromiso del gobierno con la aprobación. El oficialismo confía en tener los votos.
+- **Movilizacion no logro frenar la aprobacion:** A pesar de las caravanas y la concentracion de ~1500 personas en plaza, el oficialismo tenia los votos asegurados.
 
-- **Jornada clave: el Senado vota los 4 proyectos mineros:** PSJ Cobre Mendocino, Malargüe Distrito Minero, San Romeleo y más. Sesión histórica que puede abrir la megaminería en la provincia.
+- **Nueva era minera en Mendoza:** Cornejo logro su objetivo. El proyecto que fue rechazado en 2011 ahora es ley. Mendoza abre las puertas a la mineria metalifra.
     """)
 
     # ===== LO QUE DICEN LOS MEDIOS =====
     st.markdown("---")
-    st.subheader("Lo que dicen los medios - HOY 9 DE DICIEMBRE")
+    st.subheader("Lo que dicen los medios - 9 DE DICIEMBRE")
 
-    st.markdown("**Cobertura en VIVO del día de la votación**")
+    st.markdown("**Cobertura de la aprobacion historica**")
 
     col_med1, col_med2 = st.columns(2)
 
     with col_med1:
-        st.markdown("**Medios nacionales e internacionales:**")
+        st.markdown("**Noticias sobre la APROBACION:**")
         st.markdown("""
-- **[Prensa Latina](https://www.prensa-latina.cu/2025/12/09/marcha-por-el-agua-en-provincia-argentina-de-mendoza/):** "Marcha por el agua en provincia argentina de Mendoza". Cobertura internacional desde Cuba.
+- **[Los Andes](https://www.losandes.com.ar/politica/historico-el-senado-dio-sancion-definitiva-al-proyecto-minero-psj-cobre-mendocino-n5972830):** "Historico: el Senado dio sancion definitiva al proyecto minero PSJ Cobre Mendocino".
 
-- **[elDiarioAR](https://www.eldiarioar.com/politica/agua-no-negocia-masiva-caravana-mendoza-proyecto-minero-respaldo-milei_1_12829856.html):** "El agua no se negocia: masiva caravana en Mendoza contra proyecto minero que respaldó Milei".
+- **[MDZ Online](https://www.mdzol.com/politica/aprobaron-san-jorge-una-votacion-crucial-y-arranca-una-nueva-era-la-mineria-mendoza-n1403658):** "Aprobaron San Jorge: una votacion crucial y arranca una nueva era en la mineria de Mendoza".
 
-- **[Noticias Argentinas](https://noticiasargentinas.com/politica/-el-agua-no-se-negocia---masiva-caravana-en-mendoza-contra-el-proyecto-minero-que-respaldo-milei_a69373e24dd3ed36fdd3987ae):** "Masiva caravana en Mendoza contra el proyecto minero que respaldó Milei".
+- **[El Sol](https://www.elsol.com.ar/mendoza/la-legislatura-aprobo-san-jorge-y-sera-la-primera-explotacion-de-cobre-en-argentina/):** "La Legislatura aprobo San Jorge y sera la primera explotacion de cobre en Argentina".
 
-- **[lavaca.org](https://lavaca.org/actualidad/mendoza-en-caravana-hacia-la-capital-provincial-contra-el-proyecto-minero-san-jorge):** "Mendoza en caravana hacia la capital provincial contra el proyecto minero San Jorge".
+- **[Mendoza Post](https://www.mendozapost.com/politica/se-aprobo-san-jorge-senado-mendoza/):** "Se aprobo San Jorge en el Senado de Mendoza".
         """)
 
     with col_med2:
-        st.markdown("**Medios locales - Cobertura HOY:**")
+        st.markdown("**Cobertura del contexto:**")
         st.markdown("""
-- **[El Sol](https://www.elsol.com.ar/mendoza/llego-el-dia-la-legislatura-vota-psj-cobre-mendocino-y-el-futuro-de-la-mineria-en-mendoza/):** "Llegó el día: la Legislatura vota PSJ Cobre Mendocino y el futuro de la minería en Mendoza".
+- **[Mendoza Today](https://mendozatoday.com.ar/2025/12/09/el-senado-de-mendoza-aprobo-por-amplia-mayoria-el-proyecto-minero-san-jorge/):** "El Senado de Mendoza aprobo por amplia mayoria el proyecto minero San Jorge".
 
-- **[Diario Mendoza](https://www.diariomendoza.com.ar/sociedad/mendoza-moviliza-caravanas-masivas-marchan-legislatura-rechazo-megamineria-n136263):** "Mendoza se moviliza: caravanas masivas marchan hacia la Legislatura en rechazo a la megaminería".
+- **[elDiarioAR](https://www.eldiarioar.com/politica/agua-no-negocia-masiva-caravana-mendoza-proyecto-minero-respaldo-milei_1_12829856.html):** "El agua no se negocia: masiva caravana en Mendoza contra proyecto minero".
 
-- **[Diario San Rafael](https://diariosanrafael.com.ar/la-legislatura-vota-psj-cobre-mendocino-y-el-futuro-de-la-mineria-en-mendoza/):** "La Legislatura vota PSJ Cobre Mendocino y el futuro de la minería en Mendoza".
+- **[France 24](https://www.france24.com/es/video/20251209-argentina-pol%C3%A9mica-en-mendoza-por-proyecto-minero-y-amenaza-al-agua):** "Argentina: polemica en Mendoza por proyecto minero y amenaza al agua". Cobertura internacional.
 
-- **[El Argentino](https://elargentinodiario.com.ar/politica/08/12/2025/el-agua-no-se-negocia-mendoza-en-pie-de-lucha-contra-la-minera-que-impulsa-milei/):** "Mendoza en pie de lucha contra la minera que impulsa Milei".
+- **[TeleSur](https://www.telesurtv.net/argentina-mendoza-moviliza-contra-megamineria/):** "Argentina: Mendoza se moviliza por el agua y contra la megamineria".
         """)
 
-    st.info("**EN VIVO HOY:** El Senado debate con al menos 25 votos a favor del oficialismo. La 'Gesta Libertadora por el Agua' (caravana de 100km desde Uspallata) llegó a la Legislatura. Milei respaldó públicamente con mensaje sobre US$600 millones de inversión.")
+    st.success("**RESULTADO:** San Jorge APROBADO con 29 votos a favor. Malargue Distrito Minero APROBADO con 31 votos. Mendoza abre una nueva era minera.")
 
-    # ===== ALERTA DE CONVOCATORIAS =====
+    # ===== POST-APROBACION =====
     st.markdown("---")
-    st.subheader("Riesgo de Convocatorias y Movilizaciones")
+    st.subheader("Situacion Post-Aprobacion")
 
-    st.error("""
-    **HOY - LUNES 9 DE DICIEMBRE: VOTACIÓN EN CURSO**
+    st.warning("""
+    **9 DE DICIEMBRE - PROYECTO APROBADO**
 
-    **El Senado debate y vota PSJ Cobre Mendocino.** Caravanas masivas rodean la Legislatura. Milei y Bullrich presionan públicamente.
+    **El Senado aprobo PSJ Cobre Mendocino y Malargue Distrito Minero.** La movilizacion no logro frenar la votacion. Nueva etapa para Mendoza.
     """)
 
     st.markdown("""
-- **AHORA: Senado en sesión histórica:** Se votan 4 proyectos mineros. PSJ Cobre Mendocino es el más polémico. El oficialismo confía en tener los votos.
+- **San Jorge aprobado:** 29 votos a favor, 6 en contra, 1 abstencion. Primera explotacion de cobre en Mendoza desde la Ley 7722.
 
-- **Caravana de 100 km llegó a la Legislatura:** Miles de personas desde Uspallata, Valle de Uco y todo Mendoza concentrados frente al Senado. "El agua no se negocia".
+- **Amplia coalicion a favor:** Oficialismo + PRO + PD + La Union Mendocina + sector del PJ. El gobierno logro construir mayoria transversal.
 
-- **Milei intervino públicamente:** "Enorme oportunidad para Mendoza". El respaldo presidencial escaló la polarización. Bullrich acusó al kirchnerismo de las protestas.
+- **Movilizacion sin exito:** ~1500 personas en plaza no lograron frenar la aprobacion. El oficialismo tenia los votos asegurados.
 
-- **Operativo policial masivo:** La ministra de Seguridad anticipó medidas. Se espera tensión en las puertas de la Legislatura durante la votación.
+- **Proximos pasos:** El proyecto ahora debe avanzar con los permisos de explotacion. La empresa tiene luz verde legislativa.
 
-**EN VIVO: TN, TeleSur y medios nacionales transmiten. El resultado de hoy puede cambiar la historia de Mendoza.**
+**El conflicto puede continuar en las calles pero la batalla legislativa esta definida.**
     """)
 
     # ===== PUNTOS DE DOLOR =====
@@ -1565,41 +1535,41 @@ elif page == "Análisis 48 Horas":
 
     # ===== CONCLUSIÓN =====
     st.markdown("---")
-    st.subheader("Sintesis y Recomendaciones")
+    st.subheader("Sintesis y Proximos Pasos")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**Estado de situación - 9 de diciembre (HOY)**")
+        st.markdown("**Resultado - 9 de diciembre**")
         st.markdown("""
-**Hoy es el día decisivo.** El Senado de Mendoza vota PSJ Cobre Mendocino y otros 3 proyectos mineros.
-Milei y Bullrich presionaron públicamente. Caravanas masivas rodean la Legislatura.
+**San Jorge APROBADO** con 29 votos a favor, 6 en contra y 1 abstencion.
+**Malargue Distrito Minero APROBADO** con 31 votos a favor, 3 en contra y 1 abstencion.
 
-La cobertura mediática es **histórica**: +70 noticias en 24hs. TN, TeleSur, elDiarioAR cubren en vivo.
-El conflicto se nacionalizó completamente. US$600 millones en juego.
+Mendoza abre una nueva era minera. Primera explotacion de cobre aprobada desde la Ley 7722.
+Inversion de USD 559 millones. El gobierno de Cornejo logro su objetivo.
         """)
 
-        st.markdown("**Qué puede pasar hoy**")
+        st.markdown("**Claves de la votacion**")
         st.markdown("""
-- **Si se aprueba:** Escalada inmediata. Posibles incidentes en Legislatura.
-- **Si se rechaza:** Victoria del movimiento ambientalista. Descompresión.
-- **Variable clave:** Cantidad de votos y si hay disidencias en el oficialismo
+- **Amplia coalicion:** Oficialismo + PRO + PD + LUM + sector PJ
+- **Oposicion minoritaria:** Solo 6 votos negativos
+- **Sin sorpresas:** El resultado estaba anticipado
         """)
 
     with col2:
-        st.markdown("**Recomendaciones operativas HOY**")
+        st.markdown("**Proximos pasos**")
         st.markdown("""
-- **Monitoreo en tiempo real** de la sesión del Senado
-- **Alerta sobre hashtags:** #ElAguaNoSeNegocia, #PSJCobre, #MendozaDecide
-- **Seguimiento de TN, TeleSur** y medios que transmiten en vivo
-- **Estar atentos** a la reacción post-votación en redes
+- **Para la empresa:** Avanzar con permisos de explotacion
+- **Para el gobierno:** Comunicar beneficios economicos
+- **Para la oposicion:** Posibles recursos judiciales
+- **Monitoreo:** Reaccion en redes y posibles movilizaciones
         """)
 
-        st.markdown("**Escenarios inmediatos**")
+        st.markdown("**Escenarios a seguir**")
         st.markdown("""
-- **Si se aprueba:** Reacción inmediata de manifestantes. Posibles incidentes.
-- **Si se rechaza:** Celebración del movimiento. Retroceso para el gobierno.
-- **Independiente del resultado:** El conflicto seguirá a nivel nacional por Ley de Glaciares.
+- **Corto plazo:** Posibles protestas post-aprobacion
+- **Mediano plazo:** Avance del proyecto y generacion de empleo
+- **Nacional:** El debate sigue por la Ley de Glaciares
         """)
 
     # Timestamp con más detalle
