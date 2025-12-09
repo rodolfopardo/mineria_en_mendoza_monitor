@@ -288,6 +288,7 @@ with st.sidebar:
     page = st.radio(
         "Navegación",
         [
+            "Votacion Senado",
             "Análisis 48 Horas",
             "Streaming",
             "Análisis PSJCobre",
@@ -1108,6 +1109,204 @@ elif page == "Streaming":
     st.markdown("---")
     st.subheader("Stream Oficial - Senado de Mendoza")
     st.video("https://www.youtube.com/watch?v=fS2hoyOskdo")
+
+
+# ========== PÁGINA: VOTACION SENADO ==========
+elif page == "Votacion Senado":
+    st.header("Resultados Votacion - Senado de Mendoza")
+    st.markdown("**9 de Diciembre 2025 - Sesion Historica**")
+    st.markdown("---")
+
+    # Selector de proyecto
+    proyecto_sel = st.selectbox(
+        "Seleccionar Proyecto:",
+        ["San Jorge (PSJ Cobre Mendocino)", "Malargue Distrito Minero"],
+        index=0
+    )
+
+    st.markdown("---")
+
+    if proyecto_sel == "San Jorge (PSJ Cobre Mendocino)":
+        # ===== PROYECTO SAN JORGE =====
+        st.subheader("Proyecto San Jorge - Votacion en GENERAL")
+
+        # Resultado principal
+        col_res1, col_res2, col_res3 = st.columns(3)
+        with col_res1:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+                        padding: 30px; border-radius: 15px; text-align: center;">
+                <span style="font-size: 48px; font-weight: bold; color: white;">27</span><br>
+                <span style="font-size: 18px; color: white;">AFIRMATIVO</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_res2:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                        padding: 30px; border-radius: 15px; text-align: center;">
+                <span style="font-size: 48px; font-weight: bold; color: white;">06</span><br>
+                <span style="font-size: 18px; color: white;">NEGATIVO</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_res3:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+                        padding: 30px; border-radius: 15px; text-align: center;">
+                <span style="font-size: 48px; font-weight: bold; color: white;">01</span><br>
+                <span style="font-size: 18px; color: white;">ABSTENCION</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Grafico semicircular tipo hemiciclo
+        import plotly.graph_objects as go
+
+        fig_senado = go.Figure()
+
+        # Datos de votos
+        afirmativo = 27
+        negativo = 6
+        abstencion = 1
+        total = afirmativo + negativo + abstencion
+
+        fig_senado.add_trace(go.Pie(
+            values=[afirmativo, negativo, abstencion],
+            labels=['Afirmativo', 'Negativo', 'Abstencion'],
+            marker_colors=['#28a745', '#dc3545', '#ffc107'],
+            hole=0.5,
+            textinfo='value+label',
+            textfont_size=14,
+            rotation=90
+        ))
+
+        fig_senado.update_layout(
+            title="Distribucion de Votos - Proyecto San Jorge",
+            height=400,
+            showlegend=True
+        )
+
+        st.plotly_chart(fig_senado, use_container_width=True)
+
+        st.markdown("---")
+
+        # Lista de senadores por voto
+        st.subheader("Detalle de Votos por Senador")
+
+        senadores_afirmativo = [
+            "Ana Mario", "Ases Yamel", "Barro Alejandra", "Cano Adriana",
+            "Chappel Dugar", "Diumenjo Alejandro", "Eisenchlas Natalia",
+            "Floridia Angela", "Freidemberg Abel", "Galinares Maria",
+            "Gomez Olga Cristina", "Gonzalez Felix", "Gonzalez Valentin",
+            "Iglesias Marcelino", "Laferte Jesica", "Magistretti Armando",
+            "Manoni Flavia", "Marcolini Walther", "Marquez Sergio",
+            "Najul Claudia", "Perviu Helio", "Pezzutti Duilio",
+            "Pradines Gabriel", "Pringles Ariel", "Quattrini Marcos",
+            "Rostand Martin", "Sabadin Fernanda"
+        ]
+
+        col_voto1, col_voto2 = st.columns(2)
+
+        with col_voto1:
+            st.markdown("**VOTO AFIRMATIVO (27)**")
+            for i, senador in enumerate(senadores_afirmativo):
+                st.markdown(f"- {senador}")
+
+        with col_voto2:
+            st.markdown("**VOTO NEGATIVO (6)**")
+            st.markdown("- *(Pendiente de confirmar nombres)*")
+            st.markdown("")
+            st.markdown("**ABSTENCION (1)**")
+            st.markdown("- *(Pendiente de confirmar nombre)*")
+
+    else:
+        # ===== PROYECTO MALARGUE DISTRITO MINERO =====
+        st.subheader("Malargue Distrito Minero - Votacion en GENERAL")
+
+        # Resultado principal
+        col_mal1, col_mal2, col_mal3 = st.columns(3)
+        with col_mal1:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+                        padding: 30px; border-radius: 15px; text-align: center;">
+                <span style="font-size: 48px; font-weight: bold; color: white;">35</span><br>
+                <span style="font-size: 18px; color: white;">AFIRMATIVO</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_mal2:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+                        padding: 30px; border-radius: 15px; text-align: center;">
+                <span style="font-size: 48px; font-weight: bold; color: white;">00</span><br>
+                <span style="font-size: 18px; color: white;">NEGATIVO</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_mal3:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+                        padding: 30px; border-radius: 15px; text-align: center;">
+                <span style="font-size: 48px; font-weight: bold; color: white;">00</span><br>
+                <span style="font-size: 18px; color: white;">ABSTENCION</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Grafico
+        fig_malargue = go.Figure()
+
+        fig_malargue.add_trace(go.Pie(
+            values=[35],
+            labels=['Afirmativo'],
+            marker_colors=['#28a745'],
+            hole=0.5,
+            textinfo='value+label',
+            textfont_size=14
+        ))
+
+        fig_malargue.update_layout(
+            title="Distribucion de Votos - Malargue Distrito Minero (Unanimidad)",
+            height=400,
+            showlegend=True
+        )
+
+        st.plotly_chart(fig_malargue, use_container_width=True)
+
+        st.markdown("---")
+
+        # Lista de senadores
+        st.subheader("Detalle de Votos por Senador")
+
+        senadores_malargue = [
+            "Ana Mario", "Ases Yamel", "Barro Alejandra", "Cano Adriana",
+            "Chappel Dugar", "Derrache Maria Mercedes", "Diumenjo Alejandro",
+            "Eisenchlas Natalia", "Floridia Angela", "Freidemberg Abel",
+            "Galinares Maria", "Gomez Olga Cristina", "Gonzalez Felix",
+            "Gonzalez Valentin", "Iglesias Marcelino", "Laferte Jesica",
+            "Magistretti Armando", "Manoni Flavia", "Marcolini Walther",
+            "Marquez Sergio", "Najul Claudia", "Pezzutti Duilio",
+            "Pradines Gabriel", "Pringles Ariel", "Quattrini Marcos",
+            "Rostand Martin", "Sabadin Fernanda", "Saez David",
+            "Sainz Maria Laura", "Sat Mauricio", "Serra Pedro",
+            "Sevilla Oscar", "Soto Gustavo", "Vaquer Gerardo", "Zlobec Mariana"
+        ]
+
+        col_m1, col_m2, col_m3 = st.columns(3)
+
+        with col_m1:
+            st.markdown("**VOTO AFIRMATIVO (35)**")
+            for senador in senadores_malargue[:12]:
+                st.markdown(f"- {senador}")
+
+        with col_m2:
+            st.markdown("&nbsp;")
+            for senador in senadores_malargue[12:24]:
+                st.markdown(f"- {senador}")
+
+        with col_m3:
+            st.markdown("&nbsp;")
+            for senador in senadores_malargue[24:]:
+                st.markdown(f"- {senador}")
 
 
 # ========== PÁGINA: ANÁLISIS 48 HORAS ==========
