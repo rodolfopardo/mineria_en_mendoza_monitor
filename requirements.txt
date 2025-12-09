@@ -16,6 +16,9 @@ youtube-transcript-api>=0.6.1
 # YouTube live stats
 yt-dlp>=2024.1.0
 
+# YouTube chat
+chat-downloader>=0.2.0
+
 # NLP & Text Analysis
 textblob>=0.17.1
 

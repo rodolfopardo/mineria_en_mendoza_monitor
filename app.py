@@ -289,6 +289,7 @@ with st.sidebar:
         "Navegación",
         [
             "Análisis 48 Horas",
+            "Streaming",
             "Análisis PSJCobre",
             "Datos de Medios",
             "Análisis por Plataforma",
@@ -953,6 +954,159 @@ elif page == "Dashboard Principal":
         st.plotly_chart(fig_accounts, use_container_width=True)
     else:
         st.info("No hay datos de cuentas disponibles")
+
+
+# ========== PÁGINA: STREAMING ==========
+elif page == "Streaming":
+    st.header("Streaming en Vivo - Sesion del Senado")
+
+    # Funcion para obtener stats de YouTube
+    @st.cache_data(ttl=30)
+    def get_youtube_live_stats_streaming(video_url):
+        try:
+            result = subprocess.run(
+                ['yt-dlp', '--dump-json', video_url],
+                capture_output=True,
+                text=True,
+                timeout=15
+            )
+            if result.returncode == 0:
+                data = json.loads(result.stdout)
+                return {
+                    'viewers': data.get('concurrent_view_count', 0),
+                    'title': data.get('title', ''),
+                    'channel': data.get('channel', ''),
+                    'is_live': data.get('is_live', False)
+                }
+        except Exception:
+            pass
+        return {'viewers': 0, 'title': '', 'channel': '', 'is_live': False}
+
+    # Funcion para obtener chat en vivo
+    @st.cache_data(ttl=60)
+    def get_live_chat_messages(video_url, max_messages=200):
+        try:
+            from chat_downloader import ChatDownloader
+            downloader = ChatDownloader()
+            messages = []
+            chat = downloader.get_chat(video_url, max_messages=max_messages)
+            for msg in chat:
+                if 'message' in msg:
+                    messages.append({
+                        'author': msg.get('author', {}).get('name', 'Anonimo'),
+                        'message': msg.get('message', ''),
+                        'time': msg.get('time_text', '')
+                    })
+            return messages
+        except Exception as e:
+            return []
+
+    # Stream OID MORTALES
+    st.subheader("OID MORTALES - Debate San Jorge")
+    youtube_url_oid = "https://www.youtube.com/watch?v=VL9kXEMiSN4"
+    stats_oid = get_youtube_live_stats_streaming(youtube_url_oid)
+
+    col1, col2 = st.columns([2, 1])
+
+    with col1:
+        if stats_oid['is_live']:
+            st.success(f"EN VIVO - {stats_oid['viewers']:,} viewers")
+        st.video(youtube_url_oid)
+
+    with col2:
+        st.markdown("**Estadisticas del Stream**")
+        st.metric("Viewers", f"{stats_oid['viewers']:,}" if stats_oid['viewers'] else "---")
+        st.metric("Canal", stats_oid['channel'] or "OID MORTALES")
+
+        # Guardar en historico
+        if stats_oid['viewers'] and stats_oid['viewers'] > 0:
+            db.record_youtube_viewers("VL9kXEMiSN4", stats_oid['viewers'], "OID MORTALES", stats_oid['is_live'])
+
+    # Analisis del Chat en Vivo
+    st.markdown("---")
+    st.subheader("Analisis del Chat en Vivo")
+
+    with st.spinner("Cargando mensajes del chat..."):
+        chat_messages = get_live_chat_messages(youtube_url_oid, max_messages=300)
+
+    if chat_messages:
+        st.success(f"Se obtuvieron {len(chat_messages)} mensajes del chat")
+
+        # Extraer texto de los mensajes
+        all_text = " ".join([msg['message'] for msg in chat_messages])
+
+        # Nube de palabras
+        st.subheader("Nube de Palabras - Temas del Chat")
+
+        # Stopwords en espanol
+        stopwords_es = set([
+            'de', 'la', 'que', 'el', 'en', 'y', 'a', 'los', 'del', 'se', 'las', 'por', 'un', 'para',
+            'con', 'no', 'una', 'su', 'al', 'lo', 'como', 'mas', 'pero', 'sus', 'le', 'ya', 'o',
+            'este', 'si', 'porque', 'esta', 'entre', 'cuando', 'muy', 'sin', 'sobre', 'tambien',
+            'me', 'hasta', 'hay', 'donde', 'quien', 'desde', 'todo', 'nos', 'durante', 'todos',
+            'uno', 'les', 'ni', 'contra', 'otros', 'ese', 'eso', 'ante', 'ellos', 'e', 'esto',
+            'mi', 'antes', 'algunos', 'que', 'unos', 'yo', 'otro', 'otras', 'otra', 'el', 'tanto',
+            'esa', 'estos', 'mucho', 'quienes', 'nada', 'muchos', 'cual', 'poco', 'ella', 'estar',
+            'estas', 'algunas', 'algo', 'nosotros', 'tu', 'es', 'son', 'ser', 'tiene', 'va', 'ver',
+            'jaja', 'jajaja', 'xd', 'jajajaja', 'si', 'no', 'q', 'x', 'd'
+        ])
+
+        if len(all_text) > 50:
+            try:
+                wordcloud = WordCloud(
+                    width=800,
+                    height=400,
+                    background_color='white',
+                    stopwords=stopwords_es,
+                    min_font_size=10,
+                    max_words=100,
+                    colormap='Reds'
+                ).generate(all_text.lower())
+
+                fig_wc, ax_wc = plt.subplots(figsize=(12, 6))
+                ax_wc.imshow(wordcloud, interpolation='bilinear')
+                ax_wc.axis('off')
+                st.pyplot(fig_wc)
+                plt.close()
+            except Exception as e:
+                st.warning(f"No se pudo generar la nube de palabras: {e}")
+
+        # Ultimos mensajes del chat
+        st.subheader("Ultimos Mensajes del Chat")
+        for msg in chat_messages[-20:]:
+            st.markdown(f"**{msg['author']}**: {msg['message']}")
+
+        # Conteo de palabras clave
+        st.subheader("Menciones Clave")
+        keywords_count = {
+            'agua': all_text.lower().count('agua'),
+            'mineria': all_text.lower().count('miner'),
+            'san jorge': all_text.lower().count('san jorge'),
+            'cornejo': all_text.lower().count('cornejo'),
+            'milei': all_text.lower().count('milei'),
+            'no a la mina': all_text.lower().count('no a la mina'),
+            'cobre': all_text.lower().count('cobre'),
+            'senado': all_text.lower().count('senado'),
+            'votar': all_text.lower().count('vot'),
+        }
+
+        col_k1, col_k2, col_k3 = st.columns(3)
+        keywords_sorted = sorted(keywords_count.items(), key=lambda x: x[1], reverse=True)
+        for i, (kw, count) in enumerate(keywords_sorted):
+            if i < 3:
+                col_k1.metric(kw.title(), count)
+            elif i < 6:
+                col_k2.metric(kw.title(), count)
+            else:
+                col_k3.metric(kw.title(), count)
+
+    else:
+        st.warning("No se pudieron obtener mensajes del chat. El chat puede estar deshabilitado o el video no esta en vivo.")
+
+    # Link al stream oficial tambien
+    st.markdown("---")
+    st.subheader("Stream Oficial - Senado de Mendoza")
+    st.video("https://www.youtube.com/watch?v=fS2hoyOskdo")
 
 
 # ========== PÁGINA: ANÁLISIS 48 HORAS ==========
