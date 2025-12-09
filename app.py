@@ -959,20 +959,20 @@ elif page == "Análisis 48 Horas":
 
     # Mostrar fecha de actualización prominente
     st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
                 padding: 15px 20px;
                 border-radius: 10px;
                 margin-bottom: 20px;">
         <p style="color: white; margin: 0; font-size: 14px;">
-            <strong>Actualizado:</strong> 07 de diciembre de 2025 |
-            <strong>Período:</strong> 6-7 de diciembre 2025
+            <strong>HOY SE VOTA:</strong> 09 de diciembre de 2025 |
+            <strong>Período:</strong> 8-9 de diciembre 2025
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     # ===== INDICADOR DE EBULLICIÓN SOCIAL =====
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #f97316 0%, #eab308 100%);
+    <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
                 padding: 20px;
                 border-radius: 12px;
                 margin-bottom: 25px;
@@ -983,20 +983,20 @@ elif page == "Análisis 48 Horas":
                 <p style="color: #fef3c7; margin: 0; font-size: 14px;">Indicador de tensión sociopolítica minera en Mendoza</p>
             </div>
             <div style="text-align: center;">
-                <span style="font-size: 48px; font-weight: bold; color: white;">ALTO</span>
+                <span style="font-size: 48px; font-weight: bold; color: white;">CRÍTICO</span>
             </div>
         </div>
         <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
             <div style="display: flex; justify-content: space-between; color: #fef3c7; font-size: 13px;">
-                <span>📈 <strong>Tendencia:</strong> ESTABLE (vs período anterior)</span>
-                <span>⚠️ <strong>Score de riesgo:</strong> 9/12 (75%)</span>
-                <span>🔥 <strong>Alcance estimado:</strong> 261K interacciones</span>
+                <span>📈 <strong>Tendencia:</strong> MÁXIMA TENSIÓN</span>
+                <span>⚠️ <strong>Score de riesgo:</strong> 12/12 (100%)</span>
+                <span>🔥 <strong>Noticias 24hs:</strong> +70 artículos</span>
             </div>
         </div>
         <div style="margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>Factores a monitorear:</strong> Votación en Senado el lunes 9 • Convocatoria a movilización confirmada •
-                Cobertura mediática activa (68 noticias) • Engagement moderado en redes
+                <strong>HOY ES EL DÍA:</strong> Senado vota PSJ Cobre • Milei y Bullrich presionan públicamente • Caravanas masivas hacia Legislatura •
+                TN, TeleSur y medios nacionales cubren en vivo • Operativo policial reforzado
             </p>
         </div>
     </div>
@@ -1006,27 +1006,27 @@ elif page == "Análisis 48 Horas":
     st.markdown("""
     <div style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
         <p style="color: #94a3b8; margin: 0 0 10px 0; font-size: 13px; font-weight: bold;">
-            🔥 TOP 3 POSTS RECIENTES - RUMBO AL 9 DE DICIEMBRE
+            🔥 TOP 3 POSTS - SEMANA DE LA VOTACIÓN (1-8 DIC)
         </p>
         <div style="border-left: 3px solid #ef4444; padding-left: 12px; margin-bottom: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>1. @LautaroJimenezB</strong> (Twitter) - <span style="color: #fbbf24;">1,380 interacciones</span> - 5 dic<br>
-                <span style="color: #cbd5e1;">"La fiscalía incorporó filmaciones de la Policía de Mendoza que muestran cómo usaron la Legislatura..."</span><br>
-                <a href="https://x.com/LautaroJimenezB/status/1996924205678363079" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>1. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">5,106 interacciones</span> - 1 dic<br>
+                <span style="color: #cbd5e1;">"ES INMINENTE - SE VIENE EL MENDOZAZO #elaguademendozanosenegocia #la7722nosetoca"</span><br>
+                <a href="https://www.facebook.com/reel/1335527924451453/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
         <div style="border-left: 3px solid #f97316; padding-left: 12px; margin-bottom: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>2. @therealbuni</strong> (Twitter) - <span style="color: #fbbf24;">859 interacciones</span> - 5 dic<br>
-                <span style="color: #cbd5e1;">"En Mendoza el martes se aprueba el proyecto para hacer minería..."</span><br>
-                <a href="https://x.com/therealbuni/status/1997044359749906613" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>2. @santiagocarrazan4</strong> (TikTok) - <span style="color: #fbbf24;">4,230 interacciones</span> - 2 dic<br>
+                <span style="color: #cbd5e1;">"El agua de Mendoza no se negocia - en pie de lucha por el futuro de nuestra gente #megamineria"</span><br>
+                <a href="https://www.tiktok.com/@santiagocarrazan4/video/7579208688859122964" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
         <div style="border-left: 3px solid #eab308; padding-left: 12px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>3. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">630 interacciones</span> - 5 dic<br>
-                <span style="color: #cbd5e1;">"Los parientes volvemos a marchar. Toda Mendoza caminando a la ciudad..."</span><br>
-                <a href="https://www.facebook.com/pibessancarlos/posts/pfbid0YptiNrxJBgCaY6NTGCidhA71anPYqXEWk2HPHXgvWaHNn2BWkdLzbTnqNWU8ZZVxl" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
+                <strong>3. @pibessancarlos</strong> (Facebook) - <span style="color: #fbbf24;">3,920 interacciones</span> - 3 dic<br>
+                <span style="color: #cbd5e1;">"TODA ESTA MAREA DICE QUE EL AGUA DE MENDOZA NO SE NEGOCIA 💧"</span><br>
+                <a href="https://www.facebook.com/reel/4332258677046990/" target="_blank" style="color: #60a5fa; font-size: 12px;">Ver post →</a>
             </p>
         </div>
     </div>
@@ -1041,74 +1041,74 @@ elif page == "Análisis 48 Horas":
     st.markdown("---")
     st.subheader("Lo que mas se hablo")
 
-    st.warning("**Temas dominantes en la conversación (6-7 diciembre)**")
+    st.warning("**Temas dominantes en la conversación (8-9 diciembre) - DÍA DE LA VOTACIÓN**")
 
     st.markdown("""
-- **"La represión será televisada":** Página 12 y medios nacionales cubren el violento operativo policial del martes en el Senado de Mendoza. Imágenes de manifestantes encerrados en "corralito" generan indignación masiva.
+- **Milei y Bullrich presionan por la aprobación:** El presidente salió públicamente a respaldar PSJ Cobre: "Enorme oportunidad para Mendoza". Bullrich apuntó contra el kirchnerismo por las protestas. Presión máxima del gobierno nacional.
 
-- **Cornejo cruza el Rubicón:** Los medios describen la estrategia del gobernador como "a todo o nada por la megaminería". El oficialismo forzó el debate en comisiones con fuerte operativo de seguridad.
+- **Caravana de 100 km hacia la Legislatura:** La Asamblea por el Agua inició una caravana masiva desde Uspallata. Miles de personas marchan por los departamentos del Valle de Uco hacia la capital.
 
-- **Senado postergó votación al lunes 9:** Tras horas de tensión, se suspendió la sesión definitiva. Las asambleas convocan a nueva movilización masiva para el lunes.
+- **"El agua no se negocia" - Movilización histórica:** TN, TeleSur, elDiarioAR y medios nacionales cubren las marchas. El conflicto se nacionalizó completamente. Hashtag #ElAguaNoSeNegocia en tendencia.
 
-- **"El 9 vamos con todo al Senado":** Convocatoria viral en redes sociales. Las asambleas de todo Mendoza preparan una jornada de máxima movilización para presionar a los senadores.
+- **Hebe Casado: "Con Alfredo no daremos ni medio paso atrás":** La vicegobernadora reafirmó el compromiso del gobierno con la aprobación. El oficialismo confía en tener los votos.
 
-- **Cobertura mediática nacional sin precedentes:** El conflicto mendocino llega a medios nacionales e internacionales. Noticias Ambientales y El Grito del Sur publican investigaciones sobre el plan del Gobierno para modificar la Ley de Glaciares.
+- **Jornada clave: el Senado vota los 4 proyectos mineros:** PSJ Cobre Mendocino, Malargüe Distrito Minero, San Romeleo y más. Sesión histórica que puede abrir la megaminería en la provincia.
     """)
 
     # ===== LO QUE DICEN LOS MEDIOS =====
     st.markdown("---")
     st.subheader("Lo que dicen los medios (últimas 48 horas)")
 
-    st.markdown("**Cobertura mediática del conflicto minero - 68 noticias nuevas**")
+    st.markdown("**Cobertura mediática EXPLOSIVA - +70 noticias en 24hs**")
 
     col_med1, col_med2 = st.columns(2)
 
     with col_med1:
         st.markdown("**Medios pro-minería/oficialistas:**")
         st.markdown("""
-- **Los Andes:** "El Senado se prepara para debatir los proyectos mineros con un fuerte operativo policial". Cobertura del operativo de seguridad.
+- **El Economista:** "Milei mira con extrema atención: hay US$600 millones en juego". Análisis económico del proyecto.
 
-- **MDZ Online:** Cobertura del avance de los proyectos en comisiones. Énfasis en el apoyo del gobierno nacional.
+- **MDZ Online:** "Javier Milei tomó postura sobre San Jorge y criticó al peronismo". Cobertura del respaldo presidencial.
 
-- **Sitio Andino:** "Mendoza fortalece su presencia global en minería en Londres". Cobertura de la misión comercial de Latorre.
+- **Los Andes:** "Qué significa PSJ Cobre para el desarrollo de Mendoza según la mirada empresaria". Visión del sector privado.
 
-- **El Economista:** "Mendoza pisa fuerte en Londres: abre la puerta a inversiones en minerales críticos". Foco en oportunidades de inversión.
+- **Sitio Andino:** "PSJ Cobre Mendocino: el proyecto que puede abrir una nueva etapa productiva". Énfasis en oportunidades.
         """)
 
     with col_med2:
         st.markdown("**Medios críticos/ambientalistas:**")
         st.markdown("""
-- **Página 12:** "La represión será televisada". Cobertura del operativo policial y la represión a manifestantes.
+- **TN:** "En medio de una fuerte movilización, Mendoza decide si le abre la puerta a la megaminería". Cobertura nacional en vivo.
 
-- **Canal Abierto:** "Cornejo cruza el Rubicón: a todo o nada por la megaminería". Análisis crítico de la estrategia oficialista.
+- **TeleSur:** "Argentina: Mendoza se moviliza por el agua y contra la megaminería". Cobertura internacional.
 
-- **Noticias Ambientales:** "Una multitudinaria protesta en Mendoza reaviva el rechazo social al proyecto San Jorge". Cobertura de las movilizaciones.
+- **elDiarioAR:** "El agua no se negocia: masiva caravana en Mendoza contra proyecto minero respaldado por Milei".
 
-- **Radio Regional:** "Mendoza: la marcha del martes será multitudinaria en contra de la minería". Convocatoria confirmada.
+- **Resumen Latinoamericano:** "En defensa del agua: multitud marcha a la Legislatura para rechazar San Jorge".
         """)
 
-    st.info("**Tendencia:** La cobertura mediática alcanzó volumen histórico (68 noticias en 24hs). Los medios nacionales tomaron el conflicto mendocino. La represión del martes generó repudio generalizado y amplificó la convocatoria para el lunes 9.")
+    st.info("**HISTÓRICO:** El conflicto llegó a TN, TeleSur y medios internacionales. Milei y Bullrich intervinieron públicamente. Más de 70 noticias en 24 horas. Nivel de cobertura sin precedentes en la historia del debate minero en Mendoza.")
 
     # ===== ALERTA DE CONVOCATORIAS =====
     st.markdown("---")
     st.subheader("Riesgo de Convocatorias y Movilizaciones")
 
     st.error("""
-    **ALERTA MÁXIMA - LUNES 9: Votación definitiva en el Senado**
+    **HOY - LUNES 9 DE DICIEMBRE: VOTACIÓN EN CURSO**
 
-    **Convocatoria confirmada:** "El 9 vamos con todo al Senado" se viralizó en redes. Se espera la movilización más grande desde 2019.
+    **El Senado debate y vota PSJ Cobre Mendocino.** Caravanas masivas rodean la Legislatura. Milei y Bullrich presionan públicamente.
     """)
 
     st.markdown("""
-- **LUNES 9: Votación definitiva + Marcha masiva:** El Senado postergó la votación al lunes. Las asambleas refuerzan la convocatoria. Hashtag #El9VamosConTodo trending en Mendoza.
+- **AHORA: Senado en sesión histórica:** Se votan 4 proyectos mineros. PSJ Cobre Mendocino es el más polémico. El oficialismo confía en tener los votos.
 
-- **Represión del martes escaló el conflicto:** El operativo policial con "corralito" y detenciones generó repudio masivo. Imágenes virales multiplicaron el alcance del rechazo.
+- **Caravana de 100 km llegó a la Legislatura:** Miles de personas desde Uspallata, Valle de Uco y todo Mendoza concentrados frente al Senado. "El agua no se negocia".
 
-- **Sesiones extraordinarias nacionales confirmadas:** Milei convocará al Congreso para modificar la Ley de Glaciares. El conflicto mendocino se nacionaliza definitivamente.
+- **Milei intervino públicamente:** "Enorme oportunidad para Mendoza". El respaldo presidencial escaló la polarización. Bullrich acusó al kirchnerismo de las protestas.
 
-- **Coordinación interprovincial activa:** Asambleas de San Juan, Catamarca, La Rioja y provincias cordilleranas en alerta. Posibles acciones coordinadas el lunes.
+- **Operativo policial masivo:** La ministra de Seguridad anticipó medidas. Se espera tensión en las puertas de la Legislatura durante la votación.
 
-**CRÍTICO: El lunes 9 será el día decisivo. Si el Senado aprueba, se espera escalada inmediata. Si rechaza o posterga, descompresión temporal.**
+**EN VIVO: TN, TeleSur y medios nacionales transmiten. El resultado de hoy puede cambiar la historia de Mendoza.**
     """)
 
     # ===== PUNTOS DE DOLOR =====
@@ -1154,37 +1154,36 @@ elif page == "Análisis 48 Horas":
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**Estado de situación - 7 de diciembre**")
+        st.markdown("**Estado de situación - 9 de diciembre (HOY)**")
         st.markdown("""
-El conflicto entró en **fase crítica**. La represión del martes escaló la tensión y amplificó
-la convocatoria para el lunes 9. El Senado postergó la votación definitiva aumentando la incertidumbre.
+**Hoy es el día decisivo.** El Senado de Mendoza vota PSJ Cobre Mendocino y otros 3 proyectos mineros.
+Milei y Bullrich presionaron públicamente. Caravanas masivas rodean la Legislatura.
 
-La cobertura mediática alcanzó **volumen histórico** (68 noticias en 24hs). Medios nacionales como
-Página 12 titularon "La represión será televisada", nacionalizando el conflicto mendocino.
+La cobertura mediática es **histórica**: +70 noticias en 24hs. TN, TeleSur, elDiarioAR cubren en vivo.
+El conflicto se nacionalizó completamente. US$600 millones en juego.
         """)
 
-        st.markdown("**Próximos días críticos**")
+        st.markdown("**Qué puede pasar hoy**")
         st.markdown("""
-- **LUNES 9:** Votación definitiva en Senado + marcha masiva
-- **Sesiones extraordinarias** nacionales por Ley de Glaciares
-- **Posible "Mendozazo"** si se aprueba San Jorge
-- **Operativo policial reforzado** anticipado por el gobierno
+- **Si se aprueba:** Escalada inmediata. Posibles incidentes en Legislatura.
+- **Si se rechaza:** Victoria del movimiento ambientalista. Descompresión.
+- **Variable clave:** Cantidad de votos y si hay disidencias en el oficialismo
         """)
 
     with col2:
-        st.markdown("**Recomendaciones operativas**")
+        st.markdown("**Recomendaciones operativas HOY**")
         st.markdown("""
-- **Monitoreo 24/7** desde el domingo hasta el lunes por la noche
-- **Alerta sobre hashtags:** #El9VamosConTodo, #NoALaMina, #LaRepresiónSeráTelevisada
-- **Seguimiento de redes en tiempo real** durante la sesión del Senado
-- **Monitoreo de medios nacionales** que amplificarán cualquier incidente
+- **Monitoreo en tiempo real** de la sesión del Senado
+- **Alerta sobre hashtags:** #ElAguaNoSeNegocia, #PSJCobre, #MendozaDecide
+- **Seguimiento de TN, TeleSur** y medios que transmiten en vivo
+- **Estar atentos** a la reacción post-votación en redes
         """)
 
-        st.markdown("**Escenarios posibles para el lunes 9**")
+        st.markdown("**Escenarios inmediatos**")
         st.markdown("""
-- **Si se aprueba:** Escalada inmediata. Posible intento de ingreso al Senado. Alta probabilidad de incidentes.
-- **Si se rechaza/posterga:** Descompresión temporal. Victoria simbólica del movimiento.
-- **Variable crítica:** Nivel de represión policial y cobertura mediática en vivo.
+- **Si se aprueba:** Reacción inmediata de manifestantes. Posibles incidentes.
+- **Si se rechaza:** Celebración del movimiento. Retroceso para el gobierno.
+- **Independiente del resultado:** El conflicto seguirá a nivel nacional por Ley de Glaciares.
         """)
 
     # Timestamp con más detalle
