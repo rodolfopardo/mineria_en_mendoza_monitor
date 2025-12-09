@@ -1002,16 +1002,6 @@ elif page == "Análisis 48 Horas":
 
     # Obtener estadisticas del historico
     viewers_stats = db.get_youtube_viewers_stats(video_id)
-    stats_html = ""
-    if viewers_stats and viewers_stats.get('max_viewers'):
-        stats_html = f"""
-        <div style="display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
-            <span style="color: #fef3c7; font-size: 14px;">Max: <strong>{viewers_stats['max_viewers']:,}</strong></span>
-            <span style="color: #fef3c7; font-size: 14px;">Min: <strong>{viewers_stats['min_viewers']:,}</strong></span>
-            <span style="color: #fef3c7; font-size: 14px;">Promedio: <strong>{viewers_stats['avg_viewers']:,}</strong></span>
-            <span style="color: #fef3c7; font-size: 14px;">Registros: <strong>{viewers_stats['total_records']}</strong></span>
-        </div>
-        """
 
     st.markdown(f"""
     <div style="background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%);
@@ -1031,12 +1021,19 @@ elif page == "Análisis 48 Horas":
                 {viewers_text}
             </span>
         </div>
-        {stats_html}
         <p style="color: #fef3c7; margin: 10px 0 0 0; font-size: 16px;">
             <strong>Segui en directo la votacion del proyecto PSJ Cobre Mendocino</strong>
         </p>
     </div>
     """, unsafe_allow_html=True)
+
+    # Mostrar estadisticas con componentes nativos de Streamlit
+    if viewers_stats and viewers_stats.get('max_viewers'):
+        cols_stats = st.columns(4)
+        cols_stats[0].metric("Max", f"{viewers_stats['max_viewers']:,}")
+        cols_stats[1].metric("Min", f"{viewers_stats['min_viewers']:,}")
+        cols_stats[2].metric("Promedio", f"{viewers_stats['avg_viewers']:,}")
+        cols_stats[3].metric("Registros", f"{viewers_stats['total_records']}")
 
     # Embed del video de YouTube
     st.video(youtube_url)
