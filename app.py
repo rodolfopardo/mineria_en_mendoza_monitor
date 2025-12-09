@@ -1026,8 +1026,9 @@ elif page == "Streaming":
     st.markdown("---")
     st.subheader("Analisis del Chat en Vivo")
 
-    with st.spinner("Cargando mensajes del chat..."):
-        chat_messages = get_live_chat_messages(youtube_url_oid, max_messages=300)
+    st.info("El analisis del chat estara disponible cuando termine el stream en vivo. YouTube limita el acceso al chat durante transmisiones en directo.")
+
+    chat_messages = []  # Por ahora vacio hasta que termine el live
 
     if chat_messages:
         st.success(f"Se obtuvieron {len(chat_messages)} mensajes del chat")
