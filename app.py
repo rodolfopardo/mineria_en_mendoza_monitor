@@ -11,6 +11,8 @@ from datetime import datetime, timedelta
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import os
+import subprocess
+import json
 
 from database import SocialDatabase
 from analysis.impact_analyzer import ImpactAnalyzer
@@ -958,7 +960,51 @@ elif page == "Análisis 48 Horas":
     st.header("Analisis Cualitativo - Ultimas 48 Horas")
 
     # ===== SENADO EN VIVO =====
-    st.markdown("""
+    # Función para obtener viewers del stream de YouTube
+    @st.cache_data(ttl=30)  # Cache por 30 segundos
+    def get_youtube_live_stats(video_url):
+        """Obtiene estadísticas del live de YouTube usando yt-dlp"""
+        try:
+            result = subprocess.run(
+                ['yt-dlp', '--dump-json', video_url],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            if result.returncode == 0:
+                data = json.loads(result.stdout)
+                return {
+                    'viewers': data.get('concurrent_view_count', 0),
+                    'title': data.get('title', 'Sesión del Senado'),
+                    'is_live': data.get('is_live', False)
+                }
+        except Exception:
+            pass
+        return {'viewers': None, 'title': 'Sesión del Senado', 'is_live': False}
+
+    youtube_url = "https://www.youtube.com/watch?v=fS2hoyOskdo"
+    live_stats = get_youtube_live_stats(youtube_url)
+
+    # Mostrar viewers si está en vivo
+    viewers_html = ""
+    if live_stats['is_live'] and live_stats['viewers']:
+        viewers_html = f"""
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: white; font-size: 18px;">
+                👁️ <strong>{live_stats['viewers']:,}</strong> personas viendo ahora
+            </span>
+        </div>
+        """
+    elif live_stats['viewers'] is None:
+        viewers_html = """
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: white; font-size: 14px;">
+                ⏳ Cargando viewers...
+            </span>
+        </div>
+        """
+
+    st.markdown(f"""
     <div style="background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%);
                 padding: 20px;
                 border-radius: 12px;
@@ -966,11 +1012,12 @@ elif page == "Análisis 48 Horas":
                 border: 3px solid #fbbf24;
                 box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-            <div style="background: #fbbf24; color: #7f1d1d; padding: 5px 15px; border-radius: 5px; font-weight: bold; animation: pulse 2s infinite;">
+            <div style="background: #fbbf24; color: #7f1d1d; padding: 5px 15px; border-radius: 5px; font-weight: bold;">
                 🔴 EN VIVO
             </div>
             <h2 style="color: white; margin: 0; font-size: 24px;">SENADO DE MENDOZA - SESIÓN HISTÓRICA</h2>
         </div>
+        {viewers_html}
         <p style="color: #fef3c7; margin: 0 0 15px 0; font-size: 16px;">
             <strong>Seguí en directo la votación del proyecto PSJ Cobre Mendocino</strong>
         </p>
@@ -978,7 +1025,7 @@ elif page == "Análisis 48 Horas":
     """, unsafe_allow_html=True)
 
     # Embed del video de YouTube
-    st.video("https://www.youtube.com/watch?v=fS2hoyOskdo")
+    st.video(youtube_url)
 
     st.markdown("<br>", unsafe_allow_html=True)
 

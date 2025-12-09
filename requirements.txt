@@ -13,6 +13,9 @@ requests>=2.31.0
 # YouTube transcription
 youtube-transcript-api>=0.6.1
 
+# YouTube live stats
+yt-dlp>=2024.1.0
+
 # NLP & Text Analysis
 textblob>=0.17.1
 
