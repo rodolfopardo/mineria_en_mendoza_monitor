@@ -1136,7 +1136,7 @@ elif page == "Votacion Senado":
             st.markdown("""
             <div style="background: linear-gradient(135deg, #28a745 0%, #218838 100%);
                         padding: 30px; border-radius: 15px; text-align: center;">
-                <span style="font-size: 48px; font-weight: bold; color: white;">27</span><br>
+                <span style="font-size: 48px; font-weight: bold; color: white;">29</span><br>
                 <span style="font-size: 18px; color: white;">AFIRMATIVO</span>
             </div>
             """, unsafe_allow_html=True)
@@ -1157,6 +1157,8 @@ elif page == "Votacion Senado":
             </div>
             """, unsafe_allow_html=True)
 
+        st.caption("Nota: Martin Kerchner (a favor) no voto por presidir la sesion")
+
         st.markdown("---")
 
         # Grafico semicircular tipo hemiciclo
@@ -1165,10 +1167,9 @@ elif page == "Votacion Senado":
         fig_senado = go.Figure()
 
         # Datos de votos
-        afirmativo = 27
+        afirmativo = 29
         negativo = 6
         abstencion = 1
-        total = afirmativo + negativo + abstencion
 
         fig_senado.add_trace(go.Pie(
             values=[afirmativo, negativo, abstencion],
@@ -1193,40 +1194,76 @@ elif page == "Votacion Senado":
         # Lista de senadores por voto
         st.subheader("Detalle de Votos por Senador")
 
-        senadores_afirmativo = [
-            "Ana Mario", "Ases Yamel", "Barro Alejandra", "Cano Adriana",
-            "Chappel Dugar", "Diumenjo Alejandro", "Eisenchlas Natalia",
-            "Floridia Angela", "Freidemberg Abel", "Galinares Maria",
-            "Gomez Olga Cristina", "Gonzalez Felix", "Gonzalez Valentin",
-            "Iglesias Marcelino", "Laferte Jesica", "Magistretti Armando",
-            "Manoni Flavia", "Marcolini Walther", "Marquez Sergio",
-            "Najul Claudia", "Perviu Helio", "Pezzutti Duilio",
-            "Pradines Gabriel", "Pringles Ariel", "Quattrini Marcos",
-            "Rostand Martin", "Sabadin Fernanda"
+        # Oficialismo (18)
+        senadores_oficialismo = [
+            "Mario Ana", "Ases Yamel", "Diumenjo Alejandro", "Floridia Angela",
+            "Freidemberg Abel", "Galinares Maria", "Iglesias Marcelino",
+            "Laferte Jesica", "Marcolini Walther", "Najul Claudia",
+            "Eisenchlas Natacha", "Sabadin Fernanda", "Saez David",
+            "Sainz Maria Laura", "Sevilla Oscar", "Marquez Sergio",
+            "Soto Gustavo", "Zlobec Mariana"
         ]
 
-        senadores_negativo = [
-            "Saez David", "Sainz Maria Laura", "Serra Pedro",
-            "Sevilla Oscar", "Soto Gustavo", "Vaquer Gerardo"
+        # PRO (4)
+        senadores_pro = [
+            "Vicchi German", "Rostand Martin", "Pradines Gabriel", "Gonzalez Valentin"
         ]
 
-        senadores_abstencion = ["Zlobec Mariana"]
+        # PD (1)
+        senadores_pd = ["Magistretti Armando"]
+
+        # La Union Mendocina (2)
+        senadores_um = ["Pringles Ariel", "Quattrini Marcos"]
+
+        # PJ (5)
+        senadores_pj = [
+            "Barro Alejandra", "Cano Adriana", "Derrache Mercedes",
+            "Serra Pedro", "Sat Mauricio"
+        ]
 
         col_voto1, col_voto2 = st.columns(2)
 
         with col_voto1:
-            st.markdown("**VOTO AFIRMATIVO (27)**")
-            for senador in senadores_afirmativo:
+            st.markdown("**VOTO AFIRMATIVO (29)**")
+            st.markdown("")
+            st.markdown("*Oficialismo (18):*")
+            for senador in senadores_oficialismo:
+                st.markdown(f"- {senador}")
+            st.markdown("")
+            st.markdown("*PRO (4):*")
+            for senador in senadores_pro:
+                st.markdown(f"- {senador}")
+            st.markdown("")
+            st.markdown("*Partido Democrata (1):*")
+            for senador in senadores_pd:
                 st.markdown(f"- {senador}")
 
         with col_voto2:
-            st.markdown("**VOTO NEGATIVO (6)**")
-            for senador in senadores_negativo:
+            st.markdown("&nbsp;")
+            st.markdown("")
+            st.markdown("*La Union Mendocina (2):*")
+            for senador in senadores_um:
                 st.markdown(f"- {senador}")
             st.markdown("")
-            st.markdown("**ABSTENCION (1)**")
-            for senador in senadores_abstencion:
+            st.markdown("*Peronismo (5):*")
+            for senador in senadores_pj:
                 st.markdown(f"- {senador}")
+            st.markdown("")
+            st.markdown("---")
+            st.markdown("**VOTO NEGATIVO (6)**")
+            st.markdown("*PJ (2):*")
+            st.markdown("- Vaquer Gerardo")
+            st.markdown("- Gomez Sandra")
+            st.markdown("*Kirchnerismo (2):*")
+            st.markdown("- Gonzalez Felix")
+            st.markdown("- Perviu Helio")
+            st.markdown("*Partido Verde (1):*")
+            st.markdown("- Chappel Dugar")
+            st.markdown("*Hacemos (1):*")
+            st.markdown("- Manoni Flavia")
+            st.markdown("")
+            st.markdown("**ABSTENCION (1)**")
+            st.markdown("- Pezzutti Duilio")
 
     else:
         # ===== PROYECTO MALARGUE DISTRITO MINERO =====
