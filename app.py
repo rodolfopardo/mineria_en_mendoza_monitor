@@ -1057,37 +1057,37 @@ elif page == "Análisis 48 Horas":
 
     # ===== LO QUE DICEN LOS MEDIOS =====
     st.markdown("---")
-    st.subheader("Lo que dicen los medios (últimas 48 horas)")
+    st.subheader("Lo que dicen los medios - HOY 9 DE DICIEMBRE")
 
-    st.markdown("**Cobertura mediática EXPLOSIVA - +70 noticias en 24hs**")
+    st.markdown("**Cobertura en VIVO del día de la votación**")
 
     col_med1, col_med2 = st.columns(2)
 
     with col_med1:
-        st.markdown("**Medios pro-minería/oficialistas:**")
+        st.markdown("**Medios nacionales e internacionales:**")
         st.markdown("""
-- **El Economista:** "Milei mira con extrema atención: hay US$600 millones en juego". Análisis económico del proyecto.
+- **[Prensa Latina](https://www.prensa-latina.cu/2025/12/09/marcha-por-el-agua-en-provincia-argentina-de-mendoza/):** "Marcha por el agua en provincia argentina de Mendoza". Cobertura internacional desde Cuba.
 
-- **MDZ Online:** "Javier Milei tomó postura sobre San Jorge y criticó al peronismo". Cobertura del respaldo presidencial.
+- **[elDiarioAR](https://www.eldiarioar.com/politica/agua-no-negocia-masiva-caravana-mendoza-proyecto-minero-respaldo-milei_1_12829856.html):** "El agua no se negocia: masiva caravana en Mendoza contra proyecto minero que respaldó Milei".
 
-- **Los Andes:** "Qué significa PSJ Cobre para el desarrollo de Mendoza según la mirada empresaria". Visión del sector privado.
+- **[Noticias Argentinas](https://noticiasargentinas.com/politica/-el-agua-no-se-negocia---masiva-caravana-en-mendoza-contra-el-proyecto-minero-que-respaldo-milei_a69373e24dd3ed36fdd3987ae):** "Masiva caravana en Mendoza contra el proyecto minero que respaldó Milei".
 
-- **Sitio Andino:** "PSJ Cobre Mendocino: el proyecto que puede abrir una nueva etapa productiva". Énfasis en oportunidades.
+- **[lavaca.org](https://lavaca.org/actualidad/mendoza-en-caravana-hacia-la-capital-provincial-contra-el-proyecto-minero-san-jorge):** "Mendoza en caravana hacia la capital provincial contra el proyecto minero San Jorge".
         """)
 
     with col_med2:
-        st.markdown("**Medios críticos/ambientalistas:**")
+        st.markdown("**Medios locales - Cobertura HOY:**")
         st.markdown("""
-- **TN:** "En medio de una fuerte movilización, Mendoza decide si le abre la puerta a la megaminería". Cobertura nacional en vivo.
+- **[El Sol](https://www.elsol.com.ar/mendoza/llego-el-dia-la-legislatura-vota-psj-cobre-mendocino-y-el-futuro-de-la-mineria-en-mendoza/):** "Llegó el día: la Legislatura vota PSJ Cobre Mendocino y el futuro de la minería en Mendoza".
 
-- **TeleSur:** "Argentina: Mendoza se moviliza por el agua y contra la megaminería". Cobertura internacional.
+- **[Diario Mendoza](https://www.diariomendoza.com.ar/sociedad/mendoza-moviliza-caravanas-masivas-marchan-legislatura-rechazo-megamineria-n136263):** "Mendoza se moviliza: caravanas masivas marchan hacia la Legislatura en rechazo a la megaminería".
 
-- **elDiarioAR:** "El agua no se negocia: masiva caravana en Mendoza contra proyecto minero respaldado por Milei".
+- **[Diario San Rafael](https://diariosanrafael.com.ar/la-legislatura-vota-psj-cobre-mendocino-y-el-futuro-de-la-mineria-en-mendoza/):** "La Legislatura vota PSJ Cobre Mendocino y el futuro de la minería en Mendoza".
 
-- **Resumen Latinoamericano:** "En defensa del agua: multitud marcha a la Legislatura para rechazar San Jorge".
+- **[El Argentino](https://elargentinodiario.com.ar/politica/08/12/2025/el-agua-no-se-negocia-mendoza-en-pie-de-lucha-contra-la-minera-que-impulsa-milei/):** "Mendoza en pie de lucha contra la minera que impulsa Milei".
         """)
 
-    st.info("**HISTÓRICO:** El conflicto llegó a TN, TeleSur y medios internacionales. Milei y Bullrich intervinieron públicamente. Más de 70 noticias en 24 horas. Nivel de cobertura sin precedentes en la historia del debate minero en Mendoza.")
+    st.info("**EN VIVO HOY:** El Senado debate con al menos 25 votos a favor del oficialismo. La 'Gesta Libertadora por el Agua' (caravana de 100km desde Uspallata) llegó a la Legislatura. Milei respaldó públicamente con mensaje sobre US$600 millones de inversión.")
 
     # ===== ALERTA DE CONVOCATORIAS =====
     st.markdown("---")
