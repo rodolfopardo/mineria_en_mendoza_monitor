@@ -1236,31 +1236,31 @@ elif page == "Análisis 48 Horas":
 
     # ===== INDICADOR DE EBULLICIÓN SOCIAL =====
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    <div style="background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
                 padding: 20px;
                 border-radius: 12px;
                 margin-bottom: 25px;
                 border: 2px solid #fbbf24;">
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <div>
-                <h3 style="color: white; margin: 0 0 5px 0; font-size: 18px;">NIVEL DE EBULLICIÓN SOCIAL</h3>
-                <p style="color: #fef3c7; margin: 0; font-size: 14px;">Indicador de tensión sociopolítica minera en Mendoza</p>
+                <h3 style="color: white; margin: 0 0 5px 0; font-size: 18px;">NIVEL DE EBULLICION SOCIAL</h3>
+                <p style="color: #fef3c7; margin: 0; font-size: 14px;">Indicador de tension sociopolitica minera en Mendoza</p>
             </div>
             <div style="text-align: center;">
-                <span style="font-size: 48px; font-weight: bold; color: white;">CRÍTICO</span>
+                <span style="font-size: 48px; font-weight: bold; color: white;">MEDIO</span>
             </div>
         </div>
         <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
             <div style="display: flex; justify-content: space-between; color: #fef3c7; font-size: 13px;">
-                <span>📈 <strong>Tendencia:</strong> MÁXIMA TENSIÓN</span>
-                <span>⚠️ <strong>Score de riesgo:</strong> 12/12 (100%)</span>
-                <span>🔥 <strong>Noticias 24hs:</strong> +70 artículos</span>
+                <span><strong>Tendencia:</strong> TENSION MODERADA</span>
+                <span><strong>Score de riesgo:</strong> 7/12 (58%)</span>
+                <span><strong>Noticias 24hs:</strong> +90 articulos</span>
             </div>
         </div>
         <div style="margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
             <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>HOY ES EL DÍA:</strong> Senado vota PSJ Cobre • Milei y Bullrich presionan públicamente • Caravanas masivas hacia Legislatura •
-                TN, TeleSur y medios nacionales cubren en vivo • Operativo policial reforzado
+                <strong>SITUACION:</strong> Senado debate PSJ Cobre en vivo - Convocatoria en plaza ~1500 personas -
+                Alta cobertura mediatica nacional e internacional - Convocatorias en redes con impacto moderado
             </p>
         </div>
     </div>
