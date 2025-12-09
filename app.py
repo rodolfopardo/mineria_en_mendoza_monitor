@@ -990,9 +990,9 @@ elif page == "Análisis 48 Horas":
     is_live = live_stats.get('is_live', False)
 
     if is_live and viewers_count > 0:
-        viewers_text = f"👁️ <strong>{viewers_count:,}</strong> personas viendo ahora"
+        viewers_text = f"<strong>{viewers_count:,}</strong> personas viendo ahora"
     else:
-        viewers_text = "⏳ Conectando al stream..."
+        viewers_text = "Conectando al stream..."
 
     st.markdown(f"""
     <div style="background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%);
@@ -1003,9 +1003,9 @@ elif page == "Análisis 48 Horas":
                 box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
             <div style="background: #fbbf24; color: #7f1d1d; padding: 5px 15px; border-radius: 5px; font-weight: bold;">
-                🔴 EN VIVO
+                EN VIVO
             </div>
-            <h2 style="color: white; margin: 0; font-size: 24px;">SENADO DE MENDOZA - SESIÓN HISTÓRICA</h2>
+            <h2 style="color: white; margin: 0; font-size: 24px;">SENADO DE MENDOZA - SESION HISTORICA</h2>
         </div>
         <div style="margin-bottom: 10px;">
             <span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: white; font-size: 18px;">
@@ -1013,7 +1013,7 @@ elif page == "Análisis 48 Horas":
             </span>
         </div>
         <p style="color: #fef3c7; margin: 0; font-size: 16px;">
-            <strong>Seguí en directo la votación del proyecto PSJ Cobre Mendocino</strong>
+            <strong>Segui en directo la votacion del proyecto PSJ Cobre Mendocino</strong>
         </p>
     </div>
     """, unsafe_allow_html=True)
