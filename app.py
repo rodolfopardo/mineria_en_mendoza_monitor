@@ -1205,19 +1205,28 @@ elif page == "Votacion Senado":
             "Rostand Martin", "Sabadin Fernanda"
         ]
 
+        senadores_negativo = [
+            "Saez David", "Sainz Maria Laura", "Serra Pedro",
+            "Sevilla Oscar", "Soto Gustavo", "Vaquer Gerardo"
+        ]
+
+        senadores_abstencion = ["Zlobec Mariana"]
+
         col_voto1, col_voto2 = st.columns(2)
 
         with col_voto1:
             st.markdown("**VOTO AFIRMATIVO (27)**")
-            for i, senador in enumerate(senadores_afirmativo):
+            for senador in senadores_afirmativo:
                 st.markdown(f"- {senador}")
 
         with col_voto2:
             st.markdown("**VOTO NEGATIVO (6)**")
-            st.markdown("- *(Pendiente de confirmar nombres)*")
+            for senador in senadores_negativo:
+                st.markdown(f"- {senador}")
             st.markdown("")
             st.markdown("**ABSTENCION (1)**")
-            st.markdown("- *(Pendiente de confirmar nombre)*")
+            for senador in senadores_abstencion:
+                st.markdown(f"- {senador}")
 
     else:
         # ===== PROYECTO MALARGUE DISTRITO MINERO =====
