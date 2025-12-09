@@ -158,7 +158,7 @@ def check_password():
                 if submitted:
                     # Credenciales válidas
                     valid_users = {
-                        "identidadcentral": "hipo",
+                        "rodolfo": "oh8we61g",
                         "valentina": "mineria"
                     }
                     if username in valid_users and password == valid_users[username]:
