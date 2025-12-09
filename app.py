@@ -957,6 +957,31 @@ elif page == "Dashboard Principal":
 elif page == "Análisis 48 Horas":
     st.header("Analisis Cualitativo - Ultimas 48 Horas")
 
+    # ===== SENADO EN VIVO =====
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%);
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 20px;
+                border: 3px solid #fbbf24;
+                box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);">
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+            <div style="background: #fbbf24; color: #7f1d1d; padding: 5px 15px; border-radius: 5px; font-weight: bold; animation: pulse 2s infinite;">
+                🔴 EN VIVO
+            </div>
+            <h2 style="color: white; margin: 0; font-size: 24px;">SENADO DE MENDOZA - SESIÓN HISTÓRICA</h2>
+        </div>
+        <p style="color: #fef3c7; margin: 0 0 15px 0; font-size: 16px;">
+            <strong>Seguí en directo la votación del proyecto PSJ Cobre Mendocino</strong>
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Embed del video de YouTube
+    st.video("https://www.youtube.com/watch?v=fS2hoyOskdo")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
     # Mostrar fecha de actualización prominente
     st.markdown(f"""
     <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
