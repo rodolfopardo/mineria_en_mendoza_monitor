@@ -1364,157 +1364,59 @@ elif page == "Votacion Senado":
 elif page == "Análisis 48 Horas":
     st.header("Analisis Cualitativo - Ultimas 48 Horas")
 
-    # ===== SENADO EN VIVO =====
-    # Función para obtener viewers del stream de YouTube
-    @st.cache_data(ttl=30)  # Cache por 30 segundos
-    def get_youtube_live_stats(video_url):
-        """Obtiene estadísticas del live de YouTube usando yt-dlp"""
-        try:
-            result = subprocess.run(
-                ['yt-dlp', '--dump-json', video_url],
-                capture_output=True,
-                text=True,
-                timeout=10
-            )
-            if result.returncode == 0:
-                data = json.loads(result.stdout)
-                return {
-                    'viewers': data.get('concurrent_view_count', 0),
-                    'title': data.get('title', 'Sesión del Senado'),
-                    'is_live': data.get('is_live', False)
-                }
-        except Exception:
-            pass
-        return {'viewers': None, 'title': 'Sesión del Senado', 'is_live': False}
-
-    youtube_url = "https://www.youtube.com/watch?v=fS2hoyOskdo"
-    video_id = "fS2hoyOskdo"
-    live_stats = get_youtube_live_stats(youtube_url)
-
-    # Construir HTML del contador de viewers
-    viewers_count = live_stats.get('viewers', 0) or 0
-    is_live = live_stats.get('is_live', False)
-    video_title = live_stats.get('title', 'Sesion del Senado')
-
-    # Guardar viewers en el historico (solo si hay datos validos)
-    if viewers_count > 0:
-        db.record_youtube_viewers(video_id, viewers_count, video_title, is_live)
-
-    if is_live and viewers_count > 0:
-        viewers_text = f"<strong>{viewers_count:,}</strong> personas viendo ahora"
-    else:
-        viewers_text = "Conectando al stream..."
-
-    # Obtener estadisticas del historico
-    viewers_stats = db.get_youtube_viewers_stats(video_id)
-
-    st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%);
-                padding: 20px;
-                border-radius: 12px;
-                margin-bottom: 20px;
-                border: 3px solid #fbbf24;
-                box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-            <div style="background: #fbbf24; color: #7f1d1d; padding: 5px 15px; border-radius: 5px; font-weight: bold;">
-                EN VIVO
-            </div>
-            <h2 style="color: white; margin: 0; font-size: 24px;">SENADO DE MENDOZA - SESION HISTORICA</h2>
-        </div>
-        <div style="margin-bottom: 10px;">
-            <span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; color: white; font-size: 18px;">
-                {viewers_text}
-            </span>
-        </div>
-        <p style="color: #fef3c7; margin: 10px 0 0 0; font-size: 16px;">
-            <strong>Segui en directo la votacion del proyecto PSJ Cobre Mendocino</strong>
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Mostrar estadisticas con componentes nativos de Streamlit
-    if viewers_stats and viewers_stats.get('max_viewers'):
-        cols_stats = st.columns(4)
-        cols_stats[0].metric("Max", f"{viewers_stats['max_viewers']:,}")
-        cols_stats[1].metric("Min", f"{viewers_stats['min_viewers']:,}")
-        cols_stats[2].metric("Promedio", f"{viewers_stats['avg_viewers']:,}")
-        cols_stats[3].metric("Registros", f"{viewers_stats['total_records']}")
-
-    # Embed del video de YouTube
-    st.video(youtube_url)
-
-    # Grafico de evolucion de viewers
-    viewers_history = db.get_youtube_viewers_history(video_id, hours=24)
-    if len(viewers_history) > 1:
-        st.subheader("Evolucion de Audiencia")
-        df_viewers = pd.DataFrame(viewers_history)
-        df_viewers['recorded_at'] = pd.to_datetime(df_viewers['recorded_at'])
-
-        fig_viewers = px.line(
-            df_viewers,
-            x='recorded_at',
-            y='viewers_count',
-            title='Viewers en tiempo real - Sesion del Senado',
-            labels={'recorded_at': 'Hora', 'viewers_count': 'Viewers'}
-        )
-        fig_viewers.update_layout(
-            xaxis_title="Hora",
-            yaxis_title="Personas viendo",
-            hovermode='x unified'
-        )
-        fig_viewers.update_traces(
-            line_color='#dc2626',
-            fill='tozeroy',
-            fillcolor='rgba(220, 38, 38, 0.2)'
-        )
-        st.plotly_chart(fig_viewers, use_container_width=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # Mostrar fecha de actualización prominente
-    st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-                padding: 15px 20px;
-                border-radius: 10px;
-                margin-bottom: 20px;">
-        <p style="color: white; margin: 0; font-size: 14px;">
-            <strong>HOY SE VOTA:</strong> 09 de diciembre de 2025 |
-            <strong>Período:</strong> 8-9 de diciembre 2025
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # ===== INDICADOR DE EBULLICIÓN SOCIAL =====
+    # ===== RESULTADO HISTORICO =====
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
-                padding: 20px;
-                border-radius: 12px;
+    <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+                padding: 30px;
+                border-radius: 15px;
                 margin-bottom: 25px;
-                border: 2px solid #fbbf24;">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-            <div>
-                <h3 style="color: white; margin: 0 0 5px 0; font-size: 18px;">NIVEL DE EBULLICION SOCIAL</h3>
-                <p style="color: #fef3c7; margin: 0; font-size: 14px;">Indicador de tension sociopolitica minera en Mendoza</p>
-            </div>
-            <div style="text-align: center;">
-                <span style="font-size: 48px; font-weight: bold; color: white;">MEDIO</span>
-            </div>
-        </div>
-        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
-            <div style="display: flex; justify-content: space-between; color: #fef3c7; font-size: 13px;">
-                <span><strong>Tendencia:</strong> TENSION MODERADA</span>
-                <span><strong>Score de riesgo:</strong> 7/12 (58%)</span>
-                <span><strong>Noticias 24hs:</strong> +90 articulos</span>
-            </div>
-        </div>
-        <div style="margin-top: 10px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
-            <p style="color: white; margin: 0; font-size: 13px;">
-                <strong>SITUACION:</strong> Senado debate PSJ Cobre en vivo - Convocatoria en plaza ~1500 personas -
-                Alta cobertura mediatica nacional e internacional - Convocatorias en redes con impacto moderado
-            </p>
+                border: 4px solid #22c55e;
+                box-shadow: 0 0 30px rgba(22, 163, 74, 0.5);">
+        <div style="text-align: center;">
+            <h1 style="color: white; margin: 0 0 10px 0; font-size: 36px;">PROYECTO SAN JORGE APROBADO</h1>
+            <p style="color: #bbf7d0; margin: 0; font-size: 20px;">El Senado de Mendoza dio sancion definitiva - 9 de Diciembre 2025</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # Resultados de votacion resumidos
+    col_sj1, col_sj2, col_sj3 = st.columns(3)
+    with col_sj1:
+        st.metric("AFIRMATIVO", "29", delta="Aprobado")
+    with col_sj2:
+        st.metric("NEGATIVO", "6")
+    with col_sj3:
+        st.metric("ABSTENCION", "1")
+
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+                padding: 20px;
+                border-radius: 12px;
+                margin: 20px 0;">
+        <h3 style="color: white; margin: 0 0 15px 0;">Primera explotacion de cobre en Mendoza</h3>
+        <p style="color: #bfdbfe; margin: 0; font-size: 16px;">
+            PSJ Cobre Mendocino sera el primer proyecto de explotacion minera metalifra aprobado
+            en Mendoza desde la sancion de la Ley 7722. Inversion estimada: USD 559 millones.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # ===== MALARGUE DISTRITO MINERO =====
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 20px;">
+        <div style="text-align: center;">
+            <h2 style="color: white; margin: 0;">MALARGUE DISTRITO MINERO - APROBADO</h2>
+            <p style="color: #bbf7d0; margin: 5px 0 0 0;">31 afirmativo | 3 negativo | 1 abstencion</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
 
     # ===== TOP 3 POSTS QUE EMPUJAN LA EBULLICIÓN =====
     st.markdown("""
