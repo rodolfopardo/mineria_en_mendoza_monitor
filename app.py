@@ -1362,215 +1362,209 @@ elif page == "Votacion Senado":
 
 # ========== PÁGINA: ANÁLISIS 48 HORAS ==========
 elif page == "Análisis 48 Horas":
-    st.header("Analisis Cualitativo - Ultimas 48 Horas")
+    st.header("Indice de Riesgo de Movilizacion - Ultimas 48 Horas")
 
-    # ===== RESULTADO HISTORICO =====
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    # ===== INDICE DE RIESGO PRINCIPAL =====
+    # Nivel actual: MEDIO - Post aprobacion, sin convocatorias masivas nuevas
+    riesgo_nivel = "MEDIO"  # ALTO, MEDIO, BAJO
+    riesgo_color = "#f59e0b"  # amarillo para MEDIO
+    riesgo_icon = "⚠️"
+
+    if riesgo_nivel == "ALTO":
+        riesgo_color = "#dc2626"
+        riesgo_icon = "🔴"
+        riesgo_bg = "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)"
+    elif riesgo_nivel == "MEDIO":
+        riesgo_color = "#f59e0b"
+        riesgo_icon = "🟡"
+        riesgo_bg = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)"
+    else:
+        riesgo_color = "#22c55e"
+        riesgo_icon = "🟢"
+        riesgo_bg = "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)"
+
+    st.markdown(f"""
+    <div style="background: {riesgo_bg};
                 padding: 30px;
                 border-radius: 15px;
                 margin-bottom: 25px;
-                border: 4px solid #22c55e;
-                box-shadow: 0 0 30px rgba(22, 163, 74, 0.5);">
+                border: 3px solid {riesgo_color};
+                box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);">
         <div style="text-align: center;">
-            <h1 style="color: white; margin: 0 0 10px 0; font-size: 36px;">PROYECTO SAN JORGE APROBADO</h1>
-            <p style="color: #bbf7d0; margin: 0; font-size: 20px;">El Senado de Mendoza dio sancion definitiva - 9 de Diciembre 2025</p>
+            <p style="color: white; margin: 0; font-size: 16px; opacity: 0.9;">INDICE DE RIESGO DE MOVILIZACION</p>
+            <h1 style="color: white; margin: 10px 0; font-size: 48px;">{riesgo_icon} {riesgo_nivel}</h1>
+            <p style="color: white; margin: 0; font-size: 14px; opacity: 0.8;">Actualizado: {datetime.now().strftime('%d/%m/%Y %H:%M')}</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Resultados de votacion resumidos
-    col_sj1, col_sj2, col_sj3 = st.columns(3)
-    with col_sj1:
-        st.metric("AFIRMATIVO", "29", delta="Aprobado")
-    with col_sj2:
-        st.metric("NEGATIVO", "6")
-    with col_sj3:
-        st.metric("ABSTENCION", "1")
+    # ===== EXPLICACION DEL NIVEL =====
+    col_exp1, col_exp2, col_exp3 = st.columns(3)
 
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-                padding: 20px;
-                border-radius: 12px;
-                margin: 20px 0;">
-        <h3 style="color: white; margin: 0 0 15px 0;">Primera explotacion de cobre en Mendoza</h3>
-        <p style="color: #bfdbfe; margin: 0; font-size: 16px;">
-            PSJ Cobre Mendocino sera el primer proyecto de explotacion minera metalifra aprobado
-            en Mendoza desde la sancion de la Ley 7722. Inversion estimada: USD 559 millones.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("---")
-
-    # ===== MALARGUE DISTRITO MINERO =====
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-                padding: 20px;
-                border-radius: 12px;
-                margin-bottom: 20px;">
-        <div style="text-align: center;">
-            <h2 style="color: white; margin: 0;">MALARGUE DISTRITO MINERO - APROBADO</h2>
-            <p style="color: #bbf7d0; margin: 5px 0 0 0;">31 afirmativo | 3 negativo | 1 abstencion</p>
+    with col_exp1:
+        st.markdown("""
+        <div style="background: #fef2f2; padding: 15px; border-radius: 10px; border-left: 4px solid #dc2626;">
+            <strong style="color: #dc2626;">🔴 ALTO</strong><br>
+            <span style="font-size: 12px; color: #666;">Movilizacion masiva en curso o convocada. Miles de personas. Cobertura nacional.</span>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-    st.markdown("---")
-
-    st.info("""
-    **Resumen ejecutivo** del dia historico en Mendoza. El Senado aprobo PSJ Cobre Mendocino
-    con 29 votos a favor, 6 en contra y 1 abstencion. Primera explotacion de cobre en la provincia.
-    """)
-
-    # ===== LO QUE MÁS SE HABLÓ =====
-    st.markdown("---")
-    st.subheader("Lo que mas se hablo")
-
-    st.success("**Temas dominantes en la conversacion (9 diciembre) - DIA DE LA APROBACION**")
-
-    st.markdown("""
-- **HISTORICO: San Jorge aprobado con 29 votos a favor:** El Senado de Mendoza dio sancion definitiva al proyecto PSJ Cobre Mendocino. Primera explotacion de cobre aprobada desde la Ley 7722. USD 559 millones de inversion.
-
-- **Amplio consenso politico:** Oficialismo (18), PRO (4), PD (1), La Union Mendocina (2) y 5 peronistas votaron a favor. Solo 6 votos negativos (PJ, Kirchnerismo, Partido Verde, Hacemos) y 1 abstencion.
-
-- **Malargue Distrito Minero tambien aprobado:** 31 votos a favor, 3 en contra, 1 abstencion. Se aprobaron 27 proyectos de exploracion minera en la zona.
-
-- **Movilizacion no logro frenar la aprobacion:** A pesar de las caravanas y la concentracion de ~1500 personas en plaza, el oficialismo tenia los votos asegurados.
-
-- **Nueva era minera en Mendoza:** Cornejo logro su objetivo. El proyecto que fue rechazado en 2011 ahora es ley. Mendoza abre las puertas a la mineria metalifra.
-    """)
-
-    # ===== LO QUE DICEN LOS MEDIOS =====
-    st.markdown("---")
-    st.subheader("Lo que dicen los medios - 9 DE DICIEMBRE")
-
-    st.markdown("**Cobertura de la aprobacion historica**")
-
-    col_med1, col_med2 = st.columns(2)
-
-    with col_med1:
-        st.markdown("**Noticias sobre la APROBACION:**")
+    with col_exp2:
         st.markdown("""
-- **[Los Andes](https://www.losandes.com.ar/politica/historico-el-senado-dio-sancion-definitiva-al-proyecto-minero-psj-cobre-mendocino-n5972830):** "Historico: el Senado dio sancion definitiva al proyecto minero PSJ Cobre Mendocino".
+        <div style="background: #fefce8; padding: 15px; border-radius: 10px; border-left: 4px solid #f59e0b;">
+            <strong style="color: #f59e0b;">🟡 MEDIO</strong><br>
+            <span style="font-size: 12px; color: #666;">Movilizaciones sin escala social. Actividad en redes pero sin convocatorias masivas.</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-- **[MDZ Online](https://www.mdzol.com/politica/aprobaron-san-jorge-una-votacion-crucial-y-arranca-una-nueva-era-la-mineria-mendoza-n1403658):** "Aprobaron San Jorge: una votacion crucial y arranca una nueva era en la mineria de Mendoza".
-
-- **[El Sol](https://www.elsol.com.ar/mendoza/la-legislatura-aprobo-san-jorge-y-sera-la-primera-explotacion-de-cobre-en-argentina/):** "La Legislatura aprobo San Jorge y sera la primera explotacion de cobre en Argentina".
-
-- **[Mendoza Post](https://www.mendozapost.com/politica/se-aprobo-san-jorge-senado-mendoza/):** "Se aprobo San Jorge en el Senado de Mendoza".
-        """)
-
-    with col_med2:
-        st.markdown("**Cobertura del contexto:**")
+    with col_exp3:
         st.markdown("""
-- **[Mendoza Today](https://mendozatoday.com.ar/2025/12/09/el-senado-de-mendoza-aprobo-por-amplia-mayoria-el-proyecto-minero-san-jorge/):** "El Senado de Mendoza aprobo por amplia mayoria el proyecto minero San Jorge".
+        <div style="background: #f0fdf4; padding: 15px; border-radius: 10px; border-left: 4px solid #22c55e;">
+            <strong style="color: #22c55e;">🟢 BAJO</strong><br>
+            <span style="font-size: 12px; color: #666;">Movilizaciones muriendo. Sin convocatorias activas. Tema perdiendo traccion.</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-- **[elDiarioAR](https://www.eldiarioar.com/politica/agua-no-negocia-masiva-caravana-mendoza-proyecto-minero-respaldo-milei_1_12829856.html):** "El agua no se negocia: masiva caravana en Mendoza contra proyecto minero".
-
-- **[France 24](https://www.france24.com/es/video/20251209-argentina-pol%C3%A9mica-en-mendoza-por-proyecto-minero-y-amenaza-al-agua):** "Argentina: polemica en Mendoza por proyecto minero y amenaza al agua". Cobertura internacional.
-
-- **[TeleSur](https://www.telesurtv.net/argentina-mendoza-moviliza-contra-megamineria/):** "Argentina: Mendoza se moviliza por el agua y contra la megamineria".
-        """)
-
-    st.success("**RESULTADO:** San Jorge APROBADO con 29 votos a favor. Malargue Distrito Minero APROBADO con 31 votos. Mendoza abre una nueva era minera.")
-
-    # ===== POST-APROBACION =====
     st.markdown("---")
-    st.subheader("Situacion Post-Aprobacion")
+
+    # ===== SITUACION ACTUAL =====
+    st.subheader("Situacion Actual (10 de Diciembre)")
 
     st.warning("""
-    **9 DE DICIEMBRE - PROYECTO APROBADO**
+    **POST-APROBACION - DIA 1**
 
-    **El Senado aprobo PSJ Cobre Mendocino y Malargue Distrito Minero.** La movilizacion no logro frenar la votacion. Nueva etapa para Mendoza.
+    La movilizacion del 9/12 se disolvio tras la votacion. No hay convocatorias masivas nuevas detectadas para los proximos dias.
+    El movimiento antiminero esta en fase de reorganizacion y evaluando estrategia judicial.
     """)
+
+    # ===== CONVOCATORIAS DETECTADAS =====
+    st.markdown("---")
+    st.subheader("Convocatorias Detectadas")
+
+    col_conv1, col_conv2 = st.columns(2)
+
+    with col_conv1:
+        st.markdown("**Ultimas 48 horas:**")
+        st.markdown("""
+        | Fecha | Evento | Convocantes | Asistencia |
+        |-------|--------|-------------|------------|
+        | 9/12 | Concentracion Legislatura | Asambleas | ~1.500 |
+        | 9/12 | Marcha KM 0 (19hs) | Multisectorial | ~800 |
+        | 8-9/12 | Gesta del Agua (caminata) | Asamblea Uspallata | ~300 |
+        """)
+
+    with col_conv2:
+        st.markdown("**Proximas convocatorias:**")
+        st.markdown("""
+        | Fecha | Evento | Estado |
+        |-------|--------|--------|
+        | - | Sin convocatorias masivas detectadas | - |
+
+        **Nota:** Las asambleas estan en fase de reorganizacion.
+        Se esperan anuncios de acciones judiciales antes que nuevas marchas.
+        """)
+
+    # ===== INDICADORES DE ACTIVIDAD =====
+    st.markdown("---")
+    st.subheader("Indicadores de Actividad")
+
+    col_ind1, col_ind2, col_ind3, col_ind4 = st.columns(4)
+
+    with col_ind1:
+        st.metric("Convocatorias activas", "0", delta="-2 vs ayer", delta_color="normal")
+
+    with col_ind2:
+        st.metric("Menciones en redes (24h)", "↓", delta="Bajando", delta_color="normal")
+
+    with col_ind3:
+        st.metric("Cobertura mediatica", "Alta", delta="Post-aprobacion")
+
+    with col_ind4:
+        st.metric("Recursos judiciales", "En preparacion", delta="Proximo frente")
+
+    # ===== ANALISIS DE TENDENCIA =====
+    st.markdown("---")
+    st.subheader("Analisis de Tendencia")
 
     st.markdown("""
-- **San Jorge aprobado:** 29 votos a favor, 6 en contra, 1 abstencion. Primera explotacion de cobre en Mendoza desde la Ley 7722.
+    **Factores que bajan el riesgo:**
+    - La batalla legislativa termino. El objetivo principal (frenar la aprobacion) no se logro.
+    - No hay fechas de votacion proximas que funcionen como catalizador.
+    - El movimiento esta en transicion hacia estrategia judicial.
+    - Fatiga de movilizacion tras semanas de actividad intensa (ruidazo 2/12, gesta 8-9/12).
 
-- **Amplia coalicion a favor:** Oficialismo + PRO + PD + La Union Mendocina + sector del PJ. El gobierno logro construir mayoria transversal.
-
-- **Movilizacion sin exito:** ~1500 personas en plaza no lograron frenar la aprobacion. El oficialismo tenia los votos asegurados.
-
-- **Proximos pasos:** El proyecto ahora debe avanzar con los permisos de explotacion. La empresa tiene luz verde legislativa.
-
-**El conflicto puede continuar en las calles pero la batalla legislativa esta definida.**
+    **Factores que mantienen riesgo MEDIO (no BAJO):**
+    - El tema sigue en agenda mediatica nacional e internacional.
+    - Las asambleas mantienen estructura organizativa activa.
+    - Se esperan anuncios de amparos judiciales que pueden reactivar atencion.
+    - El proximo hito (Ley de Glaciares) puede generar nueva movilizacion a nivel nacional.
+    - Uspallata y Valle de Uco mantienen fuerte identidad antiminera.
     """)
 
-    # ===== PUNTOS DE DOLOR =====
+    # ===== ESCENARIOS PROXIMAS 48-72 HORAS =====
     st.markdown("---")
-    st.subheader("Puntos de Dolor - Lo que genera rechazo")
+    st.subheader("Escenarios Proximas 48-72 Horas")
 
-    st.markdown("**Temas que generan mayor resistencia emocional**")
+    with st.expander("Escenario 1: Calma relativa (mas probable)", expanded=True):
+        st.markdown("""
+        - Sin movilizaciones masivas.
+        - Actividad concentrada en redes y declaraciones mediaticas.
+        - Asambleas preparando estrategia judicial.
+        - **Riesgo se mantiene en MEDIO o baja a BAJO.**
+        """)
 
-    with st.expander("El agua como identidad mendocina", expanded=True):
-        st.markdown('"Mendoza es hija del agua" no es solo una consigna, es un valor identitario profundo. Cualquier amenaza percibida al recurso hídrico activa una respuesta visceral.')
+    with st.expander("Escenario 2: Reactivacion por anuncio judicial", expanded=False):
+        st.markdown("""
+        - Presentacion de amparo genera cobertura mediatica.
+        - Posible convocatoria a concentracion en tribunales.
+        - Movilizacion acotada (cientos, no miles).
+        - **Riesgo se mantiene en MEDIO.**
+        """)
 
-    with st.expander("Desconfianza institucional", expanded=True):
-        st.markdown('La censura al documento del CONICET refuerza la narrativa de que "nos ocultan información". La falta de transparencia percibida alimenta teorías conspirativas.')
+    with st.expander("Escenario 3: Escalada (menos probable)", expanded=False):
+        st.markdown("""
+        - Algun evento catalizador (incidente, declaracion polemica).
+        - Nueva convocatoria masiva emergente.
+        - Cortes de ruta o acciones directas.
+        - **Riesgo sube a ALTO.**
+        """)
 
-    with st.expander("Imposición desde arriba", expanded=True):
-        st.markdown('El sentimiento de que "se decide de espaldas al pueblo" genera frustración. La velocidad del tratamiento legislativo se percibe como atropello.')
-
-    with st.expander("Miedo al precedente", expanded=True):
-        st.markdown('"Si aprueban San Jorge, después vienen todos los demás". El temor es que sea el primer dominó que abre la puerta a la megaminería generalizada.')
-
-    # ===== OPORTUNIDADES - LO POSITIVO =====
+    # ===== ACTORES A MONITOREAR =====
     st.markdown("---")
-    st.subheader("Oportunidades - Narrativas aprovechables")
+    st.subheader("Actores a Monitorear")
 
-    st.success("**Espacios para construcción de consenso**")
+    col_act1, col_act2 = st.columns(2)
 
-    with st.expander("Desarrollo económico local", expanded=True):
-        st.markdown('Existe apertura al diálogo cuando se habla de empleo genuino y desarrollo para las comunidades locales. El argumento económico tiene receptividad si se territorializa.')
+    with col_act1:
+        st.markdown("**Organizaciones clave:**")
+        st.markdown("""
+        - Asamblea por el Agua de Uspallata
+        - Asambleas del Valle de Uco
+        - Multisectorial por el Agua
+        - Organizaciones de izquierda (PTS, MST)
+        """)
 
-    with st.expander("Regalías y beneficios concretos", expanded=True):
-        st.markdown('La discusión sobre regalías (3-5%) genera interés. La gente quiere saber qué gana Mendoza concretamente, más allá de promesas abstractas.')
+    with col_act2:
+        st.markdown("**Cuentas en redes:**")
+        st.markdown("""
+        - @asamblea.uspallata (Instagram)
+        - @marcelo_romano0 (influencer antiminero)
+        - @cuyo.ambiental
+        - Grupos de Facebook de San Carlos y Uspallata
+        """)
 
-    with st.expander("Controles y fiscalización", expanded=True):
-        st.markdown('El tema de "quién y cómo controla" a San Jorge aparece como preocupación genuina. Hay espacio para comunicar mecanismos de control creíbles.')
-
-    with st.expander("Transición energética", expanded=True):
-        st.markdown('El cobre como mineral estratégico para energías limpias es un argumento que resuena en sectores progresistas. Oportunidad de reencuadrar el debate.')
-
-    # ===== CONCLUSIÓN =====
+    # ===== RECOMENDACIONES =====
     st.markdown("---")
-    st.subheader("Sintesis y Proximos Pasos")
+    st.subheader("Recomendaciones")
 
-    col1, col2 = st.columns(2)
+    st.info("""
+    **Para las proximas 48 horas:**
 
-    with col1:
-        st.markdown("**Resultado - 9 de diciembre**")
-        st.markdown("""
-**San Jorge APROBADO** con 29 votos a favor, 6 en contra y 1 abstencion.
-**Malargue Distrito Minero APROBADO** con 31 votos a favor, 3 en contra y 1 abstencion.
-
-Mendoza abre una nueva era minera. Primera explotacion de cobre aprobada desde la Ley 7722.
-Inversion de USD 559 millones. El gobierno de Cornejo logro su objetivo.
-        """)
-
-        st.markdown("**Claves de la votacion**")
-        st.markdown("""
-- **Amplia coalicion:** Oficialismo + PRO + PD + LUM + sector PJ
-- **Oposicion minoritaria:** Solo 6 votos negativos
-- **Sin sorpresas:** El resultado estaba anticipado
-        """)
-
-    with col2:
-        st.markdown("**Proximos pasos**")
-        st.markdown("""
-- **Para la empresa:** Avanzar con permisos de explotacion
-- **Para el gobierno:** Comunicar beneficios economicos
-- **Para la oposicion:** Posibles recursos judiciales
-- **Monitoreo:** Reaccion en redes y posibles movilizaciones
-        """)
-
-        st.markdown("**Escenarios a seguir**")
-        st.markdown("""
-- **Corto plazo:** Posibles protestas post-aprobacion
-- **Mediano plazo:** Avance del proyecto y generacion de empleo
-- **Nacional:** El debate sigue por la Ley de Glaciares
-        """)
+    1. **Monitorear redes** de asambleas para detectar nuevas convocatorias.
+    2. **Seguir medios judiciales** para anticipar presentacion de amparos.
+    3. **Observar declaraciones** de referentes antimineros sobre proximos pasos.
+    4. **Estar atentos** a posibles fechas simbolicas (aniversarios, efemerides ambientales).
+    """)
 
     # Timestamp con más detalle
     st.markdown("---")
