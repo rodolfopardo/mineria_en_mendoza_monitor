@@ -1446,11 +1446,11 @@ elif page == "Análisis 48 Horas":
     with col_conv1:
         st.markdown("**Ultimas 48 horas:**")
         st.markdown("""
-        | Fecha | Evento | Convocantes | Asistencia |
-        |-------|--------|-------------|------------|
-        | 9/12 | Concentracion Legislatura | Asambleas | ~1.500 |
-        | 9/12 | Marcha KM 0 (19hs) | Multisectorial | ~800 |
-        | 8-9/12 | Gesta del Agua (caminata) | Asamblea Uspallata | ~300 |
+        | Fecha | Evento | Convocantes |
+        |-------|--------|-------------|
+        | 9/12 | Concentracion Legislatura | Asambleas |
+        | 9/12 | Marcha KM 0 (19hs) | Multisectorial |
+        | 8-9/12 | Gesta del Agua (caminata) | Asamblea Uspallata |
         """)
 
     with col_conv2:
