@@ -1428,13 +1428,13 @@ elif page == "Análisis 48 Horas":
     st.markdown("---")
 
     # ===== SITUACION ACTUAL =====
-    st.subheader("Situacion Actual (10 de Diciembre)")
+    st.subheader("Situacion Actual (11 de Diciembre)")
 
     st.warning("""
-    **POST-APROBACION - DIA 1**
+    **POST-APROBACION - DIA 2**
 
-    La movilizacion del 9/12 se disolvio tras la votacion. No hay convocatorias masivas nuevas detectadas para los proximos dias.
-    El movimiento antiminero esta en fase de reorganizacion y evaluando estrategia judicial.
+    Sin convocatorias masivas nuevas. Asambleas en "alerta y movilizacion permanente" segun declararon.
+    Foco en estrategia judicial y comunicacional. Gobierno de Mendoza presenta el proyecto en Londres.
     """)
 
     # ===== CONVOCATORIAS DETECTADAS =====
@@ -1460,8 +1460,8 @@ elif page == "Análisis 48 Horas":
         |-------|--------|--------|
         | - | Sin convocatorias masivas detectadas | - |
 
-        **Nota:** Las asambleas estan en fase de reorganizacion.
-        Se esperan anuncios de acciones judiciales antes que nuevas marchas.
+        **Nota:** Asambleas declararon "alerta y movilizacion permanente".
+        Proximo foco: presentacion de recursos judiciales (amparos).
         """)
 
     # ===== INDICADORES DE ACTIVIDAD =====
@@ -1471,13 +1471,13 @@ elif page == "Análisis 48 Horas":
     col_ind1, col_ind2, col_ind3, col_ind4 = st.columns(4)
 
     with col_ind1:
-        st.metric("Convocatorias activas", "0", delta="-2 vs ayer", delta_color="normal")
+        st.metric("Convocatorias activas", "0", delta="Sin cambios", delta_color="off")
 
     with col_ind2:
-        st.metric("Menciones en redes (24h)", "↓", delta="Bajando", delta_color="normal")
+        st.metric("Menciones en redes (24h)", "Estable", delta="Post-pico", delta_color="off")
 
     with col_ind3:
-        st.metric("Cobertura mediatica", "Alta", delta="Post-aprobacion")
+        st.metric("Cobertura mediatica", "Alta", delta="Sigue en agenda")
 
     with col_ind4:
         st.metric("Recursos judiciales", "En preparacion", delta="Proximo frente")
@@ -1490,15 +1490,16 @@ elif page == "Análisis 48 Horas":
     **Factores que bajan el riesgo:**
     - La batalla legislativa termino. El objetivo principal (frenar la aprobacion) no se logro.
     - No hay fechas de votacion proximas que funcionen como catalizador.
-    - El movimiento esta en transicion hacia estrategia judicial.
-    - Fatiga de movilizacion tras semanas de actividad intensa (ruidazo 2/12, gesta 8-9/12).
+    - El movimiento transiciona hacia estrategia judicial (amparos).
+    - Fatiga de movilizacion tras semanas intensas (ruidazo 2/12, gesta 8-9/12).
+    - Gobierno avanza con promocion internacional (Latorre en Londres).
 
     **Factores que mantienen riesgo MEDIO (no BAJO):**
-    - El tema sigue en agenda mediatica nacional e internacional.
-    - Las asambleas mantienen estructura organizativa activa.
-    - Se esperan anuncios de amparos judiciales que pueden reactivar atencion.
-    - El proximo hito (Ley de Glaciares) puede generar nueva movilizacion a nivel nacional.
-    - Uspallata y Valle de Uco mantienen fuerte identidad antiminera.
+    - Cobertura mediatica sigue alta: Pagina12, Clarin, medios internacionales.
+    - Asambleas declararon "alerta y movilizacion permanente".
+    - Posibles amparos judiciales pueden reactivar atencion.
+    - Debate nacional por Ley de Glaciares puede escalar el conflicto.
+    - Criticas desde sectores del PJ y kirchnerismo (Vallejos defendio el proyecto, genera tension interna).
     """)
 
     # ===== ESCENARIOS PROXIMAS 48-72 HORAS =====
