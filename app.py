@@ -1433,8 +1433,8 @@ elif page == "Análisis 48 Horas":
     st.warning("""
     **POST-APROBACION - DIA 2**
 
-    Sin convocatorias masivas nuevas. Asambleas en "alerta y movilizacion permanente" segun declararon.
-    Foco en estrategia judicial y comunicacional. Gobierno de Mendoza presenta el proyecto en Londres.
+    Segunda marcha masiva el 10/12. Asambleas mantienen "alerta y movilizacion permanente".
+    Movimiento sigue activo en las calles. Gobierno avanza con promocion internacional en Londres.
     """)
 
     # ===== CONVOCATORIAS DETECTADAS =====
@@ -1448,6 +1448,7 @@ elif page == "Análisis 48 Horas":
         st.markdown("""
         | Fecha | Evento | Convocantes |
         |-------|--------|-------------|
+        | 10/12 | Segunda marcha masiva | Asambleas |
         | 9/12 | Concentracion Legislatura | Asambleas |
         | 9/12 | Marcha KM 0 (19hs) | Multisectorial |
         | 8-9/12 | Gesta del Agua (caminata) | Asamblea Uspallata |
@@ -1490,16 +1491,14 @@ elif page == "Análisis 48 Horas":
     **Factores que bajan el riesgo:**
     - La batalla legislativa termino. El objetivo principal (frenar la aprobacion) no se logro.
     - No hay fechas de votacion proximas que funcionen como catalizador.
-    - El movimiento transiciona hacia estrategia judicial (amparos).
-    - Fatiga de movilizacion tras semanas intensas (ruidazo 2/12, gesta 8-9/12).
     - Gobierno avanza con promocion internacional (Latorre en Londres).
 
     **Factores que mantienen riesgo MEDIO (no BAJO):**
+    - Segunda marcha masiva el 10/12: el movimiento no se desmovilizo.
     - Cobertura mediatica sigue alta: Pagina12, Clarin, medios internacionales.
     - Asambleas declararon "alerta y movilizacion permanente".
     - Posibles amparos judiciales pueden reactivar atencion.
     - Debate nacional por Ley de Glaciares puede escalar el conflicto.
-    - Criticas desde sectores del PJ y kirchnerismo (Vallejos defendio el proyecto, genera tension interna).
     """)
 
     # ===== ESCENARIOS PROXIMAS 48-72 HORAS =====
