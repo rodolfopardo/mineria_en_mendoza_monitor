@@ -399,8 +399,9 @@ if page == "Análisis 48 Horas":
     st.warning("""
     **POST-APROBACION - DIA 2**
 
-    Segunda marcha masiva el 10/12. Asambleas mantienen "alerta y movilizacion permanente".
-    Movimiento sigue activo en las calles. Gobierno avanza con promocion internacional en Londres.
+    Segunda marcha masiva el 10/12 con miles de personas en el microcentro mendocino.
+    Manifestantes marcharon hasta el nudo vial. Sin convocatorias nuevas detectadas.
+    Gobierno promociona el proyecto en Londres (Latorre en Business Design Centre).
     """)
 
     # ===== CONVOCATORIAS DETECTADAS =====
@@ -414,10 +415,10 @@ if page == "Análisis 48 Horas":
         st.markdown("""
         | Fecha | Evento | Convocantes |
         |-------|--------|-------------|
-        | 10/12 | Segunda marcha masiva | Asambleas |
-        | 9/12 | Concentracion Legislatura | Asambleas |
-        | 9/12 | Marcha KM 0 (19hs) | Multisectorial |
-        | 8-9/12 | Gesta del Agua (caminata) | Asamblea Uspallata |
+        | 10/12 | Marcha microcentro hasta nudo vial | Asambleas |
+        | 9/12 | Concentracion Legislatura (AM) | Multisectorial |
+        | 9/12 | Marcha KM 0 hacia nudo vial (19hs) | Asambleas |
+        | 8-9/12 | Gesta del Agua (+100km a pie) | Asamblea Uspallata |
         """)
 
     with col_conv2:
@@ -438,16 +439,16 @@ if page == "Análisis 48 Horas":
     col_ind1, col_ind2, col_ind3, col_ind4 = st.columns(4)
 
     with col_ind1:
-        st.metric("Convocatorias activas", "0", delta="Sin cambios", delta_color="off")
+        st.metric("Convocatorias activas", "0", delta="Sin nuevas", delta_color="off")
 
     with col_ind2:
-        st.metric("Menciones en redes (24h)", "Estable", delta="Post-pico", delta_color="off")
+        st.metric("Marchas ultimas 48h", "2", delta="9/12 y 10/12")
 
     with col_ind3:
-        st.metric("Cobertura mediatica", "Alta", delta="Sigue en agenda")
+        st.metric("Cobertura mediatica", "Intensa", delta="Nacional + internacional")
 
     with col_ind4:
-        st.metric("Recursos judiciales", "En preparacion", delta="Proximo frente")
+        st.metric("Frente judicial", "26 incumplimientos", delta="Amparos en preparacion")
 
     # ===== ANALISIS DE TENDENCIA =====
     st.markdown("---")
@@ -455,16 +456,17 @@ if page == "Análisis 48 Horas":
 
     st.markdown("""
     **Factores que bajan el riesgo:**
-    - La batalla legislativa termino. El objetivo principal (frenar la aprobacion) no se logro.
-    - No hay fechas de votacion proximas que funcionen como catalizador.
+    - La batalla legislativa termino (29 a favor, 6 en contra, 1 abstencion).
+    - No hay nuevas convocatorias masivas detectadas para los proximos dias.
+    - El movimiento transiciona hacia estrategia judicial (amparos por 26 incumplimientos en EIA).
     - Gobierno avanza con promocion internacional (Latorre en Londres).
 
     **Factores que mantienen riesgo MEDIO (no BAJO):**
-    - Segunda marcha masiva el 10/12: el movimiento no se desmovilizo.
-    - Cobertura mediatica sigue alta: Pagina12, Clarin, medios internacionales.
-    - Asambleas declararon "alerta y movilizacion permanente".
-    - Posibles amparos judiciales pueden reactivar atencion.
-    - Debate nacional por Ley de Glaciares puede escalar el conflicto.
+    - Segunda marcha masiva el 10/12: miles marcharon hasta el nudo vial.
+    - Cobertura mediatica intensa: Pagina12, Perfil, BigBang, medios internacionales.
+    - Greenpeace advierte sobre "falta de licencia social" y riesgo hidrico.
+    - Facultad de Ciencias Medicas alerto sobre sustancias toxicas (xantatos, poliacrilamidas).
+    - Proximo hito nacional: debate por Ley de Glaciares puede reactivar movilizacion.
     """)
 
     # ===== ESCENARIOS PROXIMAS 48-72 HORAS =====
